@@ -8,6 +8,7 @@ namespace MissingNopedia
 {
 	public partial class frmMain : Form
 	{
+		private string _DefaultText;
 		private HttpClient client = new HttpClient();
 
 		public frmMain()
@@ -15,17 +16,27 @@ namespace MissingNopedia
 			// Desactivate IriParsing to parse quotes "'".
 			typeof(Uri).GetField("s_IriParsing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static).SetValue(null, false);
 			InitializeComponent();
+			_DefaultText = Text;
+			Text += " Loading...";
 		}
 
 		private async void frmMain_Load(object sender, EventArgs e)
 		{
 			var listPokemon = GetListPokemon();
+			var listPokemonDB = GetListPokemonDB();
 			var listMove = GetListMove();
 			var listAbility = GetListAbility();
 
 			cboPokemon.Items.Clear();
-			if ((await listPokemon) != null)
-				cboPokemon.Items.AddRange((await listPokemon));
+			if ((await listPokemon) != null || (await listPokemonDB) != null)
+			{
+				var listPokemonNames = (await listPokemon);
+				var listPokemonDBNames = (await listPokemonDB);
+				if (listPokemonNames == null || (listPokemonDBNames != null && listPokemonNames.Length < listPokemonDBNames.Length))
+					listPokemonNames = listPokemonDBNames;
+
+				cboPokemon.Items.AddRange(listPokemonNames);
+			}
 
 			cboMove.Items.Clear();
 			if ((await listMove) != null)
@@ -34,6 +45,8 @@ namespace MissingNopedia
 			cboAbility.Items.Clear();
 			if ((await listAbility) != null)
 				cboAbility.Items.AddRange((await listAbility));
+
+			Text = _DefaultText;
 		}
 
 		private async void tabControlEx_Selected(object sender, TabControlEventArgs e)
@@ -107,6 +120,31 @@ namespace MissingNopedia
 
 			var doc = DocumentHtml.GetHtmlDocument(content);
 			return doc.DocumentNode.SelectSingleNode("//textarea").InnerText.Split('\n');
+		}
+
+		private async Task<string[]> GetListPokemonDB()
+		{
+			string content = "";
+			HttpResponseMessage response;
+			try
+			{
+				response = await client.GetAsync("http://pokemondb.net/pokedex/all");
+			}
+			catch (HttpRequestException ex)
+			{
+				MessageBox.Show("Error getting informations : " + ex.Message);
+				return null;
+			}
+
+			if (!response.IsSuccessStatusCode)
+			{
+				MessageBox.Show("Error getting informations : " + response.StatusCode);
+				return null;
+			}
+			content = await response.Content.ReadAsStringAsync();
+
+			var doc = DocumentHtml.GetHtmlDocument(content);
+			return doc.DocumentNode.SelectNodes("//*[@class='ent-name']").Select(n => n.InnerText).Distinct().ToArray();
 		}
 
 		private async Task<string[]> GetListMove()
