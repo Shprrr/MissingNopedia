@@ -69,14 +69,41 @@ namespace MissingNopedia
 			await ShowInfoPokemon(cboPokemon.Text);
 		}
 
+		private void cboPokemon_KeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.KeyData == Keys.Enter && cboPokemon.SelectedIndex < 0)
+			{
+				btnSearchPokemon_Click(sender, e);
+				e.SuppressKeyPress = true;
+			}
+		}
+
 		private async void btnSearchMove_Click(object sender, EventArgs e)
 		{
 			await ShowInfoMove(cboMove.Text);
 		}
 
+		private void cboMove_KeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.KeyData == Keys.Enter && cboMove.SelectedIndex < 0)
+			{
+				btnSearchMove_Click(sender, e);
+				e.SuppressKeyPress = true;
+			}
+		}
+
 		private async void btnSearchAbility_Click(object sender, EventArgs e)
 		{
 			await ShowInfoAbility(cboAbility.Text);
+		}
+
+		private void cboAbility_KeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.KeyData == Keys.Enter && cboAbility.SelectedIndex < 0)
+			{
+				btnSearchAbility_Click(sender, e);
+				e.SuppressKeyPress = true;
+			}
 		}
 
 		private async void webBrowser_Navigating(object sender, WebBrowserNavigatingEventArgs e)

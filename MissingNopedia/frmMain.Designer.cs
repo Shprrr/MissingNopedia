@@ -102,6 +102,7 @@
 			this.cboPokemon.Size = new System.Drawing.Size(742, 21);
 			this.cboPokemon.TabIndex = 0;
 			this.cboPokemon.SelectedIndexChanged += new System.EventHandler(this.btnSearchPokemon_Click);
+			this.cboPokemon.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cboPokemon_KeyUp);
 			// 
 			// btnSearchPokemon
 			// 
@@ -145,6 +146,7 @@
 			this.cboMove.Size = new System.Drawing.Size(742, 21);
 			this.cboMove.TabIndex = 2;
 			this.cboMove.SelectedIndexChanged += new System.EventHandler(this.btnSearchMove_Click);
+			this.cboMove.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cboMove_KeyUp);
 			// 
 			// btnSearchMove
 			// 
@@ -180,6 +182,7 @@
 			this.cboAbility.Size = new System.Drawing.Size(742, 21);
 			this.cboAbility.TabIndex = 2;
 			this.cboAbility.SelectedIndexChanged += new System.EventHandler(this.btnSearchAbility_Click);
+			this.cboAbility.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cboAbility_KeyUp);
 			// 
 			// btnSearchAbility
 			// 
