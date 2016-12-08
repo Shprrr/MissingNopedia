@@ -11,6 +11,8 @@ namespace MissingNopedia
 		private string _DefaultText;
 		private HttpClient client = new HttpClient();
 
+		private AdvancedSearch.Pokemon[] pokemons;
+
 		public frmMain()
 		{
 			// Desactivate IriParsing to parse quotes "'".
@@ -18,6 +20,7 @@ namespace MissingNopedia
 			InitializeComponent();
 			_DefaultText = Text;
 			Text += " Loading...";
+			tabControlEx_Selected(tabControlEx, new TabControlEventArgs(tabControlEx.SelectedTab, tabControlEx.SelectedIndex, TabControlAction.Selected));
 		}
 
 		private async void frmMain_Load(object sender, EventArgs e)
@@ -46,6 +49,8 @@ namespace MissingNopedia
 			if ((await listAbility) != null)
 				cboAbility.Items.AddRange((await listAbility));
 
+			pokemons = await AdvancedSearch.Pokemon.GetListPokemonDB();
+
 			Text = _DefaultText;
 		}
 
@@ -62,6 +67,9 @@ namespace MissingNopedia
 
 			if (e.TabPage.Name == tabPageAbility.Name)
 				await ShowInfoAbility(cboAbility?.Text);
+
+			webBrowser.Visible = e.TabPage.Name != tabPageSearch.Name;
+			splitSearch.Visible = e.TabPage.Name == tabPageSearch.Name;
 		}
 
 		private async void btnSearchPokemon_Click(object sender, EventArgs e)
@@ -328,6 +336,13 @@ namespace MissingNopedia
 			var doc = new AbilityHtml(content);
 
 			ShowNewPage(doc.BuildNewPage());
+		}
+
+		private void btnAdvancedSearch_Click(object sender, EventArgs e)
+		{
+			dgvResult.Rows.Clear();
+			if (pokemons != null)
+				dgvResult.Rows.AddRange(pokemons.Select(p => p.ConvertRow()).ToArray());
 		}
 	}
 }

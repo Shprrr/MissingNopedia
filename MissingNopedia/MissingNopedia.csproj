@@ -60,6 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbilityHtml.cs" />
+    <Compile Include="AdvancedSearch\Pokemon.cs" />
+    <Compile Include="AdvancedSearch\Type.cs" />
     <Compile Include="DocumentHtml.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
@@ -76,6 +78,7 @@
     </Compile>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
