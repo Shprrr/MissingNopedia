@@ -16,6 +16,8 @@ namespace MissingNopedia
 		private const string TCGOnly = "TCG-only_moves";
 		private const string TCGExclusive = "TCG-exclusive_moves";
 		private const string Evolution = "Evolution";
+		private const string Trivia = "Trivia";
+		private const string InOtherLanguages = "In_other_languages";
 
 		public PokemonHtml(string html) : base(html)
 		{
@@ -79,6 +81,14 @@ namespace MissingNopedia
 				body.AppendChildren(section);
 
 			section = AddSection(HeldItems);
+			if (section != null)
+				body.AppendChildren(section);
+
+			section = AddSection(Trivia);
+			if (section != null)
+				body.AppendChildren(section);
+
+			section = AddSection(InOtherLanguages);
 			if (section != null)
 				body.AppendChildren(section);
 
