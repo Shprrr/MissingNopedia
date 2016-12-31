@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -8,8 +9,12 @@ namespace MissingNopedia
 {
 	public partial class frmMain : Form
 	{
+		private const string WikiPokemonSuffix = "_(Pok%C3%A9mon)";
+		private const string WikiMoveSuffix = "_(move)";
+		private const string WikiAbilitySuffix = "_(Ability)";
 		private string _DefaultText;
 		private HttpClient client = new HttpClient();
+		private Stack<Uri> history = new Stack<Uri>();
 
 		private AdvancedSearch.Pokemon[] pokemons;
 
@@ -82,9 +87,9 @@ namespace MissingNopedia
 			splitSearch.Visible = e.TabPage.Name == tabPageSearch.Name;
 		}
 
-		private async void btnSearchPokemon_Click(object sender, EventArgs e)
+		private void btnSearchPokemon_Click(object sender, EventArgs e)
 		{
-			await ShowInfoPokemon(cboPokemon.Text);
+			webBrowser.Navigate("about:/wiki/" + cboPokemon.Text + WikiPokemonSuffix);
 		}
 
 		private void cboPokemon_KeyUp(object sender, KeyEventArgs e)
@@ -96,9 +101,9 @@ namespace MissingNopedia
 			}
 		}
 
-		private async void btnSearchMove_Click(object sender, EventArgs e)
+		private void btnSearchMove_Click(object sender, EventArgs e)
 		{
-			await ShowInfoMove(cboMove.Text);
+			webBrowser.Navigate("about:/wiki/" + cboMove.Text + WikiMoveSuffix);
 		}
 
 		private void cboMove_KeyUp(object sender, KeyEventArgs e)
@@ -110,9 +115,9 @@ namespace MissingNopedia
 			}
 		}
 
-		private async void btnSearchAbility_Click(object sender, EventArgs e)
+		private void btnSearchAbility_Click(object sender, EventArgs e)
 		{
-			await ShowInfoAbility(cboAbility.Text);
+			webBrowser.Navigate("about:/wiki/" + cboAbility.Text + WikiAbilitySuffix);
 		}
 
 		private void cboAbility_KeyUp(object sender, KeyEventArgs e)
@@ -129,17 +134,34 @@ namespace MissingNopedia
 			if (e.Url.AbsolutePath != "blank")
 				e.Cancel = true;
 
-			var i = e.Url.Segments.Last().LastIndexOf("_(Pok%C3%A9mon)");
+			if (e.Url.AbsoluteUri == "about:blank") return;
+
+			if (history.Count == 0 || history.Peek() != e.Url)
+				history.Push(e.Url);
+			btnBackPokemon.Enabled = history.Count > 1;
+			btnBackMove.Enabled = history.Count > 1;
+			btnBackAbility.Enabled = history.Count > 1;
+
+			var i = e.Url.Segments.Last().LastIndexOf(WikiPokemonSuffix);
 			if (i != -1)
 				await ShowInfoPokemon(Uri.UnescapeDataString(e.Url.Segments.Last().Remove(i)));
 
-			i = e.Url.Segments.Last().LastIndexOf("_(move)");
+			i = e.Url.Segments.Last().LastIndexOf(WikiMoveSuffix);
 			if (i != -1)
 				await ShowInfoMove(Uri.UnescapeDataString(e.Url.Segments.Last().Remove(i)));
 
-			i = e.Url.Segments.Last().LastIndexOf("_(Ability)");
+			i = e.Url.Segments.Last().LastIndexOf(WikiAbilitySuffix);
 			if (i != -1)
 				await ShowInfoAbility(Uri.UnescapeDataString(e.Url.Segments.Last().Remove(i)));
+		}
+
+		private void btnBack_Click(object sender, EventArgs e)
+		{
+			history.Pop();
+			webBrowser_Navigating(sender, new WebBrowserNavigatingEventArgs(history.Peek(), ""));
+			btnBackPokemon.Enabled = history.Count > 1;
+			btnBackMove.Enabled = history.Count > 1;
+			btnBackAbility.Enabled = history.Count > 1;
 		}
 
 		private async Task<string[]> GetListPokemon()
@@ -258,7 +280,7 @@ namespace MissingNopedia
 			HttpResponseMessage response;
 			try
 			{
-				response = await client.GetAsync("http://bulbapedia.bulbagarden.net/wiki/" + Uri.EscapeDataString(pokemonName.Replace(' ', '_')) + "_(Pok%C3%A9mon)");
+				response = await client.GetAsync("http://bulbapedia.bulbagarden.net/wiki/" + Uri.EscapeDataString(pokemonName.Replace(' ', '_')) + WikiPokemonSuffix);
 			}
 			catch (HttpRequestException ex)
 			{
@@ -297,7 +319,7 @@ namespace MissingNopedia
 			HttpResponseMessage response;
 			try
 			{
-				response = await client.GetAsync("http://bulbapedia.bulbagarden.net/wiki/" + Uri.EscapeDataString(moveName.Replace(' ', '_')) + "_(move)");
+				response = await client.GetAsync("http://bulbapedia.bulbagarden.net/wiki/" + Uri.EscapeDataString(moveName.Replace(' ', '_')) + WikiMoveSuffix);
 			}
 			catch (HttpRequestException ex)
 			{
@@ -328,7 +350,7 @@ namespace MissingNopedia
 			HttpResponseMessage response;
 			try
 			{
-				response = await client.GetAsync("http://bulbapedia.bulbagarden.net/wiki/" + Uri.EscapeDataString(abilityName.Replace(' ', '_')) + "_(Ability)");
+				response = await client.GetAsync("http://bulbapedia.bulbagarden.net/wiki/" + Uri.EscapeDataString(abilityName.Replace(' ', '_')) + WikiAbilitySuffix);
 			}
 			catch (HttpRequestException ex)
 			{
