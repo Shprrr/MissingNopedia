@@ -1,9 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 using System.Windows.Forms;
 
 namespace MissingNopedia.AdvancedSearch
@@ -31,6 +34,10 @@ namespace MissingNopedia.AdvancedSearch
 		public int Wall { get { return BaseHP + BaseDefense + BaseSpDefense; } }
 		public int PhysicalTank { get { return BaseAttack + BaseDefense; } }
 		public int SpecialTank { get { return BaseSpAttack + BaseSpDefense; } }
+
+		public string Ability1 { get; set; }
+		public string Ability2 { get; set; }
+		public string HiddenAbility { get; set; }
 
 		public Pokemon(int number, string name)
 		{
@@ -75,11 +82,17 @@ namespace MissingNopedia.AdvancedSearch
 			row.Cells.Add(new DataGridViewTextBoxCell { Value = Wall });
 			row.Cells.Add(new DataGridViewTextBoxCell { Value = PhysicalTank });
 			row.Cells.Add(new DataGridViewTextBoxCell { Value = SpecialTank });
+
+			row.Cells.Add(new DataGridViewTextBoxCell { Value = Ability1 });
+			row.Cells.Add(new DataGridViewTextBoxCell { Value = Ability2 });
+			row.Cells.Add(new DataGridViewTextBoxCell { Value = HiddenAbility });
 			return row;
 		}
 
-		public static async Task<Pokemon[]> GetListPokemonDB()
+		public static async Task<Pokemon[]> GetListPokemonWeb()
 		{
+			return null;
+			var watch = new System.Diagnostics.Stopwatch(); watch.Start();
 			string content = "";
 			HttpResponseMessage response;
 			try
@@ -103,6 +116,7 @@ namespace MissingNopedia.AdvancedSearch
 
 			var rows = doc.DocumentNode.SelectNodes("//*[@id='pokedex']/tbody/tr");
 			var pokeList = new List<Pokemon>(rows.Count);
+			var actionBlock = new ActionBlock<Pokemon>(p => p.GetDetailedInfo(), new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = rows.Count });
 			foreach (var row in rows)
 			{
 				var pkmn = new Pokemon(int.Parse(row.SelectSingleNode(".//*[@class='num cell-icon-string']").InnerText), row.SelectSingleNode(".//*[@class='ent-name']").InnerText);
@@ -122,8 +136,135 @@ namespace MissingNopedia.AdvancedSearch
 				pkmn.BaseSpDefense = nums[4];
 				pkmn.BaseSpeed = nums[5];
 
+				actionBlock.Post(pkmn);
+
 				pokeList.Add(pkmn);
 			}
+
+			actionBlock.Complete();
+			await actionBlock.Completion;
+			watch.Stop(); System.Diagnostics.Debug.Print("ListPokemon a pris " + watch.ElapsedMilliseconds + " ms.");
+			return pokeList.ToArray();
+		}
+
+		private async Task GetDetailedInfo()
+		{
+			string content = "";
+			HttpResponseMessage response;
+			try
+			{
+				// Remove diacritics.
+				string name = Encoding.UTF8.GetString(Encoding.GetEncoding("ISO-8859-8").GetBytes(Name.ToLower()));
+				if (Name == "Nidoran♀")
+					name = "nidoran-f";
+				if (Name == "Nidoran♂")
+					name = "nidoran-m";
+				// Remove "'" and replace everything else with a "-".
+				name = Regex.Replace(name.Replace("'", ""), @"\W+", "-").Trim('-');
+				response = await client.GetAsync("http://pokemondb.net/pokedex/" + name);
+			}
+			catch (HttpRequestException ex)
+			{
+				MessageBox.Show("Error getting informations : " + ex.Message);
+				return;
+			}
+
+			if (!response.IsSuccessStatusCode)
+			{
+				MessageBox.Show("Error getting informations : " + response.StatusCode);
+				return;
+			}
+			content = await response.Content.ReadAsStringAsync();
+
+			var doc = DocumentHtml.GetHtmlDocument(content);
+
+			var tables = doc.DocumentNode.SelectNodes("//*[@class='vitals-table']");
+			//0=Summary
+			var abilities = tables[0].SelectNodes(".//*[contains(@href, '/ability/')]");
+			Ability1 = abilities[0].InnerText;
+			if (abilities.Count > 1 && abilities[1].ParentNode.Name != "small")
+				Ability2 = abilities[1].InnerText;
+			if (abilities.Last().ParentNode.Name == "small")
+				HiddenAbility = abilities.Last().InnerText;
+			//1=Training
+			//2=Breeding
+			//3=Base Stats
+			//4=Pokédex
+			//5=Locations
+
+			var typeDefenseValues = doc.DocumentNode.SelectNodes("//*[@class='type-table']//td").Select(n => WebUtility.HtmlDecode(n.InnerText)).ToArray();
+		}
+
+		public static Pokemon[] GetListPokemonDB()
+		{
+#if DEBUG
+			DifferencesSunMoon.ExecuteDifferences();
+			var watch = new System.Diagnostics.Stopwatch(); watch.Start();
+#endif
+			var pokeList = new List<Pokemon>();
+
+			using (var sql = new SQLite.SQLiteConnection("pokedex.sqlite"))
+			{
+				var pokemonsMap = Mappings.Pokemon.GetAllPokemons(sql);
+				pokeList.Capacity = pokemonsMap.Count;
+				var pokemonSpecies = Mappings.PokemonSpecie.GetAllPokemonSpecies(sql);
+				var pokemonSpeciesNames = Mappings.PokemonSpecieName.GetAllPokemonSpeciesNames(sql);
+				var pokemonForms = Mappings.PokemonForm.GetAllPokemonForms(sql);
+				var pokemonFormNames = Mappings.PokemonFormName.GetAllPokemonFormNames(sql);
+				var pokemonTypes = Mappings.PokemonType.GetAllPokemonTypes(sql);
+				var pokemonStats = Mappings.PokemonStat.GetAllPokemonStats(sql);
+				var pokemonAbilities = Mappings.PokemonAbility.GetAllPokemonAbilities(sql);
+				var pokemons = pokemonsMap
+					.Join(pokemonSpecies, p => p.SpeciesId, ps => ps.Id, (p, ps) => new { p, ps })
+					.Join(pokemonSpeciesNames, p => p.ps.Id, psn => psn.PokemonSpeciesId, (p, psn) => new { p.p, p.ps, psn })
+					.GroupJoin(pokemonForms, p => p.p.Id, pf => pf.PokemonId, (p, pf) => new { p.p, p.ps, p.psn, pf }).SelectMany(p => p.pf.DefaultIfEmpty(), (p, pf) => new { p.p, p.ps, p.psn, pf })
+					.GroupJoin(pokemonFormNames, p => p.pf.Id, pfn => pfn.PokemonFormId, (p, pfn) => new { p.p, p.ps, p.psn, p.pf, pfn }).SelectMany(p => p.pfn.DefaultIfEmpty(), (p, pfn) => new { p.p, p.ps, p.psn, p.pf, pfn })
+					.GroupJoin(pokemonTypes, p => p.p.Id, pt => pt.PokemonId, (p, pt) => new { p.p, p.ps, p.psn, p.pf, p.pfn, pt = pt.ToArray() })
+					.GroupJoin(pokemonStats, p => p.p.Id, ps => ps.PokemonId, (p, ps) => new { p.p, p.ps, p.psn, p.pf, p.pfn, p.pt, pst = ps.ToArray() })
+					.GroupJoin(pokemonAbilities, p => p.p.Id, pa => pa.PokemonId, (p, pa) => new ExtendedMappings.Pokemon(p.p, p.ps, p.psn, p.pf, p.pfn, p.pt, p.pst, pa.ToArray())).ToList();
+
+				var types = Mappings.Type.GetAllTypes(sql);
+
+				var stats = Mappings.Stat.GetAllStats(sql);
+				var statHP = stats.Single(s => s.IsHP);
+				var statAttack = stats.Single(s => s.IsAttack);
+				var statDefense = stats.Single(s => s.IsDefense);
+				var statSpecialAttack = stats.Single(s => s.IsSpecialAttack);
+				var statSpecialDefense = stats.Single(s => s.IsSpecialDefense);
+				var statSpeed = stats.Single(s => s.IsSpeed);
+
+				var abilitiesMap = Mappings.Ability.GetAllAbilities(sql);
+				var abilitieNames = Mappings.AbilityName.GetAllAbilityNames(sql);
+				var abilities = abilitiesMap.Join(abilitieNames, a => a.Id, an => an.AbilityId, (a, an) => new ExtendedMappings.Ability(a, an));
+
+				foreach (var pkmn in pokemons)
+				{
+					var pokemon = new Pokemon(pkmn.SpeciesId, pkmn.Name);
+
+					pokemon.Form = pkmn.FormName;
+
+					pokemon.Type1 = Type.Parse(types.Single(t => t.Id == pkmn.Types.Single(pt => pt.Slot == 1).TypeId).Identifier);
+					var pokemonType2 = pkmn.Types.SingleOrDefault(pt => pt.Slot == 2);
+					if (pokemonType2 != null)
+						pokemon.Type2 = Type.Parse(types.Single(t => t.Id == pokemonType2.TypeId).Identifier);
+
+					pokemon.BaseHP = pkmn.Stats.Single(ps => ps.StatId == statHP.Id).BaseStat;
+					pokemon.BaseAttack = pkmn.Stats.Single(ps => ps.StatId == statAttack.Id).BaseStat;
+					pokemon.BaseDefense = pkmn.Stats.Single(ps => ps.StatId == statDefense.Id).BaseStat;
+					pokemon.BaseSpAttack = pkmn.Stats.Single(ps => ps.StatId == statSpecialAttack.Id).BaseStat;
+					pokemon.BaseSpDefense = pkmn.Stats.Single(ps => ps.StatId == statSpecialDefense.Id).BaseStat;
+					pokemon.BaseSpeed = pkmn.Stats.Single(ps => ps.StatId == statSpeed.Id).BaseStat;
+
+					pokemon.Ability1 = abilities.Single(a => a.Id == pkmn.Abilities.Single(pa => pa.Slot == 1).AbilityId).Name;
+					pokemon.Ability2 = abilities.SingleOrDefault(a => a.Id == pkmn.Abilities.SingleOrDefault(pa => pa.Slot == 2)?.AbilityId)?.Name;
+					pokemon.HiddenAbility = abilities.SingleOrDefault(a => a.Id == pkmn.Abilities.SingleOrDefault(pa => pa.IsHidden)?.AbilityId)?.Name;
+
+					pokeList.Add(pokemon);
+				}
+			}
+#if DEBUG
+			watch.Stop(); System.Diagnostics.Debug.Print("ListPokemonDB a pris " + watch.ElapsedMilliseconds + " ms.");
+#endif
 
 			return pokeList.ToArray();
 		}

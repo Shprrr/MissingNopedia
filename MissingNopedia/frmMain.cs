@@ -49,7 +49,17 @@ namespace MissingNopedia
 			if ((await listAbility) != null)
 				cboAbility.Items.AddRange((await listAbility));
 
-			pokemons = await AdvancedSearch.Pokemon.GetListPokemonDB();
+#if DEBUG
+#pragma warning disable CS4014 // Dans la mesure où cet appel n'est pas attendu, l'exécution de la méthode actuelle continue avant la fin de l'appel
+			AdvancedSearch.Pokemon[] pokemonsWeb = null;
+			AdvancedSearch.Pokemon.GetListPokemonWeb().ContinueWith(p =>
+			{
+				pokemonsWeb = p.Result;
+			});
+#pragma warning restore CS4014 // Dans la mesure où cet appel n'est pas attendu, l'exécution de la méthode actuelle continue avant la fin de l'appel
+#endif
+
+			pokemons = AdvancedSearch.Pokemon.GetListPokemonDB();
 
 			Text = _DefaultText;
 		}

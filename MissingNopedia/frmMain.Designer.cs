@@ -38,6 +38,19 @@
 			this.flpCriteria = new System.Windows.Forms.FlowLayoutPanel();
 			this.btnAdvancedSearch = new System.Windows.Forms.Button();
 			this.dgvResult = new System.Windows.Forms.DataGridView();
+			this.splitSearch = new System.Windows.Forms.SplitContainer();
+			this.tabControlEx = new MissingNopedia.TabControlEx();
+			this.tabPagePokemon = new System.Windows.Forms.TabPage();
+			this.cboPokemon = new System.Windows.Forms.ComboBox();
+			this.btnSearchPokemon = new System.Windows.Forms.Button();
+			this.tabPageType = new System.Windows.Forms.TabPage();
+			this.tabPageMove = new System.Windows.Forms.TabPage();
+			this.cboMove = new System.Windows.Forms.ComboBox();
+			this.btnSearchMove = new System.Windows.Forms.Button();
+			this.tabPageAbility = new System.Windows.Forms.TabPage();
+			this.cboAbility = new System.Windows.Forms.ComboBox();
+			this.btnSearchAbility = new System.Windows.Forms.Button();
+			this.tabPageSearch = new System.Windows.Forms.TabPage();
 			this.ColNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColName = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColType1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,19 +67,9 @@
 			this.ColWall = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColPhysicalTank = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColSpecialTank = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.splitSearch = new System.Windows.Forms.SplitContainer();
-			this.tabControlEx = new MissingNopedia.TabControlEx();
-			this.tabPagePokemon = new System.Windows.Forms.TabPage();
-			this.cboPokemon = new System.Windows.Forms.ComboBox();
-			this.btnSearchPokemon = new System.Windows.Forms.Button();
-			this.tabPageType = new System.Windows.Forms.TabPage();
-			this.tabPageMove = new System.Windows.Forms.TabPage();
-			this.cboMove = new System.Windows.Forms.ComboBox();
-			this.btnSearchMove = new System.Windows.Forms.Button();
-			this.tabPageAbility = new System.Windows.Forms.TabPage();
-			this.cboAbility = new System.Windows.Forms.ComboBox();
-			this.btnSearchAbility = new System.Windows.Forms.Button();
-			this.tabPageSearch = new System.Windows.Forms.TabPage();
+			this.ColAbility1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColAbility2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ColHiddenAbility = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.dgvResult)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitSearch)).BeginInit();
 			this.splitSearch.Panel1.SuspendLayout();
@@ -150,132 +153,15 @@
             this.ColSpecialSweeper,
             this.ColWall,
             this.ColPhysicalTank,
-            this.ColSpecialTank});
+            this.ColSpecialTank,
+            this.ColAbility1,
+            this.ColAbility2,
+            this.ColHiddenAbility});
 			this.dgvResult.Location = new System.Drawing.Point(0, 29);
 			this.dgvResult.Name = "dgvResult";
 			this.dgvResult.ReadOnly = true;
 			this.dgvResult.Size = new System.Drawing.Size(822, 654);
 			this.dgvResult.TabIndex = 3;
-			// 
-			// ColNumber
-			// 
-			this.ColNumber.Frozen = true;
-			this.ColNumber.HeaderText = "#";
-			this.ColNumber.Name = "ColNumber";
-			this.ColNumber.ReadOnly = true;
-			this.ColNumber.Width = 5;
-			// 
-			// ColName
-			// 
-			this.ColName.Frozen = true;
-			this.ColName.HeaderText = "Name";
-			this.ColName.Name = "ColName";
-			this.ColName.ReadOnly = true;
-			this.ColName.Width = 5;
-			// 
-			// ColType1
-			// 
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-			this.ColType1.DefaultCellStyle = dataGridViewCellStyle2;
-			this.ColType1.HeaderText = "Type";
-			this.ColType1.Name = "ColType1";
-			this.ColType1.ReadOnly = true;
-			this.ColType1.Width = 5;
-			// 
-			// ColType2
-			// 
-			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-			this.ColType2.DefaultCellStyle = dataGridViewCellStyle3;
-			this.ColType2.HeaderText = "Type";
-			this.ColType2.Name = "ColType2";
-			this.ColType2.ReadOnly = true;
-			this.ColType2.Width = 5;
-			// 
-			// ColHP
-			// 
-			this.ColHP.HeaderText = "HP";
-			this.ColHP.Name = "ColHP";
-			this.ColHP.ReadOnly = true;
-			this.ColHP.Width = 5;
-			// 
-			// ColAttack
-			// 
-			this.ColAttack.HeaderText = "Attack";
-			this.ColAttack.Name = "ColAttack";
-			this.ColAttack.ReadOnly = true;
-			this.ColAttack.Width = 5;
-			// 
-			// ColDefense
-			// 
-			this.ColDefense.HeaderText = "Defense";
-			this.ColDefense.Name = "ColDefense";
-			this.ColDefense.ReadOnly = true;
-			this.ColDefense.Width = 5;
-			// 
-			// ColSpAttack
-			// 
-			this.ColSpAttack.HeaderText = "Special Attack";
-			this.ColSpAttack.Name = "ColSpAttack";
-			this.ColSpAttack.ReadOnly = true;
-			this.ColSpAttack.Width = 5;
-			// 
-			// ColSpDefense
-			// 
-			this.ColSpDefense.HeaderText = "Special Defense";
-			this.ColSpDefense.Name = "ColSpDefense";
-			this.ColSpDefense.ReadOnly = true;
-			this.ColSpDefense.Width = 5;
-			// 
-			// ColSpeed
-			// 
-			this.ColSpeed.HeaderText = "Speed";
-			this.ColSpeed.Name = "ColSpeed";
-			this.ColSpeed.ReadOnly = true;
-			this.ColSpeed.Width = 5;
-			// 
-			// ColTotalStat
-			// 
-			this.ColTotalStat.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.ColTotalStat.DividerWidth = 4;
-			this.ColTotalStat.HeaderText = "Total";
-			this.ColTotalStat.Name = "ColTotalStat";
-			this.ColTotalStat.ReadOnly = true;
-			this.ColTotalStat.Width = 60;
-			// 
-			// ColPhysicalSweeper
-			// 
-			this.ColPhysicalSweeper.HeaderText = "Physical Sweeper";
-			this.ColPhysicalSweeper.Name = "ColPhysicalSweeper";
-			this.ColPhysicalSweeper.ReadOnly = true;
-			this.ColPhysicalSweeper.Width = 5;
-			// 
-			// ColSpecialSweeper
-			// 
-			this.ColSpecialSweeper.HeaderText = "Special Sweeper";
-			this.ColSpecialSweeper.Name = "ColSpecialSweeper";
-			this.ColSpecialSweeper.ReadOnly = true;
-			this.ColSpecialSweeper.Width = 5;
-			// 
-			// ColWall
-			// 
-			this.ColWall.HeaderText = "Wall";
-			this.ColWall.Name = "ColWall";
-			this.ColWall.ReadOnly = true;
-			this.ColWall.Width = 5;
-			// 
-			// ColPhysicalTank
-			// 
-			this.ColPhysicalTank.HeaderText = "Physical Tank";
-			this.ColPhysicalTank.Name = "ColPhysicalTank";
-			this.ColPhysicalTank.ReadOnly = true;
-			this.ColPhysicalTank.Width = 5;
-			// 
-			// ColSpecialTank
-			// 
-			this.ColSpecialTank.HeaderText = "Special Tank";
-			this.ColSpecialTank.Name = "ColSpecialTank";
-			this.ColSpecialTank.ReadOnly = true;
-			this.ColSpecialTank.Width = 5;
 			// 
 			// splitSearch
 			// 
@@ -445,6 +331,148 @@
 			this.tabPageSearch.Text = "Advanced Search";
 			this.tabPageSearch.UseVisualStyleBackColor = true;
 			// 
+			// ColNumber
+			// 
+			this.ColNumber.Frozen = true;
+			this.ColNumber.HeaderText = "#";
+			this.ColNumber.Name = "ColNumber";
+			this.ColNumber.ReadOnly = true;
+			this.ColNumber.Width = 5;
+			// 
+			// ColName
+			// 
+			this.ColName.Frozen = true;
+			this.ColName.HeaderText = "Name";
+			this.ColName.Name = "ColName";
+			this.ColName.ReadOnly = true;
+			this.ColName.Width = 5;
+			// 
+			// ColType1
+			// 
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+			this.ColType1.DefaultCellStyle = dataGridViewCellStyle2;
+			this.ColType1.HeaderText = "Type";
+			this.ColType1.Name = "ColType1";
+			this.ColType1.ReadOnly = true;
+			this.ColType1.Width = 5;
+			// 
+			// ColType2
+			// 
+			dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
+			this.ColType2.DefaultCellStyle = dataGridViewCellStyle3;
+			this.ColType2.HeaderText = "Type";
+			this.ColType2.Name = "ColType2";
+			this.ColType2.ReadOnly = true;
+			this.ColType2.Width = 5;
+			// 
+			// ColHP
+			// 
+			this.ColHP.HeaderText = "HP";
+			this.ColHP.Name = "ColHP";
+			this.ColHP.ReadOnly = true;
+			this.ColHP.Width = 5;
+			// 
+			// ColAttack
+			// 
+			this.ColAttack.HeaderText = "Attack";
+			this.ColAttack.Name = "ColAttack";
+			this.ColAttack.ReadOnly = true;
+			this.ColAttack.Width = 5;
+			// 
+			// ColDefense
+			// 
+			this.ColDefense.HeaderText = "Defense";
+			this.ColDefense.Name = "ColDefense";
+			this.ColDefense.ReadOnly = true;
+			this.ColDefense.Width = 5;
+			// 
+			// ColSpAttack
+			// 
+			this.ColSpAttack.HeaderText = "Special Attack";
+			this.ColSpAttack.Name = "ColSpAttack";
+			this.ColSpAttack.ReadOnly = true;
+			this.ColSpAttack.Width = 5;
+			// 
+			// ColSpDefense
+			// 
+			this.ColSpDefense.HeaderText = "Special Defense";
+			this.ColSpDefense.Name = "ColSpDefense";
+			this.ColSpDefense.ReadOnly = true;
+			this.ColSpDefense.Width = 5;
+			// 
+			// ColSpeed
+			// 
+			this.ColSpeed.HeaderText = "Speed";
+			this.ColSpeed.Name = "ColSpeed";
+			this.ColSpeed.ReadOnly = true;
+			this.ColSpeed.Width = 5;
+			// 
+			// ColTotalStat
+			// 
+			this.ColTotalStat.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.ColTotalStat.DividerWidth = 4;
+			this.ColTotalStat.HeaderText = "Total";
+			this.ColTotalStat.Name = "ColTotalStat";
+			this.ColTotalStat.ReadOnly = true;
+			this.ColTotalStat.Width = 60;
+			// 
+			// ColPhysicalSweeper
+			// 
+			this.ColPhysicalSweeper.HeaderText = "Physical Sweeper";
+			this.ColPhysicalSweeper.Name = "ColPhysicalSweeper";
+			this.ColPhysicalSweeper.ReadOnly = true;
+			this.ColPhysicalSweeper.Width = 5;
+			// 
+			// ColSpecialSweeper
+			// 
+			this.ColSpecialSweeper.HeaderText = "Special Sweeper";
+			this.ColSpecialSweeper.Name = "ColSpecialSweeper";
+			this.ColSpecialSweeper.ReadOnly = true;
+			this.ColSpecialSweeper.Width = 5;
+			// 
+			// ColWall
+			// 
+			this.ColWall.HeaderText = "Wall";
+			this.ColWall.Name = "ColWall";
+			this.ColWall.ReadOnly = true;
+			this.ColWall.Width = 5;
+			// 
+			// ColPhysicalTank
+			// 
+			this.ColPhysicalTank.HeaderText = "Physical Tank";
+			this.ColPhysicalTank.Name = "ColPhysicalTank";
+			this.ColPhysicalTank.ReadOnly = true;
+			this.ColPhysicalTank.Width = 5;
+			// 
+			// ColSpecialTank
+			// 
+			this.ColSpecialTank.DividerWidth = 4;
+			this.ColSpecialTank.HeaderText = "Special Tank";
+			this.ColSpecialTank.Name = "ColSpecialTank";
+			this.ColSpecialTank.ReadOnly = true;
+			this.ColSpecialTank.Width = 5;
+			// 
+			// ColAbility1
+			// 
+			this.ColAbility1.HeaderText = "Ability";
+			this.ColAbility1.Name = "ColAbility1";
+			this.ColAbility1.ReadOnly = true;
+			this.ColAbility1.Width = 5;
+			// 
+			// ColAbility2
+			// 
+			this.ColAbility2.HeaderText = "Ability";
+			this.ColAbility2.Name = "ColAbility2";
+			this.ColAbility2.ReadOnly = true;
+			this.ColAbility2.Width = 5;
+			// 
+			// ColHiddenAbility
+			// 
+			this.ColHiddenAbility.HeaderText = "Hidden Ability";
+			this.ColHiddenAbility.Name = "ColHiddenAbility";
+			this.ColHiddenAbility.ReadOnly = true;
+			this.ColHiddenAbility.Width = 5;
+			// 
 			// frmMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -491,6 +519,7 @@
 		private System.Windows.Forms.FlowLayoutPanel flpCriteria;
 		private System.Windows.Forms.Button btnAdvancedSearch;
 		private System.Windows.Forms.DataGridView dgvResult;
+		private System.Windows.Forms.SplitContainer splitSearch;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColNumber;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColName;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColType1;
@@ -507,7 +536,9 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColWall;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColPhysicalTank;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColSpecialTank;
-		private System.Windows.Forms.SplitContainer splitSearch;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColAbility1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColAbility2;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ColHiddenAbility;
 	}
 }
 
