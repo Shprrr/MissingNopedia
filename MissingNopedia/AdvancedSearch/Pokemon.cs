@@ -198,6 +198,7 @@ namespace MissingNopedia.AdvancedSearch
 		public static Pokemon[] GetListPokemonDB()
 		{
 #if DEBUG
+			DifferencesSunMoon.ExecuteRemoveConquest();
 			DifferencesSunMoon.ExecuteDifferences();
 			var watch = new System.Diagnostics.Stopwatch(); watch.Start();
 #endif
