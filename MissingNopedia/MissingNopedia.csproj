@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbilityHtml.cs" />
+    <Compile Include="AdvancedSearch\Criteria\SqlLikeStringUtilities.cs" />
     <Compile Include="AdvancedSearch\ExtendedMappings\Ability.cs" />
     <Compile Include="AdvancedSearch\DifferencesSunMoon.cs" />
     <Compile Include="AdvancedSearch\ExtendedMappings\Pokemon.cs" />
@@ -101,6 +102,12 @@
     <Compile Include="AdvancedSearch\Mappings\Type.cs" />
     <Compile Include="AdvancedSearch\Pokemon.cs" />
     <Compile Include="AdvancedSearch\Type.cs" />
+    <Compile Include="AdvancedSearch\Criteria\Criterion.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AdvancedSearch\Criteria\Criterion.Designer.cs">
+      <DependentUpon>Criterion.cs</DependentUpon>
+    </Compile>
     <Compile Include="DocumentHtml.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
@@ -115,6 +122,10 @@
     <Compile Include="TabControlEx.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="AdvancedSearch\Criteria\Criterion.resx">
+      <DependentUpon>Criterion.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
       <SubType>Designer</SubType>

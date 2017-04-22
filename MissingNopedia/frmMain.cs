@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MissingNopedia.AdvancedSearch.Criteria;
 
 namespace MissingNopedia
 {
@@ -22,9 +23,22 @@ namespace MissingNopedia
 		{
 			// Desactivate IriParsing to parse quotes "'".
 			typeof(Uri).GetField("s_IriParsing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static).SetValue(null, false);
+
 			InitializeComponent();
+
+			// Remove auto horizontal scroll.
+			tlpCriteria.AutoScroll = false;
+			tlpCriteria.HorizontalScroll.Enabled = false;
+			tlpCriteria.HorizontalScroll.Visible = false;
+			tlpCriteria.HorizontalScroll.Maximum = 0;
+			tlpCriteria.AutoScroll = true;
+
+			lblFound.Text = "";
+
+			// Loading text.
 			_DefaultText = Text;
 			Text += " Loading...";
+
 			tabControlEx_Selected(tabControlEx, new TabControlEventArgs(tabControlEx.SelectedTab, tabControlEx.SelectedIndex, TabControlAction.Selected));
 		}
 
@@ -370,11 +384,30 @@ namespace MissingNopedia
 			ShowNewPage(doc.BuildNewPage());
 		}
 
+		private void btnAddCriterion_Click(object sender, EventArgs e)
+		{
+			flpCriteria.Controls.Add(new Criterion());
+		}
+
+		private void btnRemoveCriterion_Click(object sender, EventArgs e)
+		{
+			if (flpCriteria.Controls.Count > 0)
+				flpCriteria.Controls.RemoveAt(flpCriteria.Controls.Count - 1);
+		}
+
 		private void btnAdvancedSearch_Click(object sender, EventArgs e)
 		{
 			dgvResult.Rows.Clear();
 			if (pokemons != null)
-				dgvResult.Rows.AddRange(pokemons.Select(p => p.ConvertRow()).ToArray());
+			{
+				var results = pokemons;
+				foreach (var criterion in flpCriteria.Controls)
+				{
+					results = ((Criterion)criterion).ApplyCriterion(results);
+				}
+				dgvResult.Rows.AddRange(results.Select(p => p.ConvertRow()).ToArray());
+				lblFound.Text = results.Length + " found";
+			}
 		}
 	}
 }

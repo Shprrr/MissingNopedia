@@ -30,12 +30,16 @@
 		private void InitializeComponent()
 		{
 			System.Windows.Forms.Label label1;
+			System.Windows.Forms.Panel panBtnCriteria;
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-			this.webBrowser = new System.Windows.Forms.WebBrowser();
+			this.tlpCriteria = new System.Windows.Forms.TableLayoutPanel();
 			this.flpCriteria = new System.Windows.Forms.FlowLayoutPanel();
+			this.btnAddCriterion = new System.Windows.Forms.Button();
+			this.btnRemoveCriterion = new System.Windows.Forms.Button();
+			this.webBrowser = new System.Windows.Forms.WebBrowser();
 			this.btnAdvancedSearch = new System.Windows.Forms.Button();
 			this.dgvResult = new System.Windows.Forms.DataGridView();
 			this.ColNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,6 +62,7 @@
 			this.ColAbility2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ColHiddenAbility = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.splitSearch = new System.Windows.Forms.SplitContainer();
+			this.lblFound = new System.Windows.Forms.Label();
 			this.tabControlEx = new MissingNopedia.TabControlEx();
 			this.tabPagePokemon = new System.Windows.Forms.TabPage();
 			this.btnBackPokemon = new System.Windows.Forms.Button();
@@ -74,6 +79,9 @@
 			this.btnSearchAbility = new System.Windows.Forms.Button();
 			this.tabPageSearch = new System.Windows.Forms.TabPage();
 			label1 = new System.Windows.Forms.Label();
+			panBtnCriteria = new System.Windows.Forms.Panel();
+			this.tlpCriteria.SuspendLayout();
+			panBtnCriteria.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvResult)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitSearch)).BeginInit();
 			this.splitSearch.Panel1.SuspendLayout();
@@ -84,6 +92,75 @@
 			this.tabPageMove.SuspendLayout();
 			this.tabPageAbility.SuspendLayout();
 			this.SuspendLayout();
+			// 
+			// label1
+			// 
+			label1.AutoSize = true;
+			label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label1.Location = new System.Drawing.Point(3, 3);
+			label1.Name = "label1";
+			label1.Size = new System.Drawing.Size(60, 16);
+			label1.TabIndex = 1;
+			label1.Text = "Results";
+			// 
+			// tlpCriteria
+			// 
+			this.tlpCriteria.AutoScroll = true;
+			this.tlpCriteria.AutoSize = true;
+			this.tlpCriteria.ColumnCount = 1;
+			this.tlpCriteria.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tlpCriteria.Controls.Add(this.flpCriteria, 0, 0);
+			this.tlpCriteria.Controls.Add(panBtnCriteria, 0, 1);
+			this.tlpCriteria.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tlpCriteria.Location = new System.Drawing.Point(0, 0);
+			this.tlpCriteria.Name = "tlpCriteria";
+			this.tlpCriteria.RowCount = 2;
+			this.tlpCriteria.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tlpCriteria.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tlpCriteria.Size = new System.Drawing.Size(822, 126);
+			this.tlpCriteria.TabIndex = 6;
+			// 
+			// flpCriteria
+			// 
+			this.flpCriteria.AutoSize = true;
+			this.flpCriteria.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.flpCriteria.Location = new System.Drawing.Point(3, 3);
+			this.flpCriteria.Name = "flpCriteria";
+			this.flpCriteria.Size = new System.Drawing.Size(0, 0);
+			this.flpCriteria.TabIndex = 0;
+			// 
+			// panBtnCriteria
+			// 
+			panBtnCriteria.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			panBtnCriteria.AutoSize = true;
+			panBtnCriteria.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			panBtnCriteria.Controls.Add(this.btnAddCriterion);
+			panBtnCriteria.Controls.Add(this.btnRemoveCriterion);
+			panBtnCriteria.Location = new System.Drawing.Point(0, 100);
+			panBtnCriteria.Margin = new System.Windows.Forms.Padding(0);
+			panBtnCriteria.Name = "panBtnCriteria";
+			panBtnCriteria.Size = new System.Drawing.Size(184, 26);
+			panBtnCriteria.TabIndex = 5;
+			// 
+			// btnAddCriterion
+			// 
+			this.btnAddCriterion.Location = new System.Drawing.Point(0, 0);
+			this.btnAddCriterion.Name = "btnAddCriterion";
+			this.btnAddCriterion.Size = new System.Drawing.Size(75, 23);
+			this.btnAddCriterion.TabIndex = 3;
+			this.btnAddCriterion.Text = "&Add Criterion";
+			this.btnAddCriterion.UseVisualStyleBackColor = true;
+			this.btnAddCriterion.Click += new System.EventHandler(this.btnAddCriterion_Click);
+			// 
+			// btnRemoveCriterion
+			// 
+			this.btnRemoveCriterion.Location = new System.Drawing.Point(81, 0);
+			this.btnRemoveCriterion.Name = "btnRemoveCriterion";
+			this.btnRemoveCriterion.Size = new System.Drawing.Size(100, 23);
+			this.btnRemoveCriterion.TabIndex = 4;
+			this.btnRemoveCriterion.Text = "&Remove Criterion";
+			this.btnRemoveCriterion.UseVisualStyleBackColor = true;
+			this.btnRemoveCriterion.Click += new System.EventHandler(this.btnRemoveCriterion_Click);
 			// 
 			// webBrowser
 			// 
@@ -98,27 +175,6 @@
 			this.webBrowser.TabIndex = 1;
 			this.webBrowser.WebBrowserShortcutsEnabled = false;
 			this.webBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.webBrowser_Navigating);
-			// 
-			// label1
-			// 
-			label1.AutoSize = true;
-			label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			label1.Location = new System.Drawing.Point(3, 3);
-			label1.Name = "label1";
-			label1.Size = new System.Drawing.Size(60, 16);
-			label1.TabIndex = 1;
-			label1.Text = "Results";
-			// 
-			// flpCriteria
-			// 
-			this.flpCriteria.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.flpCriteria.AutoSize = true;
-			this.flpCriteria.Location = new System.Drawing.Point(0, 0);
-			this.flpCriteria.Name = "flpCriteria";
-			this.flpCriteria.Size = new System.Drawing.Size(822, 126);
-			this.flpCriteria.TabIndex = 0;
 			// 
 			// btnAdvancedSearch
 			// 
@@ -166,7 +222,7 @@
 			this.dgvResult.Location = new System.Drawing.Point(0, 29);
 			this.dgvResult.Name = "dgvResult";
 			this.dgvResult.ReadOnly = true;
-			this.dgvResult.Size = new System.Drawing.Size(822, 654);
+			this.dgvResult.Size = new System.Drawing.Size(822, 524);
 			this.dgvResult.TabIndex = 3;
 			// 
 			// ColNumber
@@ -316,23 +372,36 @@
 			this.splitSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.splitSearch.BackColor = System.Drawing.SystemColors.ControlDark;
 			this.splitSearch.Location = new System.Drawing.Point(12, 66);
 			this.splitSearch.Name = "splitSearch";
 			this.splitSearch.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
 			// splitSearch.Panel1
 			// 
-			this.splitSearch.Panel1.Controls.Add(this.flpCriteria);
-			this.splitSearch.Panel1Collapsed = true;
+			this.splitSearch.Panel1.AutoScroll = true;
+			this.splitSearch.Panel1.BackColor = System.Drawing.SystemColors.Control;
+			this.splitSearch.Panel1.Controls.Add(this.tlpCriteria);
 			// 
 			// splitSearch.Panel2
 			// 
+			this.splitSearch.Panel2.BackColor = System.Drawing.SystemColors.Control;
+			this.splitSearch.Panel2.Controls.Add(this.lblFound);
 			this.splitSearch.Panel2.Controls.Add(this.btnAdvancedSearch);
 			this.splitSearch.Panel2.Controls.Add(this.dgvResult);
 			this.splitSearch.Panel2.Controls.Add(label1);
 			this.splitSearch.Size = new System.Drawing.Size(822, 683);
 			this.splitSearch.SplitterDistance = 126;
 			this.splitSearch.TabIndex = 3;
+			// 
+			// lblFound
+			// 
+			this.lblFound.AutoSize = true;
+			this.lblFound.Location = new System.Drawing.Point(78, 5);
+			this.lblFound.Name = "lblFound";
+			this.lblFound.Size = new System.Drawing.Size(43, 13);
+			this.lblFound.TabIndex = 4;
+			this.lblFound.Text = "0 found";
 			// 
 			// tabControlEx
 			// 
@@ -530,6 +599,9 @@
 			this.Name = "frmMain";
 			this.Text = "MissingNopedia";
 			this.Load += new System.EventHandler(this.frmMain_Load);
+			this.tlpCriteria.ResumeLayout(false);
+			this.tlpCriteria.PerformLayout();
+			panBtnCriteria.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvResult)).EndInit();
 			this.splitSearch.Panel1.ResumeLayout(false);
 			this.splitSearch.Panel1.PerformLayout();
@@ -586,6 +658,10 @@
 		private System.Windows.Forms.Button btnBackPokemon;
 		private System.Windows.Forms.Button btnBackMove;
 		private System.Windows.Forms.Button btnBackAbility;
+		private System.Windows.Forms.Button btnRemoveCriterion;
+		private System.Windows.Forms.Button btnAddCriterion;
+		private System.Windows.Forms.Label lblFound;
+		private System.Windows.Forms.TableLayoutPanel tlpCriteria;
 	}
 }
 
