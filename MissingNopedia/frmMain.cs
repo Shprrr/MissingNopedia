@@ -150,23 +150,33 @@ namespace MissingNopedia
 
 			if (e.Url.AbsoluteUri == "about:blank") return;
 
-			if (history.Count == 0 || history.Peek() != e.Url)
+			var i = e.Url.Segments.Last().LastIndexOf(WikiPokemonSuffix);
+			bool pageProcessed = false;
+			if (i != -1)
+			{
+				pageProcessed = true;
+				await ShowInfoPokemon(Uri.UnescapeDataString(e.Url.Segments.Last().Remove(i)));
+			}
+
+			i = e.Url.Segments.Last().LastIndexOf(WikiMoveSuffix);
+			if (i != -1)
+			{
+				pageProcessed = true;
+				await ShowInfoMove(Uri.UnescapeDataString(e.Url.Segments.Last().Remove(i)));
+			}
+
+			i = e.Url.Segments.Last().LastIndexOf(WikiAbilitySuffix);
+			if (i != -1)
+			{
+				pageProcessed = true;
+				await ShowInfoAbility(Uri.UnescapeDataString(e.Url.Segments.Last().Remove(i)));
+			}
+
+			if (pageProcessed && (history.Count == 0 || history.Peek() != e.Url))
 				history.Push(e.Url);
 			btnBackPokemon.Enabled = history.Count > 1;
 			btnBackMove.Enabled = history.Count > 1;
 			btnBackAbility.Enabled = history.Count > 1;
-
-			var i = e.Url.Segments.Last().LastIndexOf(WikiPokemonSuffix);
-			if (i != -1)
-				await ShowInfoPokemon(Uri.UnescapeDataString(e.Url.Segments.Last().Remove(i)));
-
-			i = e.Url.Segments.Last().LastIndexOf(WikiMoveSuffix);
-			if (i != -1)
-				await ShowInfoMove(Uri.UnescapeDataString(e.Url.Segments.Last().Remove(i)));
-
-			i = e.Url.Segments.Last().LastIndexOf(WikiAbilitySuffix);
-			if (i != -1)
-				await ShowInfoAbility(Uri.UnescapeDataString(e.Url.Segments.Last().Remove(i)));
 		}
 
 		private void btnBack_Click(object sender, EventArgs e)
