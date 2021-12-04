@@ -21,9 +21,6 @@ namespace MissingNopedia
 
 		public frmMain()
 		{
-			// Desactivate IriParsing to parse quotes "'".
-			typeof(Uri).GetField("s_IriParsing", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static).SetValue(null, false);
-
 			InitializeComponent();
 
 			// Remove auto horizontal scroll.
