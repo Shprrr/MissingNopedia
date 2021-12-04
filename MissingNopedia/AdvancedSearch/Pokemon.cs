@@ -13,7 +13,7 @@ namespace MissingNopedia.AdvancedSearch
 {
 	public class Pokemon
 	{
-		private static HttpClient client = new HttpClient();
+		private static readonly HttpClient client = new();
 
 		public int Number { get; set; }
 		public string Name { get; set; }
@@ -119,22 +119,22 @@ namespace MissingNopedia.AdvancedSearch
 			var actionBlock = new ActionBlock<Pokemon>(p => p.GetDetailedInfo(), new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = rows.Count });
 			foreach (var row in rows)
 			{
-				var pkmn = new Pokemon(int.Parse(row.SelectSingleNode(".//*[@class='num cell-icon-string']").InnerText), row.SelectSingleNode(".//*[@class='ent-name']").InnerText);
-
-				pkmn.Form = row.SelectSingleNode(".//*[@class='aside']")?.InnerText;
-
 				var types = row.SelectNodes(".//*[contains(@class, 'type-icon')]").Select(n => n.InnerText).ToArray();
-				pkmn.Type1 = Type.Parse(types[0]);
-				if (types.Length == 2)
-					pkmn.Type2 = Type.Parse(types[1]);
-
 				var nums = row.SelectNodes(".//*[@class='num']").Select(n => int.Parse(n.InnerText)).ToArray();
-				pkmn.BaseHP = nums[0];
-				pkmn.BaseAttack = nums[1];
-				pkmn.BaseDefense = nums[2];
-				pkmn.BaseSpAttack = nums[3];
-				pkmn.BaseSpDefense = nums[4];
-				pkmn.BaseSpeed = nums[5];
+				var pkmn = new Pokemon(int.Parse(row.SelectSingleNode(".//*[@class='num cell-icon-string']").InnerText), row.SelectSingleNode(".//*[@class='ent-name']").InnerText)
+				{
+					Form = row.SelectSingleNode(".//*[@class='aside']")?.InnerText,
+
+					Type1 = Type.Parse(types[0]),
+					Type2 = types.Length == 2 ? Type.Parse(types[1]) : null,
+
+					BaseHP = nums[0],
+					BaseAttack = nums[1],
+					BaseDefense = nums[2],
+					BaseSpAttack = nums[3],
+					BaseSpDefense = nums[4],
+					BaseSpeed = nums[5]
+				};
 
 				actionBlock.Post(pkmn);
 
@@ -204,64 +204,62 @@ namespace MissingNopedia.AdvancedSearch
 #endif
 			var pokeList = new List<Pokemon>();
 
-			using (var sql = new SQLite.SQLiteConnection("pokedex.sqlite"))
+			using var sql = new SQLite.SQLiteConnection("pokedex.sqlite");
+			var pokemonsMap = Mappings.Pokemon.GetAllPokemons(sql);
+			pokeList.Capacity = pokemonsMap.Count;
+			var pokemonSpecies = Mappings.PokemonSpecie.GetAllPokemonSpecies(sql);
+			var pokemonSpeciesNames = Mappings.PokemonSpecieName.GetAllPokemonSpeciesNames(sql);
+			var pokemonForms = Mappings.PokemonForm.GetAllPokemonForms(sql);
+			var pokemonFormNames = Mappings.PokemonFormName.GetAllPokemonFormNames(sql);
+			var pokemonTypes = Mappings.PokemonType.GetAllPokemonTypes(sql);
+			var pokemonStats = Mappings.PokemonStat.GetAllPokemonStats(sql);
+			var pokemonAbilities = Mappings.PokemonAbility.GetAllPokemonAbilities(sql);
+			var pokemons = pokemonsMap
+				.Join(pokemonSpecies, p => p.SpeciesId, ps => ps.Id, (p, ps) => new { p, ps })
+				.Join(pokemonSpeciesNames, p => p.ps.Id, psn => psn.PokemonSpeciesId, (p, psn) => new { p.p, p.ps, psn })
+				.GroupJoin(pokemonForms, p => p.p.Id, pf => pf.PokemonId, (p, pf) => new { p.p, p.ps, p.psn, pf }).SelectMany(p => p.pf.DefaultIfEmpty(), (p, pf) => new { p.p, p.ps, p.psn, pf })
+				.GroupJoin(pokemonFormNames, p => p.pf.Id, pfn => pfn.PokemonFormId, (p, pfn) => new { p.p, p.ps, p.psn, p.pf, pfn }).SelectMany(p => p.pfn.DefaultIfEmpty(), (p, pfn) => new { p.p, p.ps, p.psn, p.pf, pfn })
+				.GroupJoin(pokemonTypes, p => p.p.Id, pt => pt.PokemonId, (p, pt) => new { p.p, p.ps, p.psn, p.pf, p.pfn, pt = pt.ToArray() })
+				.GroupJoin(pokemonStats, p => p.p.Id, ps => ps.PokemonId, (p, ps) => new { p.p, p.ps, p.psn, p.pf, p.pfn, p.pt, pst = ps.ToArray() })
+				.GroupJoin(pokemonAbilities, p => p.p.Id, pa => pa.PokemonId, (p, pa) => new ExtendedMappings.Pokemon(p.p, p.ps, p.psn, p.pf, p.pfn, p.pt, p.pst, pa.ToArray())).ToList();
+
+			var types = Mappings.Type.GetAllTypes(sql);
+
+			var stats = Mappings.Stat.GetAllStats(sql);
+			var statHP = stats.Single(s => s.IsHP);
+			var statAttack = stats.Single(s => s.IsAttack);
+			var statDefense = stats.Single(s => s.IsDefense);
+			var statSpecialAttack = stats.Single(s => s.IsSpecialAttack);
+			var statSpecialDefense = stats.Single(s => s.IsSpecialDefense);
+			var statSpeed = stats.Single(s => s.IsSpeed);
+
+			var abilitiesMap = Mappings.Ability.GetAllAbilities(sql);
+			var abilitieNames = Mappings.AbilityName.GetAllAbilityNames(sql);
+			var abilities = abilitiesMap.Join(abilitieNames, a => a.Id, an => an.AbilityId, (a, an) => new ExtendedMappings.Ability(a, an));
+
+			foreach (var pkmn in pokemons)
 			{
-				var pokemonsMap = Mappings.Pokemon.GetAllPokemons(sql);
-				pokeList.Capacity = pokemonsMap.Count;
-				var pokemonSpecies = Mappings.PokemonSpecie.GetAllPokemonSpecies(sql);
-				var pokemonSpeciesNames = Mappings.PokemonSpecieName.GetAllPokemonSpeciesNames(sql);
-				var pokemonForms = Mappings.PokemonForm.GetAllPokemonForms(sql);
-				var pokemonFormNames = Mappings.PokemonFormName.GetAllPokemonFormNames(sql);
-				var pokemonTypes = Mappings.PokemonType.GetAllPokemonTypes(sql);
-				var pokemonStats = Mappings.PokemonStat.GetAllPokemonStats(sql);
-				var pokemonAbilities = Mappings.PokemonAbility.GetAllPokemonAbilities(sql);
-				var pokemons = pokemonsMap
-					.Join(pokemonSpecies, p => p.SpeciesId, ps => ps.Id, (p, ps) => new { p, ps })
-					.Join(pokemonSpeciesNames, p => p.ps.Id, psn => psn.PokemonSpeciesId, (p, psn) => new { p.p, p.ps, psn })
-					.GroupJoin(pokemonForms, p => p.p.Id, pf => pf.PokemonId, (p, pf) => new { p.p, p.ps, p.psn, pf }).SelectMany(p => p.pf.DefaultIfEmpty(), (p, pf) => new { p.p, p.ps, p.psn, pf })
-					.GroupJoin(pokemonFormNames, p => p.pf.Id, pfn => pfn.PokemonFormId, (p, pfn) => new { p.p, p.ps, p.psn, p.pf, pfn }).SelectMany(p => p.pfn.DefaultIfEmpty(), (p, pfn) => new { p.p, p.ps, p.psn, p.pf, pfn })
-					.GroupJoin(pokemonTypes, p => p.p.Id, pt => pt.PokemonId, (p, pt) => new { p.p, p.ps, p.psn, p.pf, p.pfn, pt = pt.ToArray() })
-					.GroupJoin(pokemonStats, p => p.p.Id, ps => ps.PokemonId, (p, ps) => new { p.p, p.ps, p.psn, p.pf, p.pfn, p.pt, pst = ps.ToArray() })
-					.GroupJoin(pokemonAbilities, p => p.p.Id, pa => pa.PokemonId, (p, pa) => new ExtendedMappings.Pokemon(p.p, p.ps, p.psn, p.pf, p.pfn, p.pt, p.pst, pa.ToArray())).ToList();
-
-				var types = Mappings.Type.GetAllTypes(sql);
-
-				var stats = Mappings.Stat.GetAllStats(sql);
-				var statHP = stats.Single(s => s.IsHP);
-				var statAttack = stats.Single(s => s.IsAttack);
-				var statDefense = stats.Single(s => s.IsDefense);
-				var statSpecialAttack = stats.Single(s => s.IsSpecialAttack);
-				var statSpecialDefense = stats.Single(s => s.IsSpecialDefense);
-				var statSpeed = stats.Single(s => s.IsSpeed);
-
-				var abilitiesMap = Mappings.Ability.GetAllAbilities(sql);
-				var abilitieNames = Mappings.AbilityName.GetAllAbilityNames(sql);
-				var abilities = abilitiesMap.Join(abilitieNames, a => a.Id, an => an.AbilityId, (a, an) => new ExtendedMappings.Ability(a, an));
-
-				foreach (var pkmn in pokemons)
+				var pokemonType2 = pkmn.Types.SingleOrDefault(pt => pt.Slot == 2);
+				var pokemon = new Pokemon(pkmn.SpeciesId, pkmn.Name)
 				{
-					var pokemon = new Pokemon(pkmn.SpeciesId, pkmn.Name);
+					Form = pkmn.FormName,
 
-					pokemon.Form = pkmn.FormName;
+					Type1 = Type.Parse(types.Single(t => t.Id == pkmn.Types.Single(pt => pt.Slot == 1).TypeId).Identifier),
+					Type2 = pokemonType2 != null ? Type.Parse(types.Single(t => t.Id == pokemonType2.TypeId).Identifier) : null,
 
-					pokemon.Type1 = Type.Parse(types.Single(t => t.Id == pkmn.Types.Single(pt => pt.Slot == 1).TypeId).Identifier);
-					var pokemonType2 = pkmn.Types.SingleOrDefault(pt => pt.Slot == 2);
-					if (pokemonType2 != null)
-						pokemon.Type2 = Type.Parse(types.Single(t => t.Id == pokemonType2.TypeId).Identifier);
+					BaseHP = pkmn.Stats.Single(ps => ps.StatId == statHP.Id).BaseStat,
+					BaseAttack = pkmn.Stats.Single(ps => ps.StatId == statAttack.Id).BaseStat,
+					BaseDefense = pkmn.Stats.Single(ps => ps.StatId == statDefense.Id).BaseStat,
+					BaseSpAttack = pkmn.Stats.Single(ps => ps.StatId == statSpecialAttack.Id).BaseStat,
+					BaseSpDefense = pkmn.Stats.Single(ps => ps.StatId == statSpecialDefense.Id).BaseStat,
+					BaseSpeed = pkmn.Stats.Single(ps => ps.StatId == statSpeed.Id).BaseStat,
 
-					pokemon.BaseHP = pkmn.Stats.Single(ps => ps.StatId == statHP.Id).BaseStat;
-					pokemon.BaseAttack = pkmn.Stats.Single(ps => ps.StatId == statAttack.Id).BaseStat;
-					pokemon.BaseDefense = pkmn.Stats.Single(ps => ps.StatId == statDefense.Id).BaseStat;
-					pokemon.BaseSpAttack = pkmn.Stats.Single(ps => ps.StatId == statSpecialAttack.Id).BaseStat;
-					pokemon.BaseSpDefense = pkmn.Stats.Single(ps => ps.StatId == statSpecialDefense.Id).BaseStat;
-					pokemon.BaseSpeed = pkmn.Stats.Single(ps => ps.StatId == statSpeed.Id).BaseStat;
+					Ability1 = abilities.Single(a => a.Id == pkmn.Abilities.Single(pa => pa.Slot == 1).AbilityId).Name,
+					Ability2 = abilities.SingleOrDefault(a => a.Id == pkmn.Abilities.SingleOrDefault(pa => pa.Slot == 2)?.AbilityId)?.Name,
+					HiddenAbility = abilities.SingleOrDefault(a => a.Id == pkmn.Abilities.SingleOrDefault(pa => pa.IsHidden)?.AbilityId)?.Name
+				};
 
-					pokemon.Ability1 = abilities.Single(a => a.Id == pkmn.Abilities.Single(pa => pa.Slot == 1).AbilityId).Name;
-					pokemon.Ability2 = abilities.SingleOrDefault(a => a.Id == pkmn.Abilities.SingleOrDefault(pa => pa.Slot == 2)?.AbilityId)?.Name;
-					pokemon.HiddenAbility = abilities.SingleOrDefault(a => a.Id == pkmn.Abilities.SingleOrDefault(pa => pa.IsHidden)?.AbilityId)?.Name;
-
-					pokeList.Add(pokemon);
-				}
+				pokeList.Add(pokemon);
 			}
 #if DEBUG
 			watch.Stop(); System.Diagnostics.Debug.Print("ListPokemonDB a pris " + watch.ElapsedMilliseconds + " ms.");

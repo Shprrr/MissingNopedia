@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using HtmlAgilityPack;
 
@@ -60,8 +59,7 @@ namespace MissingNopedia
 			node = node.ParentNode;
 			string tag = node.Name;
 			int headerLevelTemp = 0;
-			int headerLevel = 0;
-			int.TryParse(tag.TrimStart('h'), out headerLevel);
+			_ = int.TryParse(tag.TrimStart('h'), out var headerLevel);
 			do
 			{
 				// Cancel width 100%.
@@ -78,7 +76,7 @@ namespace MissingNopedia
 
 				nodes.Append(node.Clone());
 				// Loop as long as the next isn't the same type of tag or the next isn't a higher level of header.
-			} while ((node = node.NextSibling) != null && (node.Name != tag && (!int.TryParse(node.Name.TrimStart('h'), out headerLevelTemp) || headerLevel < headerLevelTemp)));
+			} while ((node = node.NextSibling) != null && node.Name != tag && (!int.TryParse(node.Name.TrimStart('h'), out headerLevelTemp) || headerLevel < headerLevelTemp));
 
 			return nodes;
 		}

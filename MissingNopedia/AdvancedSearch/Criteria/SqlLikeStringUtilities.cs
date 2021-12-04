@@ -14,7 +14,7 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 				isCharWildCardOn = false,
 				isCharSetOn = false,
 				isNotCharSetOn = false,
-				endOfPattern = false;
+				endOfPattern;
 			int lastWildCard = -1;
 			int patternIndex = 0;
 			List<char> set = new List<char>();
@@ -23,7 +23,7 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 			for (int i = 0; i < str.Length; i++)
 			{
 				char c = str[i];
-				endOfPattern = (patternIndex >= pattern.Length);
+				endOfPattern = patternIndex >= pattern.Length;
 				if (!endOfPattern)
 				{
 					p = pattern[patternIndex];
@@ -32,8 +32,7 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 					{
 						lastWildCard = patternIndex;
 						isWildCardOn = true;
-						while (patternIndex < pattern.Length &&
-							pattern[patternIndex] == '%')
+						while (patternIndex < pattern.Length && pattern[patternIndex] == '%')
 						{
 							patternIndex++;
 						}
@@ -70,8 +69,7 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 							patternIndex++;
 						}
 
-						while (patternIndex < pattern.Length &&
-							pattern[patternIndex] != ']')
+						while (patternIndex < pattern.Length && pattern[patternIndex] != ']')
 						{
 							set.Add(pattern[patternIndex]);
 							patternIndex++;
@@ -94,8 +92,8 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 				}
 				else if (isCharSetOn || isNotCharSetOn)
 				{
-					bool charMatch = (set.Contains(char.ToUpper(c)));
-					if ((isNotCharSetOn && charMatch) || (isCharSetOn && !charMatch))
+					bool charMatch = set.Contains(char.ToUpper(c));
+					if (isNotCharSetOn && charMatch || isCharSetOn && !charMatch)
 					{
 						if (lastWildCard >= 0) patternIndex = lastWildCard;
 						else
@@ -123,7 +121,7 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 					}
 				}
 			}
-			endOfPattern = (patternIndex >= pattern.Length);
+			endOfPattern = patternIndex >= pattern.Length;
 
 			if (isMatch && !endOfPattern)
 			{

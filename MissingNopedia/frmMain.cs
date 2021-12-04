@@ -13,9 +13,9 @@ namespace MissingNopedia
 		private const string WikiPokemonSuffix = "_(Pok%C3%A9mon)";
 		private const string WikiMoveSuffix = "_(move)";
 		private const string WikiAbilitySuffix = "_(Ability)";
-		private string _DefaultText;
-		private HttpClient client = new HttpClient();
-		private Stack<Uri> history = new Stack<Uri>();
+		private readonly string _DefaultText;
+		private readonly HttpClient client = new();
+		private readonly Stack<Uri> history = new();
 
 		private AdvancedSearch.Pokemon[] pokemons;
 
@@ -47,23 +47,23 @@ namespace MissingNopedia
 			var listAbility = GetListAbility();
 
 			cboPokemon.Items.Clear();
-			if ((await listPokemon) != null || (await listPokemonDB) != null)
+			if (await listPokemon != null || await listPokemonDB != null)
 			{
-				var listPokemonNames = (await listPokemon);
-				var listPokemonDBNames = (await listPokemonDB);
-				if (listPokemonNames == null || (listPokemonDBNames != null && listPokemonNames.Length < listPokemonDBNames.Length))
+				var listPokemonNames = await listPokemon;
+				var listPokemonDBNames = await listPokemonDB;
+				if (listPokemonNames == null || listPokemonDBNames != null && listPokemonNames.Length < listPokemonDBNames.Length)
 					listPokemonNames = listPokemonDBNames;
 
 				cboPokemon.Items.AddRange(listPokemonNames);
 			}
 
 			cboMove.Items.Clear();
-			if ((await listMove) != null)
-				cboMove.Items.AddRange((await listMove));
+			if (await listMove != null)
+				cboMove.Items.AddRange(await listMove);
 
 			cboAbility.Items.Clear();
-			if ((await listAbility) != null)
-				cboAbility.Items.AddRange((await listAbility));
+			if (await listAbility != null)
+				cboAbility.Items.AddRange(await listAbility);
 
 #if DEBUG
 #pragma warning disable CS4014 // Dans la mesure où cet appel n'est pas attendu, l'exécution de la méthode actuelle continue avant la fin de l'appel
@@ -187,7 +187,6 @@ namespace MissingNopedia
 
 		private async Task<string[]> GetListPokemon()
 		{
-			string content = "";
 			HttpResponseMessage response;
 			try
 			{
@@ -204,7 +203,7 @@ namespace MissingNopedia
 				MessageBox.Show("Error getting informations : " + response.StatusCode);
 				return null;
 			}
-			content = await response.Content.ReadAsStringAsync();
+			var content = await response.Content.ReadAsStringAsync();
 
 			var doc = DocumentHtml.GetHtmlDocument(content);
 			return doc.DocumentNode.SelectSingleNode("//textarea").InnerText.Split('\n');
@@ -212,7 +211,6 @@ namespace MissingNopedia
 
 		private async Task<string[]> GetListPokemonDB()
 		{
-			string content = "";
 			HttpResponseMessage response;
 			try
 			{
@@ -229,7 +227,7 @@ namespace MissingNopedia
 				MessageBox.Show("Error getting informations : " + response.StatusCode);
 				return null;
 			}
-			content = await response.Content.ReadAsStringAsync();
+			var content = await response.Content.ReadAsStringAsync();
 
 			var doc = DocumentHtml.GetHtmlDocument(content);
 			return doc.DocumentNode.SelectNodes("//*[@class='ent-name']").Select(n => n.InnerText).Distinct().ToArray();

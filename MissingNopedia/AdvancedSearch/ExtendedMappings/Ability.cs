@@ -2,8 +2,8 @@
 {
 	public class Ability
 	{
-		private Mappings.Ability _Ability;
-		private Mappings.AbilityName _AbilityName;
+		private readonly Mappings.Ability _Ability;
+		private readonly Mappings.AbilityName _AbilityName;
 
 		public int Id { get { return _Ability.Id; } set { _Ability.Id = value; _AbilityName.AbilityId = value; } }
 		public string Name { get { return _AbilityName.Name; } set { _AbilityName.Name = value; } }

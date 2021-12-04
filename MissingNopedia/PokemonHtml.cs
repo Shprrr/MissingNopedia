@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace MissingNopedia
+﻿namespace MissingNopedia
 {
 	public class PokemonHtml : DocumentHtml
 	{
@@ -34,12 +32,12 @@ namespace MissingNopedia
 			if (title.StartsWith("Scolipede"))
 				summary.SelectSingleNode(".//img").SetAttributeValue("src", "http://24.media.tumblr.com/tumblr_liimqxDoT51qekruyo1_500.png");
 			var rows = summary.SelectNodes("./tr");
-			rows[rows.Count - 7].SetAttributeValue("style", "display: none"); // Mega Stones
-			rows[rows.Count - 6].SetAttributeValue("style", "display: none"); // Pokédex Numbers
-			rows[rows.Count - 5].SetAttributeValue("style", "display: none"); // Experience
-			rows[rows.Count - 3].SetAttributeValue("style", "display: none"); // Body/Footprint
-			rows[rows.Count - 2].SetAttributeValue("style", "display: none"); // Color/Friendship
-			rows[rows.Count - 1].SetAttributeValue("style", "display: none"); // External Links
+			rows[^7].SetAttributeValue("style", "display: none"); // Mega Stones
+			rows[^6].SetAttributeValue("style", "display: none"); // Pokédex Numbers
+			rows[^5].SetAttributeValue("style", "display: none"); // Experience
+			rows[^3].SetAttributeValue("style", "display: none"); // Body/Footprint
+			rows[^2].SetAttributeValue("style", "display: none"); // Color/Friendship
+			rows[^1].SetAttributeValue("style", "display: none"); // External Links
 			body.AppendChild(summary.Clone()); // Clone to keep link with the old document.
 
 			var node = summary.NextSibling;

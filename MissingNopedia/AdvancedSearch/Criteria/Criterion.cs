@@ -159,8 +159,7 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 
 		public bool CompareOperator(int valueToCompare)
 		{
-			int value;
-			int.TryParse(Value, out value);
+			if (!int.TryParse(Value, out var value)) return false;
 			switch (OperatorValue)
 			{
 				case Operator.Equals:

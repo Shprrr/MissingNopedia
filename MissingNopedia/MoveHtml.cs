@@ -22,7 +22,7 @@ namespace MissingNopedia
 			var content = doc.GetElementbyId(ContentText);
 			var summary = content.SelectSingleNode("./table[contains(@style,'float')]");
 			var rows = summary.SelectNodes("./tr");
-			rows[rows.Count - 1].SetAttributeValue("style", "display: none"); // External Links
+			rows[^1].SetAttributeValue("style", "display: none"); // External Links
 			body.AppendChild(summary.Clone());
 
 			var node = summary.NextSibling;
