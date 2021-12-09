@@ -20,8 +20,8 @@ namespace MissingNopedia
 			var body = newDoc.DocumentNode.LastChild.LastChild.FirstChild;
 
 			var content = doc.GetElementbyId(ContentText);
-			var summary = content.SelectSingleNode("./table[contains(@style,'float')]");
-			var rows = summary.SelectNodes("./tr");
+			var summary = content.SelectSingleNode(".//table[contains(@style,'float')]");
+			var rows = summary.SelectNodes(".//tr");
 			rows[^1].SetAttributeValue("style", "display: none"); // External Links
 			body.AppendChild(summary.Clone());
 
@@ -46,11 +46,11 @@ namespace MissingNopedia
 			if (section != null)
 				body.AppendChildren(section);
 
-			var variations = content.SelectNodes("*[@class='roundy']")?.LastOrDefault(n => n.Descendants().Any(n2 => n2.GetAttributeValue("title", "") == MoveVariations));
+			var variations = content.SelectNodes(".//*[@class='roundy']")?.LastOrDefault(n => n.Descendants().Any(n2 => n2.GetAttributeValue("title", "") == MoveVariations));
 			if (variations != null)
-				body.AppendChild(variations.Clone());
+				body.AppendChild(variations.Ancestors("table").First().Clone());
 
-			var tms = content.SelectNodes("*[@class='toccolours']")?.Where(n => n.Descendants().Any(n2 => n2.GetAttributeValue("title", "") == TM));
+			var tms = content.SelectNodes(".//*[@class='toccolours']")?.Where(n => n.Descendants().Any(n2 => n2.GetAttributeValue("title", "") == TM));
 			if (tms != null)
 				foreach (var tm in tms)
 				{

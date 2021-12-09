@@ -28,10 +28,10 @@
 			var body = newDoc.DocumentNode.LastChild.LastChild.FirstChild;
 
 			var content = doc.GetElementbyId(ContentText);
-			var summary = content.SelectSingleNode("*[@class='roundy']");
+			var summary = content.SelectSingleNode(".//*[@class='roundy']");
 			if (title.StartsWith("Scolipede"))
 				summary.SelectSingleNode(".//img").SetAttributeValue("src", "http://24.media.tumblr.com/tumblr_liimqxDoT51qekruyo1_500.png");
-			var rows = summary.SelectNodes("./tr");
+			var rows = summary.SelectNodes(".//tr");
 			rows[^7].SetAttributeValue("style", "display: none"); // Mega Stones
 			rows[^6].SetAttributeValue("style", "display: none"); // Pokédex Numbers
 			rows[^5].SetAttributeValue("style", "display: none"); // Experience

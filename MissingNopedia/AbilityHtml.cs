@@ -15,7 +15,7 @@
 			var body = newDoc.DocumentNode.LastChild.LastChild.FirstChild;
 
 			var content = doc.GetElementbyId(ContentText);
-			var summary = content.SelectSingleNode("./table");
+			var summary = content.SelectSingleNode(".//table");
 			body.AppendChild(summary.Clone());
 
 			var node = summary.NextSibling;
