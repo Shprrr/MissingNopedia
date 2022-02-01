@@ -17,8 +17,12 @@
 		private const string Trivia = "Trivia";
 		private const string InOtherLanguages = "In_other_languages";
 
-		public PokemonHtml(string html) : base(html)
+		private readonly HtmlAgilityPack.HtmlDocument learnsetDocument;
+
+		public PokemonHtml(string html, string htmlLearnset) : base(html)
 		{
+			if (!string.IsNullOrEmpty(htmlLearnset))
+				learnsetDocument = GetHtmlDocument(htmlLearnset);
 		}
 
 		public override string BuildNewPage()
@@ -64,6 +68,17 @@
 				body.AppendChildren(stats);
 
 			var learnset = AddSection(Learnset);
+			if (learnset != null && learnsetDocument != null)
+			{
+				var learnsetTitle = learnset[0]; // Title of the section
+				learnset.Clear();
+				learnset.Add(learnsetTitle);
+				var learnsetContentNode = learnsetDocument.GetElementbyId(ContentText);
+				for (int i = 1; i < learnsetContentNode.FirstChild.ChildNodes.Count; i++)
+				{
+					learnset.Append(learnsetContentNode.FirstChild.ChildNodes[i]);
+				}
+			}
 			RemoveSection(learnset, AnimeOnly);
 			RemoveSection(learnset, TCGOnly);
 			RemoveSection(learnset, TCGExclusive);

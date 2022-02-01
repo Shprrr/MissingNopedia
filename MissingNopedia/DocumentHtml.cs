@@ -16,13 +16,6 @@ namespace MissingNopedia
 		public DocumentHtml(string html)
 		{
 			doc = GetHtmlDocument(html);
-
-			// Add scheme to url in src attributes.
-			var nodesSrc = doc.DocumentNode.SelectNodes("//*[starts-with(@src, '//')]");
-			foreach (var node in nodesSrc)
-			{
-				node.SetAttributeValue("src", "https:" + node.GetAttributeValue("src", ""));
-			}
 		}
 
 		protected HtmlDocument ConstructBulbapediaPage()
@@ -109,6 +102,15 @@ namespace MissingNopedia
 		{
 			var doc = new HtmlDocument();
 			doc.LoadHtml(html);
+
+			// Add scheme to url in src attributes.
+			var nodesSrc = doc.DocumentNode.SelectNodes("//*[starts-with(@src, '//')]");
+			if (nodesSrc != null)
+				foreach (var node in nodesSrc)
+				{
+					node.SetAttributeValue("src", "https:" + node.GetAttributeValue("src", ""));
+				}
+
 			return doc;
 		}
 	}

@@ -147,26 +147,33 @@ namespace MissingNopedia
 
 			if (e.Url.AbsoluteUri == "about:blank") return;
 
-			var i = e.Url.Segments.Last().LastIndexOf(WikiPokemonSuffix);
+			var i = e.Url.Segments[^1].LastIndexOf(WikiPokemonSuffix);
 			bool pageProcessed = false;
 			if (i != -1)
 			{
 				pageProcessed = true;
-				await ShowInfoPokemon(Uri.UnescapeDataString(e.Url.Segments.Last().Remove(i)));
+				await ShowInfoPokemon(Uri.UnescapeDataString(e.Url.Segments[^1].Remove(i)));
 			}
 
-			i = e.Url.Segments.Last().LastIndexOf(WikiMoveSuffix);
+			i = e.Url.Segments[^2].LastIndexOf(WikiPokemonSuffix);
 			if (i != -1)
 			{
 				pageProcessed = true;
-				await ShowInfoMove(Uri.UnescapeDataString(e.Url.Segments.Last().Remove(i)));
+				await ShowInfoPokemon(Uri.UnescapeDataString(e.Url.Segments[^2].Remove(i)), e.Url.Segments[^1]);
 			}
 
-			i = e.Url.Segments.Last().LastIndexOf(WikiAbilitySuffix);
+			i = e.Url.Segments[^1].LastIndexOf(WikiMoveSuffix);
 			if (i != -1)
 			{
 				pageProcessed = true;
-				await ShowInfoAbility(Uri.UnescapeDataString(e.Url.Segments.Last().Remove(i)));
+				await ShowInfoMove(Uri.UnescapeDataString(e.Url.Segments[^1].Remove(i)));
+			}
+
+			i = e.Url.Segments[^1].LastIndexOf(WikiAbilitySuffix);
+			if (i != -1)
+			{
+				pageProcessed = true;
+				await ShowInfoAbility(Uri.UnescapeDataString(e.Url.Segments[^1].Remove(i)));
 			}
 
 			if (pageProcessed && (history.Count == 0 || history.Peek() != e.Url))
@@ -288,7 +295,28 @@ namespace MissingNopedia
 			webBrowser.DocumentText = newDoc;
 		}
 
-		private async Task ShowInfoPokemon(string pokemonName)
+		private async Task<string> GetPageContentAsync(string url)
+		{
+			HttpResponseMessage response;
+			try
+			{
+				response = await client.GetAsync(url);
+			}
+			catch (HttpRequestException ex)
+			{
+				MessageBox.Show("Error getting informations : " + ex.Message);
+				return null;
+			}
+
+			if (!response.IsSuccessStatusCode)
+			{
+				MessageBox.Show("Error getting informations : " + response.StatusCode);
+				return null;
+			}
+			return await response.Content.ReadAsStringAsync();
+		}
+
+		private async Task ShowInfoPokemon(string pokemonName, string generationLearnset = null)
 		{
 			if (string.IsNullOrWhiteSpace(pokemonName))
 			{
@@ -296,25 +324,17 @@ namespace MissingNopedia
 				return;
 			}
 
-			HttpResponseMessage response;
-			try
+			var content = await GetPageContentAsync($"http://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(pokemonName.Replace(' ', '_'))}{WikiPokemonSuffix}");
+			if (content is null) return;
+
+			string contentGenerationLearnset = null;
+			if (!string.IsNullOrEmpty(generationLearnset))
 			{
-				response = await client.GetAsync("http://bulbapedia.bulbagarden.net/wiki/" + Uri.EscapeDataString(pokemonName.Replace(' ', '_')) + WikiPokemonSuffix);
-			}
-			catch (HttpRequestException ex)
-			{
-				MessageBox.Show("Error getting informations : " + ex.Message);
-				return;
+				contentGenerationLearnset = await GetPageContentAsync($"http://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(pokemonName.Replace(' ', '_'))}{WikiPokemonSuffix}/{generationLearnset}");
+				if (contentGenerationLearnset is null) return;
 			}
 
-			if (!response.IsSuccessStatusCode)
-			{
-				MessageBox.Show("Error getting informations : " + response.StatusCode);
-				return;
-			}
-
-			var content = await response.Content.ReadAsStringAsync();
-			var doc = new PokemonHtml(content);
+			var doc = new PokemonHtml(content, contentGenerationLearnset);
 
 			ShowNewPage(doc.BuildNewPage());
 		}
@@ -335,24 +355,9 @@ namespace MissingNopedia
 				return;
 			}
 
-			HttpResponseMessage response;
-			try
-			{
-				response = await client.GetAsync("http://bulbapedia.bulbagarden.net/wiki/" + Uri.EscapeDataString(moveName.Replace(' ', '_')) + WikiMoveSuffix);
-			}
-			catch (HttpRequestException ex)
-			{
-				MessageBox.Show("Error getting informations : " + ex.Message);
-				return;
-			}
+			var content = await GetPageContentAsync($"http://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(moveName.Replace(' ', '_'))}{WikiMoveSuffix}");
+			if (content is null) return;
 
-			if (!response.IsSuccessStatusCode)
-			{
-				MessageBox.Show("Error getting informations : " + response.StatusCode);
-				return;
-			}
-
-			var content = await response.Content.ReadAsStringAsync();
 			var doc = new MoveHtml(content);
 
 			ShowNewPage(doc.BuildNewPage());
@@ -366,24 +371,9 @@ namespace MissingNopedia
 				return;
 			}
 
-			HttpResponseMessage response;
-			try
-			{
-				response = await client.GetAsync("http://bulbapedia.bulbagarden.net/wiki/" + Uri.EscapeDataString(abilityName.Replace(' ', '_')) + WikiAbilitySuffix);
-			}
-			catch (HttpRequestException ex)
-			{
-				MessageBox.Show("Error getting informations : " + ex.Message);
-				return;
-			}
+			var content = await GetPageContentAsync($"http://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(abilityName.Replace(' ', '_'))}{WikiAbilitySuffix}");
+			if (content is null) return;
 
-			if (!response.IsSuccessStatusCode)
-			{
-				MessageBox.Show("Error getting informations : " + response.StatusCode);
-				return;
-			}
-
-			var content = await response.Content.ReadAsStringAsync();
 			var doc = new AbilityHtml(content);
 
 			ShowNewPage(doc.BuildNewPage());
