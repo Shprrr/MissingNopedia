@@ -41,29 +41,27 @@ namespace MissingNopedia
 
 		private async void frmMain_Load(object sender, EventArgs e)
 		{
-			var listPokemon = GetListPokemon();
-			var listPokemonDB = GetListPokemonDB();
-			var listMove = GetListMove();
-			var listAbility = GetListAbility();
+			var taskListPokemon = GetListPokemon();
+			var taskListPokemonDB = GetListPokemonDB();
+			var taskListPokemonGen8 = GetListPokemonGen8();
+			var taskListMove = GetListMove();
+			var taskListAbility = GetListAbility();
 
 			cboPokemon.Items.Clear();
-			if (await listPokemon != null || await listPokemonDB != null)
-			{
-				var listPokemonNames = await listPokemon;
-				var listPokemonDBNames = await listPokemonDB;
-				if (listPokemonNames == null || listPokemonDBNames != null && listPokemonNames.Length < listPokemonDBNames.Length)
-					listPokemonNames = listPokemonDBNames;
+			var listPokemonNames = await taskListPokemon;
+			var listPokemonDBNames = await taskListPokemonDB;
+			if (listPokemonNames.Length < listPokemonDBNames.Length)
+				listPokemonNames = listPokemonDBNames;
 
-				cboPokemon.Items.AddRange(listPokemonNames);
-			}
+			var listPokemonGen8Names = await taskListPokemonGen8;
+			listPokemonNames = listPokemonNames.Union(listPokemonGen8Names).ToArray();
+			cboPokemon.Items.AddRange(listPokemonNames);
 
 			cboMove.Items.Clear();
-			if (await listMove != null)
-				cboMove.Items.AddRange(await listMove);
+			cboMove.Items.AddRange(await taskListMove);
 
 			cboAbility.Items.Clear();
-			if (await listAbility != null)
-				cboAbility.Items.AddRange(await listAbility);
+			cboAbility.Items.AddRange(await taskListAbility);
 
 #if DEBUG
 #pragma warning disable CS4014 // Dans la mesure où cet appel n'est pas attendu, l'exécution de la méthode actuelle continue avant la fin de l'appel
@@ -194,23 +192,8 @@ namespace MissingNopedia
 
 		private async Task<string[]> GetListPokemon()
 		{
-			HttpResponseMessage response;
-			try
-			{
-				response = await client.GetAsync("http://www.dragonflycave.com/resources/pokemon-list-generator?format=%25%5Bname%5D%25&linebreaks=1");
-			}
-			catch (HttpRequestException ex)
-			{
-				MessageBox.Show("Error getting informations : " + ex.Message);
-				return null;
-			}
-
-			if (!response.IsSuccessStatusCode)
-			{
-				MessageBox.Show("Error getting informations : " + response.StatusCode);
-				return null;
-			}
-			var content = await response.Content.ReadAsStringAsync();
+			var content = await GetPageContentAsync("http://www.dragonflycave.com/resources/pokemon-list-generator?format=%25%5Bname%5D%25&linebreaks=1");
+			if (content is null) return Array.Empty<string>();
 
 			var doc = DocumentHtml.GetHtmlDocument(content);
 			return doc.DocumentNode.SelectSingleNode("//textarea").InnerText.Split('\n');
@@ -218,48 +201,26 @@ namespace MissingNopedia
 
 		private async Task<string[]> GetListPokemonDB()
 		{
-			HttpResponseMessage response;
-			try
-			{
-				response = await client.GetAsync("http://pokemondb.net/pokedex/all");
-			}
-			catch (HttpRequestException ex)
-			{
-				MessageBox.Show("Error getting informations : " + ex.Message);
-				return null;
-			}
-
-			if (!response.IsSuccessStatusCode)
-			{
-				MessageBox.Show("Error getting informations : " + response.StatusCode);
-				return null;
-			}
-			var content = await response.Content.ReadAsStringAsync();
+			var content = await GetPageContentAsync("http://pokemondb.net/pokedex/all");
+			if (content is null) return Array.Empty<string>();
 
 			var doc = DocumentHtml.GetHtmlDocument(content);
 			return doc.DocumentNode.SelectNodes("//*[@class='ent-name']").Select(n => n.InnerText).Distinct().ToArray();
 		}
 
+		private async Task<string[]> GetListPokemonGen8()
+		{
+			var content = await GetPageContentAsync("https://www.serebii.net/pokemon/gen8pokemon.shtml");
+			if (content is null) return Array.Empty<string>();
+
+			var doc = DocumentHtml.GetHtmlDocument(content);
+			return doc.DocumentNode.SelectNodes(".//*[@class='dextable']//*[@class='fooinfo'][position()=3]/a").Select(n => n.InnerText).Distinct().ToArray();
+		}
+
 		private async Task<string[]> GetListMove()
 		{
-			string content = "";
-			HttpResponseMessage response;
-			try
-			{
-				response = await client.GetAsync("http://pokemondb.net/move/all");
-			}
-			catch (HttpRequestException ex)
-			{
-				MessageBox.Show("Error getting informations : " + ex.Message);
-				return null;
-			}
-
-			if (!response.IsSuccessStatusCode)
-			{
-				MessageBox.Show("Error getting informations : " + response.StatusCode);
-				return null;
-			}
-			content = await response.Content.ReadAsStringAsync();
+			string content = await GetPageContentAsync("http://pokemondb.net/move/all");
+			if (content is null) return Array.Empty<string>();
 
 			var doc = DocumentHtml.GetHtmlDocument(content);
 			return doc.DocumentNode.SelectNodes("//*[@class='ent-name']").Select(n => n.InnerText).ToArray();
@@ -267,24 +228,8 @@ namespace MissingNopedia
 
 		private async Task<string[]> GetListAbility()
 		{
-			string content = "";
-			HttpResponseMessage response;
-			try
-			{
-				response = await client.GetAsync("http://pokemondb.net/ability");
-			}
-			catch (HttpRequestException ex)
-			{
-				MessageBox.Show("Error getting informations : " + ex.Message);
-				return null;
-			}
-
-			if (!response.IsSuccessStatusCode)
-			{
-				MessageBox.Show("Error getting informations : " + response.StatusCode);
-				return null;
-			}
-			content = await response.Content.ReadAsStringAsync();
+			string content = await GetPageContentAsync("http://pokemondb.net/ability");
+			if (content is null) return Array.Empty<string>();
 
 			var doc = DocumentHtml.GetHtmlDocument(content);
 			return doc.DocumentNode.SelectNodes("//*[@class='ent-name']").Select(n => n.InnerText).ToArray();
