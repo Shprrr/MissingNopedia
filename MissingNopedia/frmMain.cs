@@ -42,23 +42,16 @@ namespace MissingNopedia
 		private async void frmMain_Load(object sender, EventArgs e)
 		{
 			var taskListPokemon = GetListPokemon();
-			var taskListPokemonDB = GetListPokemonDB();
 			var taskListPokemonGen8 = GetListPokemonGen8();
 			var taskListMove = GetListMove();
+			var taskListMoveGen8 = GetListMoveGen8();
 			var taskListAbility = GetListAbility();
 
 			cboPokemon.Items.Clear();
-			var listPokemonNames = await taskListPokemon;
-			var listPokemonDBNames = await taskListPokemonDB;
-			if (listPokemonNames.Length < listPokemonDBNames.Length)
-				listPokemonNames = listPokemonDBNames;
-
-			var listPokemonGen8Names = await taskListPokemonGen8;
-			listPokemonNames = listPokemonNames.Union(listPokemonGen8Names).ToArray();
-			cboPokemon.Items.AddRange(listPokemonNames);
+			cboPokemon.Items.AddRange((await taskListPokemon).Union(await taskListPokemonGen8).ToArray());
 
 			cboMove.Items.Clear();
-			cboMove.Items.AddRange(await taskListMove);
+			cboMove.Items.AddRange((await taskListMove).Union(await taskListMoveGen8).ToArray());
 
 			cboAbility.Items.Clear();
 			cboAbility.Items.AddRange(await taskListAbility);
@@ -192,15 +185,6 @@ namespace MissingNopedia
 
 		private async Task<string[]> GetListPokemon()
 		{
-			var content = await GetPageContentAsync("http://www.dragonflycave.com/resources/pokemon-list-generator?format=%25%5Bname%5D%25&linebreaks=1");
-			if (content is null) return Array.Empty<string>();
-
-			var doc = DocumentHtml.GetHtmlDocument(content);
-			return doc.DocumentNode.SelectSingleNode("//textarea").InnerText.Split('\n');
-		}
-
-		private async Task<string[]> GetListPokemonDB()
-		{
 			var content = await GetPageContentAsync("http://pokemondb.net/pokedex/all");
 			if (content is null) return Array.Empty<string>();
 
@@ -224,6 +208,15 @@ namespace MissingNopedia
 
 			var doc = DocumentHtml.GetHtmlDocument(content);
 			return doc.DocumentNode.SelectNodes("//*[@class='ent-name']").Select(n => n.InnerText).ToArray();
+		}
+
+		private async Task<string[]> GetListMoveGen8()
+		{
+			string content = await GetPageContentAsync("https://www.serebii.net/attackdex-swsh/");
+			if (content is null) return Array.Empty<string>();
+
+			var doc = DocumentHtml.GetHtmlDocument(content);
+			return doc.DocumentNode.SelectNodes(".//select[@name='SelectURL']//option[@value!='']").Select(n => n.InnerText).ToArray();
 		}
 
 		private async Task<string[]> GetListAbility()
