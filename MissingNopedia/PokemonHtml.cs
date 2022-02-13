@@ -14,6 +14,7 @@
 		private const string TCGOnly = "TCG-only_moves";
 		private const string TCGExclusive = "TCG-exclusive_moves";
 		private const string Evolution = "Evolution";
+		private const string Sprites = "Sprites";
 		private const string Trivia = "Trivia";
 		private const string InOtherLanguages = "In_other_languages";
 
@@ -102,6 +103,10 @@
 				body.AppendChildren(section);
 
 			section = AddSection(InOtherLanguages);
+			if (section != null)
+				body.AppendChildren(section);
+
+			section = AddSection(Sprites);
 			if (section != null)
 				body.AppendChildren(section);
 

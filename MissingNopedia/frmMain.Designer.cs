@@ -154,7 +154,7 @@
             this.tlpCriteria.RowCount = 2;
             this.tlpCriteria.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpCriteria.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpCriteria.Size = new System.Drawing.Size(959, 145);
+            this.tlpCriteria.Size = new System.Drawing.Size(1026, 145);
             this.tlpCriteria.TabIndex = 6;
             // 
             // flpCriteria
@@ -177,7 +177,7 @@
             this.webBrowser.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.webBrowser.MinimumSize = new System.Drawing.Size(23, 23);
             this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(959, 788);
+            this.webBrowser.Size = new System.Drawing.Size(1026, 791);
             this.webBrowser.TabIndex = 1;
             this.webBrowser.WebBrowserShortcutsEnabled = false;
             this.webBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.webBrowser_Navigating);
@@ -185,7 +185,7 @@
             // btnAdvancedSearch
             // 
             this.btnAdvancedSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAdvancedSearch.Location = new System.Drawing.Point(871, 0);
+            this.btnAdvancedSearch.Location = new System.Drawing.Point(938, 0);
             this.btnAdvancedSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnAdvancedSearch.Name = "btnAdvancedSearch";
             this.btnAdvancedSearch.Size = new System.Drawing.Size(88, 27);
@@ -230,7 +230,7 @@
             this.dgvResult.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.dgvResult.Name = "dgvResult";
             this.dgvResult.ReadOnly = true;
-            this.dgvResult.Size = new System.Drawing.Size(959, 603);
+            this.dgvResult.Size = new System.Drawing.Size(1026, 605);
             this.dgvResult.TabIndex = 3;
             // 
             // ColNumber
@@ -399,7 +399,7 @@
             this.splitSearch.Panel2.Controls.Add(this.btnAdvancedSearch);
             this.splitSearch.Panel2.Controls.Add(this.dgvResult);
             this.splitSearch.Panel2.Controls.Add(label1);
-            this.splitSearch.Size = new System.Drawing.Size(959, 788);
+            this.splitSearch.Size = new System.Drawing.Size(1026, 791);
             this.splitSearch.SplitterDistance = 145;
             this.splitSearch.SplitterWidth = 5;
             this.splitSearch.TabIndex = 3;
@@ -429,7 +429,7 @@
             this.tabControlEx.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabControlEx.Name = "tabControlEx";
             this.tabControlEx.SelectedIndex = 0;
-            this.tabControlEx.Size = new System.Drawing.Size(959, 55);
+            this.tabControlEx.Size = new System.Drawing.Size(1026, 55);
             this.tabControlEx.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControlEx.TabIndex = 0;
             this.tabControlEx.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlEx_Selected);
@@ -442,7 +442,7 @@
             this.tabPagePokemon.Location = new System.Drawing.Point(0, 25);
             this.tabPagePokemon.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPagePokemon.Name = "tabPagePokemon";
-            this.tabPagePokemon.Size = new System.Drawing.Size(959, 29);
+            this.tabPagePokemon.Size = new System.Drawing.Size(1026, 29);
             this.tabPagePokemon.TabIndex = 0;
             this.tabPagePokemon.Text = "Pokémon";
             this.tabPagePokemon.UseVisualStyleBackColor = true;
@@ -470,7 +470,7 @@
             this.cboPokemon.Location = new System.Drawing.Point(34, 1);
             this.cboPokemon.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cboPokemon.Name = "cboPokemon";
-            this.cboPokemon.Size = new System.Drawing.Size(835, 23);
+            this.cboPokemon.Size = new System.Drawing.Size(902, 23);
             this.cboPokemon.TabIndex = 0;
             this.cboPokemon.SelectedIndexChanged += new System.EventHandler(this.btnSearchPokemon_Click);
             this.cboPokemon.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cboPokemon_KeyUp);
@@ -478,7 +478,7 @@
             // btnSearchPokemon
             // 
             this.btnSearchPokemon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearchPokemon.Location = new System.Drawing.Point(871, -1);
+            this.btnSearchPokemon.Location = new System.Drawing.Point(938, -1);
             this.btnSearchPokemon.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSearchPokemon.Name = "btnSearchPokemon";
             this.btnSearchPokemon.Size = new System.Drawing.Size(88, 27);
@@ -617,7 +617,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(987, 878);
+            this.ClientSize = new System.Drawing.Size(1054, 881);
             this.Controls.Add(this.splitSearch);
             this.Controls.Add(this.tabControlEx);
             this.Controls.Add(this.webBrowser);

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 
 namespace MissingNopedia
@@ -42,6 +43,7 @@ namespace MissingNopedia
 
 		public abstract string BuildNewPage();
 
+		private static readonly Regex floatRegex = new("float:.+?(;|$)");
 		public HtmlNodeCollection AddSection(string sectionName)
 		{
 			var node = doc.GetElementbyId(sectionName);
@@ -59,9 +61,13 @@ namespace MissingNopedia
 				if (node.Name == "table" && node.GetAttributeValue("width", "") != "")
 					node.SetAttributeValue("width", "");
 
-				// Cancel float left.
+				// Cancel align left.
 				if (node.Name == "table" && node.GetAttributeValue("align", "") == "left")
 					node.SetAttributeValue("align", "");
+
+				// Cancel float left.
+				if (node.Name == "table" && node.GetAttributeValue("style", "").Contains("float:"))
+					node.SetAttributeValue("style", floatRegex.Replace(node.GetAttributeValue("style", ""), ""));
 
 				// Cancel clear both.
 				if (node.DescendantsAndSelf().Any(n => n.GetAttributeValue("clear", "") == "all"))
