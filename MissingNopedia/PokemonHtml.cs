@@ -7,6 +7,7 @@
 		private const string GameLocations = "Game_locations";
 		private const string HeldItems = "Held_items";
 		private const string Stats = "Stats";
+		private const string BaseStats = "Base_stats";
 		private const string PokeathlonStats = "Pok.C3.A9athlon_stats";
 		private const string TypeEffectiveness = "Type_effectiveness";
 		private const string Learnset = "Learnset";
@@ -63,6 +64,7 @@
 				body.AppendChildren(section);
 
 			var stats = AddSection(Stats);
+			if (stats == null) stats = AddSection(BaseStats); // Some pages have the BaseStats subsection for the Stats section.
 			RemoveSection(stats, Generation1to5);
 			RemoveSection(stats, PokeathlonStats);
 			if (stats != null)
