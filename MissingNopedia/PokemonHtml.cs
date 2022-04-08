@@ -21,11 +21,14 @@
 
 		private readonly HtmlAgilityPack.HtmlDocument learnsetDocument;
 
-		public PokemonHtml(string html, string htmlLearnset) : base(html)
+		public PokemonHtml(string pokemonName, string html, string htmlLearnset) : base(html)
 		{
 			if (!string.IsNullOrEmpty(htmlLearnset))
 				learnsetDocument = GetHtmlDocument(htmlLearnset);
+			PokemonName = pokemonName;
 		}
+
+		public string PokemonName { get; }
 
 		public override string BuildNewPage()
 		{
@@ -35,8 +38,12 @@
 
 			var content = doc.GetElementbyId(ContentText);
 			var summary = content.SelectSingleNode(".//*[@class='roundy']");
-			if (title.StartsWith("Scolipede"))
-				summary.SelectSingleNode(".//img").SetAttributeValue("src", "http://24.media.tumblr.com/tumblr_liimqxDoT51qekruyo1_500.png");
+			var imgProfile = summary.SelectSingleNode(".//img");
+			if (PokemonName == "Scolipede")
+				imgProfile.SetAttributeValue("src", "http://24.media.tumblr.com/tumblr_liimqxDoT51qekruyo1_500.png");
+			else if(AFD.HasAFD(PokemonName))
+				imgProfile.SetAttributeValue("src", AFD.GetImageUrl(PokemonName));
+
 			var rows = summary.SelectNodes(".//tr");
 			rows[^7].SetAttributeValue("style", "display: none"); // Mega Stones
 			rows[^6].SetAttributeValue("style", "display: none"); // Pokédex Numbers

@@ -1,0 +1,951 @@
+Dex,Pokemon,Art,Artist,Artist's ID
+1,Bulbasaur,https://i.imgur.com/bOGRPZ9.png,Dagger_Mace#5953,611659645760831506
+2,Ivysaur,https://i.imgur.com/kqKINi9.png,Sept#8911,891522852182982656
+3,Venusaur,https://i.imgur.com/ObuzaMH.png,Sept#8911,891522852182982656
+4,Charmander,https://i.imgur.com/5516Zue.png,SuperJedi224#2591,304098467192635392
+5,Charmeleon,https://i.imgur.com/0Pm8P1j.png,Kiyu_067#0591,775549954080899142
+6,Charizard,https://i.imgur.com/ozP2Lt3.png,BlueLego#2332,711892049842012190
+7,Squirtle,https://i.imgur.com/JGiDqrM.png,Kiyu_067#0591,775549954080899142
+8,Wartortle,https://i.imgur.com/Zr2YVd2.png,Dagger_Mace#5953,611659645760831506
+9,Blastoise,https://i.imgur.com/kR0bkVo.png,Dagger_Mace#5953,611659645760831506
+10,Caterpie,https://i.imgur.com/tRAquOS.png,BlueLego#2332,711892049842012190
+11,Metapod,https://i.imgur.com/nHoqdg0.png,Dagger_Mace#5953,611659645760831506
+12,Butterfree,https://i.imgur.com/DDcajlo.png,Dagger_Mace#5953,611659645760831506
+13,Weedle,https://i.imgur.com/r6mrRvZ.png,Dagger_Mace#5953,611659645760831506
+14,Kakuna,https://i.imgur.com/U93tIMf.png,Dagger_Mace#5953,611659645760831506
+15,Beedrill,https://i.imgur.com/XtBCbYD.png,Dagger_Mace#5953,611659645760831506
+16,Pidgey,https://i.imgur.com/qwGSLEF.png,BlueLego#2332,711892049842012190
+17,Pidgeotto,https://i.imgur.com/PkDZW4u.png,Anoea#3441,285861483412193280
+18,Pidgeot,https://i.imgur.com/ToN9ocu.png,Anoea#3441,285861483412193280
+19,Rattata,https://i.imgur.com/8f22N7u.png,Chaotic Havoc#7512,326895657803710477
+20,Raticate,https://i.imgur.com/sXyAzV1.png,Chaotic Havoc#7512,326895657803710477
+21,Spearow,https://i.imgur.com/hp7WdXG.png,Anoea#3441,285861483412193280
+22,Fearow,https://i.imgur.com/3ITBLpf.png,Witherr🖤#5417,267550284979503104
+23,Ekans,https://i.imgur.com/fpKcdJp.png,Kiyu_067#0591,775549954080899142
+24,Arbok,https://i.imgur.com/hnLvj9m.png,Dagger_Mace#5953,611659645760831506
+25,Pikachu,https://i.imgur.com/9wDf27T.png,Dagger_Mace#5953,611659645760831506
+26,Raichu,https://i.imgur.com/wiS9o6p.png,Yiqii#6383,297842109514383360
+27,Sandshrew,https://i.imgur.com/zwehhWI.png,BlueLego#2332,711892049842012190
+28,Sandslash,https://i.imgur.com/qSEDeva.png,Kiyu_067#0591,775549954080899142
+29,Nidoran♀️,https://i.imgur.com/2euCFm7.png,BlueLego#2332,711892049842012190
+30,Nidorina,https://i.imgur.com/yMn8MiA.png,BlueLego#2332,711892049842012190
+31,Nidoqueen,https://i.imgur.com/HizGgoe.png,BlueLego#2332,711892049842012190
+32,Nidoran♂️,https://i.imgur.com/jEyizXr.png,BlueLego#2332,711892049842012190
+33,Nidorino,https://i.imgur.com/6ReTJIm.png,BlueLego#2332,711892049842012190
+34,Nidoking,https://i.imgur.com/HXFkpYT.png,BlueLego#2332,711892049842012190
+35,Clefairy,https://i.imgur.com/mxgPWl0.png,BluBambii | Jess#6814,712521240602214400
+36,Clefable,https://i.imgur.com/LO2g1ee.png,Sept#8911,891522852182982656
+37,Vulpix,https://i.imgur.com/nNJB7ut.png,BluBambii | Jess#6814,712521240602214400
+38,Ninetales,https://i.imgur.com/40HqA3a.png,itsonlyanna#1477,286350129265508352
+39,Jigglypuff,https://i.imgur.com/hM4235W.png,Chaotic Havoc#7512,326895657803710477
+40,Wigglytuff,https://i.imgur.com/A8KQUB9.png,Chaotic Havoc#7512,326895657803710477
+41,Zubat,https://i.imgur.com/LRi4uxk.png,Kiyu_067#0591,775549954080899142
+42,Golbat,https://i.imgur.com/Q5CQyqQ.png,Anoea#3441,285861483412193280
+43,Oddish,https://i.imgur.com/9u6hfZM.png,Yiqii#6383,297842109514383360
+44,Gloom,https://i.imgur.com/iDL4YR5.png,itsonlyanna#1477,286350129265508352
+45,Vileplume,https://i.imgur.com/cUFP2mq.png,Anoea#3441,285861483412193280
+46,Paras,https://i.imgur.com/OpmRqNw.png,Anoea#3441,285861483412193280
+47,Parasect,https://i.imgur.com/nyCDLnw.png,Anoea#3441,285861483412193280
+48,Venonat,https://i.imgur.com/yLmFBx7.png,Anoea#3441,285861483412193280
+49,Venomoth,https://i.imgur.com/VRuesoX.png,Anoea#3441,285861483412193280
+50,Diglett,https://i.imgur.com/n4H0Uf0.png,Anoea#3441,285861483412193280
+51,Dugtrio,https://i.imgur.com/xEIvnMK.png,Anoea#3441,285861483412193280
+52,Meowth,https://i.imgur.com/kezMqoG.png,Chaotic Havoc#7512,326895657803710477
+53,Persian,https://i.imgur.com/tyIQVEP.png,Chaotic Havoc#7512,326895657803710477
+54,Psyduck,https://i.imgur.com/CMIVT6u.png,Anoea#3441,285861483412193280
+55,Golduck,https://i.imgur.com/6TsMv0T.png,Anoea#3441,285861483412193280
+56,Mankey,https://i.imgur.com/aPxNoWg.png,itsonlyanna#1477,286350129265508352
+57,Primeape,https://i.imgur.com/WyQzvBO.png,Kiyu_067#0591,775549954080899142
+58,Growlithe,https://i.imgur.com/vjK4qus.png,BlueLego#2332,711892049842012190
+59,Arcanine,https://i.imgur.com/XzKwzz0.png,BlueLego#2332,711892049842012190
+60,Poliwag,https://i.imgur.com/cO18hwU.png,DanishPenguin#5557,137643766931521537
+61,Poliwhirl,https://i.imgur.com/5G6dNs3.png,Anoea#3441,285861483412193280
+62,Poliwrath,https://i.imgur.com/cth9c3j.png,Kiyu_067#0591,775549954080899142
+63,Abra,https://i.imgur.com/TavELrk.png,Kiyu_067#0591,775549954080899142
+64,Kadabra,https://i.imgur.com/plRWTnr.png,Kiyu_067#0591,775549954080899142
+65,Alakazam,https://i.imgur.com/rujmjTE.png,Kiyu_067#0591,775549954080899142
+66,Machop,https://i.imgur.com/clvNCS6.png,Kiyu_067#0591,775549954080899142
+67,Machoke,https://i.imgur.com/Q8eAJzl.png,Kiyu_067#0591,775549954080899142
+68,Machamp,https://i.imgur.com/RMCHFtQ.png,Purgatory#4604,216317211042775050
+69,Bellsprout,https://i.imgur.com/Xp7l06x.png,Yiqii#6383,297842109514383360
+70,Weepinbell,https://i.imgur.com/qOsIhjY.png,Yiqii#6383,297842109514383360
+71,Victreebel,https://i.imgur.com/n2XgL7z.png,Anoea#3441,285861483412193280
+72,Tentacool,https://i.imgur.com/SYZ1QbS.png,Kiyu_067#0591,775549954080899142
+73,Tentacruel,https://i.imgur.com/ibwbHR6.png,Kiyu_067#0591,775549954080899142
+74,Geodude,https://i.imgur.com/duHkFYq.png,Dagger_Mace#5953,611659645760831506
+75,Graveler,https://i.imgur.com/CtXuvg7.png,SuperJedi224#2591,304098467192635392
+76,Golem,https://i.imgur.com/VuezlNF.png,Kiyu_067#0591,775549954080899142
+77,Ponyta,https://i.imgur.com/IsuWD8V.png,Kiyu_067#0591,775549954080899142
+78,Rapidash,https://i.imgur.com/rgk8Slz.png,MetSpek#6969,243763234685976577
+79,Slowpoke,https://i.imgur.com/YG1a8nC.png,Kiyu_067#0591,775549954080899142
+80,Slowbro,https://i.imgur.com/qSPsMHp.png,itsonlyanna#1477,286350129265508352
+81,Magnemite,https://i.imgur.com/GV8mqQ7.png,Kiyu_067#0591,775549954080899142
+82,Magneton,https://i.imgur.com/zfrS22t.png,kitkat#8097,882428206907555930
+83,Farfetch'd,https://i.imgur.com/ogLdzRA.png,BlueLego#2332,711892049842012190
+84,Doduo,https://i.imgur.com/Ea0omtn.png,BlueLego#2332,711892049842012190
+85,Dodrio,https://i.imgur.com/XMCvl9W.png,Kiyu_067#0591,775549954080899142
+86,Seel,https://i.imgur.com/FALgfQQ.png,DanishPenguin#5557,137643766931521537
+87,Dewgong,https://i.imgur.com/ULBK7bE.png,DanishPenguin#5557,137643766931521537
+88,Grimer,https://i.imgur.com/f8cFwOi.png,Yiqii#6383,297842109514383360
+89,Muk,https://i.imgur.com/CFTLmJu.png,Yiqii#6383,297842109514383360
+90,Shellder,https://i.imgur.com/8oBfWk1.png,Anoea#3441,285861483412193280
+91,Cloyster,https://i.imgur.com/LaFLJYD.png,Anoea#3441,285861483412193280
+92,Gastly,https://i.imgur.com/eDa9BUU.png,BlueLego#2332,711892049842012190
+93,Haunter,https://i.imgur.com/N6LyPVX.png,Anoea#3441,285861483412193280
+94,Gengar,https://i.imgur.com/u5njz25.png,Kiyu_067#0591,775549954080899142
+95,Onix,https://i.imgur.com/qtA1Re7.png,Kiyu_067#0591,775549954080899142
+96,Drowzee,https://i.imgur.com/Pg7z1NW.png,Anoea#3441,285861483412193280
+97,Hypno,https://i.imgur.com/92sWYt5.png,itsonlyanna#1477,286350129265508352
+98,Krabby,https://i.imgur.com/SpfH9sa.png,Anoea#3441,285861483412193280
+99,Kingler,https://i.imgur.com/sCFGWqL.png,Anoea#3441,285861483412193280
+100,Voltorb,https://i.imgur.com/0Ch0GNG.png,BlueLego#2332,711892049842012190
+101,Electrode,https://i.imgur.com/GhhJIxw.png,BlueLego#2332,711892049842012190
+102,Exeggcute,https://i.imgur.com/tOIpkMJ.png,MetSpek#6969,243763234685976577
+103,Exeggutor,https://i.imgur.com/IlgHpPk.png,Anoea#3441,285861483412193280
+104,Cubone,https://i.imgur.com/XwkhHwg.png,Anoea#3441,285861483412193280
+105,Marowak,https://i.imgur.com/36RrlEM.png,Anoea#3441,285861483412193280
+106,Hitmonlee,https://i.imgur.com/uVaVZsw.png,MetSpek#6969,243763234685976577
+107,Hitmonchan,https://i.imgur.com/TK7bxVP.png,Kiyu_067#0591,775549954080899142
+108,Lickitung,https://i.imgur.com/j8DrPiZ.png,DanishPenguin#5557,137643766931521537
+109,Koffing,https://i.imgur.com/3eTngKy.png,BluBambii | Jess#6814,712521240602214400
+110,Weezing,https://i.imgur.com/nxGfpr7.png,BluBambii | Jess#6814,712521240602214400
+111,Rhyhorn,https://i.imgur.com/yBpiAdZ.png,Anoea#3441,285861483412193280
+112,Rhydon,https://i.imgur.com/AiusWnV.png,Anoea#3441,285861483412193280
+113,Chansey,https://i.imgur.com/Cjw0Gtz.png,DanishPenguin#5557,137643766931521537
+114,Tangela,https://i.imgur.com/dhZaBBG.png,Sept#8911,891522852182982656
+115,Kangaskhan,https://i.imgur.com/HgU3FVC.png,Anoea#3441,285861483412193280
+116,Horsea,https://i.imgur.com/coA95r7.png,BlueLego#2332,711892049842012190
+117,Seadra,https://i.imgur.com/MFZVSBR.png,Anoea#3441,285861483412193280
+118,Goldeen,https://i.imgur.com/LmqoXNF.png,Anoea#3441,285861483412193280
+119,Seaking,https://i.imgur.com/OBsChAU.png,Anoea#3441,285861483412193280
+120,Staryu,https://i.imgur.com/ArNTam0.png,Kiyu_067#0591,775549954080899142
+121,Starmie,https://i.imgur.com/DWbCmMs.png,SuperJedi224#2591,304098467192635392
+122,Mr. Mime,https://i.imgur.com/INZ0Q4v.png,DanishPenguin#5557,137643766931521537
+123,Scyther,https://i.imgur.com/u7TByYt.png,Chaotic Havoc#7512,326895657803710477
+124,Jynx,https://i.imgur.com/mss0pcz.png,kitkat#8097,882428206907555930
+125,Electabuzz,https://i.imgur.com/jIBOizb.png,SuperJedi224#2591,304098467192635392
+126,Magmar,https://i.imgur.com/OtLtmap.png,Dagger_Mace#5953,611659645760831506
+127,Pinsir,https://i.imgur.com/xGf65TQ.png,SuperJedi224#2591,304098467192635392
+128,Tauros,https://i.imgur.com/xg3J0tY.png,Anoea#3441,285861483412193280
+129,Magikarp,https://i.imgur.com/ia0qZOg.png,Anoea#3441,285861483412193280
+130,Gyarados,https://i.imgur.com/FYe09a8.png,🍄bwl626🍄#5858,370362708765310977
+131,Lapras,https://i.imgur.com/RwgKe2G.png,BlueLego#2332,711892049842012190
+132,Ditto,https://i.imgur.com/G0fIy8H.png,Anoea#3441,285861483412193280
+133,Eevee,https://i.imgur.com/5wZepSh.png,SuperJedi224#2591,304098467192635392
+134,Vaporeon,https://i.imgur.com/sQBAgPC.png,Dagger_Mace#5953,611659645760831506
+135,Jolteon,https://i.imgur.com/RDmaaTj.png,Sept#8911,891522852182982656
+136,Flareon,https://i.imgur.com/5BSixKY.png,SuperJedi224#2591,304098467192635392
+137,Porygon,https://i.imgur.com/jdMztAu.png,Sept#8911,891522852182982656
+138,Omanyte,https://i.imgur.com/lCEzDiW.png,Anoea#3441,285861483412193280
+139,Omastar,https://i.imgur.com/rmoWZcI.png,Dagger_Mace#5953,611659645760831506
+140,Kabuto,https://i.imgur.com/2etfnRT.png,Anoea#3441,285861483412193280
+141,Kabutops,https://i.imgur.com/EY0Eb9L.png,Anoea#3441,285861483412193280
+142,Aerodactyl,https://i.imgur.com/W77MSSn.png,Sept#8911,891522852182982656
+143,Snorlax,https://i.imgur.com/L3o6Rsn.png,Sept#8911,891522852182982656
+144,Articuno,https://i.imgur.com/VPsisrm.png,Dagger_Mace#5953,611659645760831506
+145,Zapdos,https://i.imgur.com/23qi2T4.png,Dagger_Mace#5953,611659645760831506
+146,Moltres,https://i.imgur.com/4VlVwI8.png,Dagger_Mace#5953,611659645760831506
+147,Dratini,https://i.imgur.com/aMfIYEW.png,Cobey-Kun#2017,497837831637434388
+148,Dragonair,https://i.imgur.com/gaBykSN.png,kitkat#8097,882428206907555930
+149,Dragonite,https://i.imgur.com/F1NPKuB.png,Kiyu_067#0591,775549954080899142
+150,Mewtwo,https://i.imgur.com/mTWJwbg.png,BlueLego#2332,711892049842012190
+151,Mew,https://i.imgur.com/RcTdzwS.png,SuperJedi224#2591,304098467192635392
+152,Chikorita,https://i.imgur.com/PqNnQ5f.png,Kiyu_067#0591,775549954080899142
+153,Bayleef,https://i.imgur.com/RgEp5CO.png,SuperJedi224#2591,304098467192635392
+154,Meganium,https://i.imgur.com/6VQV7kU.png,MozzSylveon700#0772,807345153051590701
+155,Cyndaquil,https://i.imgur.com/xfhifzi.png,kitkat#8097,882428206907555930
+156,Quilava,https://i.imgur.com/KrKfHWh.png,Kiyu_067#0591,775549954080899142
+157,Typhlosion,https://i.imgur.com/YBBuhgM.png,SuperJedi224#2591,304098467192635392
+158,Totodile,https://i.imgur.com/3lKsSbA.png,Anoea#3441,285861483412193280
+159,Croconaw,https://i.imgur.com/6Dz9Th1.png,Dagger_Mace#5953,611659645760831506
+160,Feraligatr,https://i.imgur.com/U3lmAiY.png,Dagger_Mace#5953,611659645760831506
+161,Sentret,https://i.imgur.com/4f5EQ7o.png,Anoea#3441,285861483412193280
+162,Furret,https://i.imgur.com/YtMgp8t.png,Anoea#3441,285861483412193280
+163,Hoothoot,https://i.imgur.com/VoKTWF5.png,Kiyu_067#0591,775549954080899142
+164,Noctowl,https://i.imgur.com/twsOVD2.png,Anoea#3441,285861483412193280
+165,Ledyba,https://i.imgur.com/vYH81ki.png,DanishPenguin#5557,137643766931521537
+166,Ledian,https://i.imgur.com/xmCRweU.png,DanishPenguin#5557,137643766931521537
+167,Spinarak,https://i.imgur.com/q1oCFML.png,Kiyu_067#0591,775549954080899142
+168,Ariados,https://i.imgur.com/JHOyrca.png,Anoea#3441,285861483412193280
+169,Crobat,https://i.imgur.com/PTMSK3y.png,Chaotic Havoc#7512,326895657803710477
+170,Chinchou,https://i.imgur.com/goNifRs.png,SuperJedi224#2591,304098467192635392
+171,Lanturn,https://i.imgur.com/yneGwaw.png,Dagger_Mace#5953,611659645760831506
+172,Pichu,https://i.imgur.com/ymH3Xmc.png,Rxinbow🌈~#2434,843155645422108712
+173,Cleffa,https://i.imgur.com/ztwBBuu.png,DanishPenguin#5557,137643766931521537
+174,Igglybuff,https://i.imgur.com/Tl5Tt5Y.png,DanishPenguin#5557,137643766931521537
+175,Togepi,https://i.imgur.com/T6YrINh.png,BluBambii | Jess#6814,712521240602214400
+176,Togetic,https://i.imgur.com/dwgZJXj.png,MetSpek#6969,243763234685976577
+177,Natu,https://i.imgur.com/SbxjeSY.png,DanishPenguin#5557,137643766931521537
+178,Xatu,https://i.imgur.com/OORHYvU.png,DanishPenguin#5557,137643766931521537
+179,Mareep,https://i.imgur.com/FkMYfPG.png,Koffie#0099,738478455909253201
+180,Flaaffy,https://i.imgur.com/K4NOOeR.png,Koffie#0099,738478455909253201
+181,Ampharos,https://i.imgur.com/9yUGv1g.png,Koffie#0099,738478455909253201
+182,Bellossom,https://i.imgur.com/sBYTG2H.png,Anoea#3441,285861483412193280
+183,Marill,https://i.imgur.com/U0XWV1D.png,Sept#8911,891522852182982656
+184,Azumarill,https://i.imgur.com/Yp2Mk27.png,Sept#8911,891522852182982656
+185,Sudowoodo,https://i.imgur.com/1RJN6rF.png,Kiyu_067#0591,775549954080899142
+186,Politoed,https://i.imgur.com/fjtOHFh.png,DanishPenguin#5557,137643766931521537
+187,Hoppip,https://i.imgur.com/CVjYfSc.png,Yiqii#6383,297842109514383360
+188,Skiploom,https://i.imgur.com/o0Lj5e4.png,BluBambii | Jess#6814,712521240602214400
+189,Jumpluff,https://i.imgur.com/OMgPa8g.png,DanishPenguin#5557,137643766931521537
+190,Aipom,https://i.imgur.com/vYTl5QK.png,BluBambii | Jess#6814,712521240602214400
+191,Sunkern,https://i.imgur.com/gqgMtrK.png,DanishPenguin#5557,137643766931521537
+192,Sunflora,https://i.imgur.com/TYa5JjN.png,Var_Monke#1354,857103603130302514
+193,Yanma,https://i.imgur.com/uiZj3Vz.png,Anoea#3441,285861483412193280
+194,Wooper,https://i.imgur.com/Ljd8DEN.png,Sept#8911,891522852182982656
+195,Quagsire,https://i.imgur.com/OBjy6YA.png,Sept#8911,891522852182982656
+196,Espeon,https://i.imgur.com/HyAQyMt.png,SuperJedi224#2591,304098467192635392
+197,Umbreon,https://i.imgur.com/QCnsyw7.png,Kiyu_067#0591,775549954080899142
+198,Murkrow,https://i.imgur.com/hQItdef.png,MetSpek#6969,243763234685976577
+199,Slowking,https://i.imgur.com/WsayZtZ.png,Anoea#3441,285861483412193280
+200,Misdreavus,https://i.imgur.com/2l524za.png,Kiyu_067#0591,775549954080899142
+201,Unown,https://i.imgur.com/yyjGyIH.png,Kiyu_067#0591,775549954080899142
+202,Wobbuffet,https://i.imgur.com/W6kpN8Y.png,Chaotic Havoc#7512,326895657803710477
+203,Girafarig,https://i.imgur.com/gkOeAuP.png,Anoea#3441,285861483412193280
+204,Pineco,https://i.imgur.com/3u3SdsU.png,Anoea#3441,285861483412193280
+205,Forretress,https://i.imgur.com/BJz9Gm0.png,SuperJedi224#2591,304098467192635392
+206,Dunsparce,https://i.imgur.com/JEHx1pW.png,DanishPenguin#5557,137643766931521537
+207,Gligar,https://i.imgur.com/FMENDxw.png,Chaotic Havoc#7512,326895657803710477
+208,Steelix,https://i.imgur.com/J3Jnxcf.png,🍄bwl626🍄#5858,370362708765310977
+209,Snubbull,https://i.imgur.com/ZClaizK.png,MetSpek#6969,243763234685976577
+210,Granbull,https://i.imgur.com/Rr64XLd.png,MetSpek#6969,243763234685976577
+211,Qwilfish,https://i.imgur.com/tgQo4KG.png,Sept#8911,891522852182982656
+212,Scizor,https://i.imgur.com/1O12F8j.png,Chaotic Havoc#7512,326895657803710477
+213,Shuckle,https://i.imgur.com/UoqM6vz.png,DanishPenguin#5557,137643766931521537
+214,Heracross,https://i.imgur.com/2AkrFKR.png,BlueLego#2332,711892049842012190
+215,Sneasel,https://i.imgur.com/EaK7qEi.png,Chaotic Havoc#7512,326895657803710477
+216,Teddiursa,https://i.imgur.com/SLUlauH.png,Sept#8911,891522852182982656
+217,Ursaring,https://i.imgur.com/2IePJ9E.png,BlueLego#2332,711892049842012190
+218,Slugma,https://i.imgur.com/NoblOso.png,kitkat#8097,882428206907555930
+219,Magcargo,https://i.imgur.com/OckrTs1.png,Kiyu_067#0591,775549954080899142
+220,Swinub,https://i.imgur.com/i9wSmYw.png,Dagger_Mace#5953,611659645760831506
+221,Piloswine,https://i.imgur.com/jRgADx9.png,MetSpek#6969,243763234685976577
+222,Corsola,https://i.imgur.com/RP2dtBc.png,MetSpek#6969,243763234685976577
+223,Remoraid,https://i.imgur.com/8j2BwV0.png,Anoea#3441,285861483412193280
+224,Octillery,https://i.imgur.com/CWbmz5n.png,Anoea#3441,285861483412193280
+225,Delibird,https://i.imgur.com/joIUnk4.png,FBCB#3544,435120408706940939
+226,Mantine,https://i.imgur.com/e9zb6Nq.png,Kiyu_067#0591,775549954080899142
+227,Skarmory,https://i.imgur.com/6vuYxaz.png,🍄bwl626🍄#5858,370362708765310977
+228,Houndour,https://i.imgur.com/CIlidHm.png,SuperJedi224#2591,304098467192635392
+229,Houndoom,https://i.imgur.com/Ypw8kr2.png,Chaotic Havoc#7512,326895657803710477
+230,Kingdra,https://i.imgur.com/AvgT40U.png,🍄bwl626🍄#5858,370362708765310977
+231,Phanpy,https://i.imgur.com/3YPvFBy.png,Witherr🖤#5417,267550284979503104
+232,Donphan,https://i.imgur.com/eBXrjlP.png,Anoea#3441,285861483412193280
+233,Porygon2,https://i.imgur.com/UAtZ7Bk.png,Kiyu_067#0591,775549954080899142
+234,Stantler,https://i.imgur.com/fVjt6Ks.png,Kiyu_067#0591,775549954080899142
+235,Smeargle,https://i.imgur.com/dkJuJUU.png,Chaotic Havoc#7512,326895657803710477
+236,Tyrogue,https://i.imgur.com/WnbiKDy.png,DanishPenguin#5557,137643766931521537
+237,Hitmontop,https://i.imgur.com/0HenEkX.png,DanishPenguin#5557,137643766931521537
+238,Smoochum,https://i.imgur.com/eTyq5G6.png,DanishPenguin#5557,137643766931521537
+239,Elekid,https://i.imgur.com/561XCDf.png,BluBambii | Jess#6814,712521240602214400
+240,Magby,https://i.imgur.com/OSYlbhS.png,Kiyu_067#0591,775549954080899142
+241,Miltank,https://i.imgur.com/kAmNYSf.png,kitkat#8097,882428206907555930
+242,Blissey,https://i.imgur.com/nRlmmLS.png,itsonlyanna#1477,286350129265508352
+243,Raikou,https://i.imgur.com/WY2dXem.png,sparki#2080,292439818154278922
+244,Entei,https://i.imgur.com/YRKjLRe.png,sparki#2080,292439818154278922
+245,Suicune,https://i.imgur.com/c3rMIxh.png,sparki#2080,292439818154278922
+246,Larvitar,https://i.imgur.com/4n07B6a.png,Kiyu_067#0591,775549954080899142
+247,Pupitar,https://i.imgur.com/2jf63H0.png,SuperJedi224#2591,304098467192635392
+248,Tyranitar,https://i.imgur.com/AN0tjKH.png,SuperJedi224#2591,304098467192635392
+249,Lugia,https://i.imgur.com/KZKWEdD.png,Dagger_Mace#5953,611659645760831506
+250,Ho-Oh,https://i.imgur.com/EpXNgMy.png,Sept#8911,891522852182982656
+251,Celebi,https://i.imgur.com/n270ufY.png,DanishPenguin#5557,137643766931521537
+252,Treecko,https://i.imgur.com/lzqTA3v.png,Chaotic Havoc#7512,326895657803710477
+253,Grovyle,https://i.imgur.com/SrcbjA7.png,Chaotic Havoc#7512,326895657803710477
+254,Sceptile,https://i.imgur.com/MRA70jk.png,Chaotic Havoc#7512,326895657803710477
+255,Torchic,https://i.imgur.com/0GTb2D3.png,sparki#2080,292439818154278922
+256,Combusken,https://i.imgur.com/7EBbIXK.png,sparki#2080,292439818154278922
+257,Blaziken,https://i.imgur.com/TQE1AE9.png,sparki#2080,292439818154278922
+258,Mudkip,https://i.imgur.com/9Sd7GYs.png,Sept#8911,891522852182982656
+259,Marshtomp,https://i.imgur.com/zEPilrd.png,Sept#8911,891522852182982656
+260,Swampert,https://i.imgur.com/pJSPCE8.png,Sept#8911,891522852182982656
+261,Poochyena,https://i.imgur.com/hvYKsmU.png,SuperJedi224#2591,304098467192635392
+262,Mightyena,https://i.imgur.com/3xs4O9B.png,BluBambii | Jess#6814,712521240602214400
+263,Zigzagoon,https://i.imgur.com/rRPIrCV.png,🦝QWISTAYCAT🦝#1314,285996997641502731
+264,Linoone,https://i.imgur.com/RLJqLts.png,🦝QWISTAYCAT🦝#1314,285996997641502731
+265,Wurmple,https://i.imgur.com/nqpSgMf.png,bubblesstann#3132,483265131611029518
+266,Silcoon,https://i.imgur.com/9nEuWLt.png,DanishPenguin#5557,137643766931521537
+267,Beautifly,https://i.imgur.com/bxIy60F.png,Anoea#3441,285861483412193280
+268,Cascoon,https://i.imgur.com/lYimf1Z.png,DanishPenguin#5557,137643766931521537
+269,Dustox,https://i.imgur.com/KvPR7UU.png,Anoea#3441,285861483412193280
+270,Lotad,https://i.imgur.com/cQdgDqA.png,Kiyu_067#0591,775549954080899142
+271,Lombre,https://i.imgur.com/kr92K85.png,Yiqii#6383,297842109514383360
+272,Ludicolo,https://i.imgur.com/LQMHbFm.png,Kiyu_067#0591,775549954080899142
+273,Seedot,https://i.imgur.com/2EWddW0.png,Kiyu_067#0591,775549954080899142
+274,Nuzleaf,https://i.imgur.com/WjuXII2.png,Kiyu_067#0591,775549954080899142
+275,Shiftry,https://i.imgur.com/EQyQt3Y.png,Kiyu_067#0591,775549954080899142
+276,Taillow,https://i.imgur.com/8X4JNCA.png,BluBambii | Jess#6814,712521240602214400
+277,Swellow,https://i.imgur.com/P1J48IA.png,Kiyu_067#0591,775549954080899142
+278,Wingull,https://i.imgur.com/OZdOiYu.png,Anoea#3441,285861483412193280
+279,Pelipper,https://i.imgur.com/7jJTqP1.png,Anoea#3441,285861483412193280
+280,Ralts,https://i.imgur.com/kLOqx5j.png,Witherr🖤#5417,267550284979503104
+281,Kirlia,https://i.imgur.com/BWfUZh2.png,Witherr🖤#5417,267550284979503104
+282,Gardevoir,https://i.imgur.com/mBG7s2b.png,Witherr🖤#5417,267550284979503104
+283,Surskit,https://i.imgur.com/VrFMrnY.png,JynErso#2806,449792537272516628
+284,Masquerain,https://i.imgur.com/SX6X828.png,DanishPenguin#5557,137643766931521537
+285,Shroomish,https://i.imgur.com/jzVpdTk.png,SuperJedi224#2591,304098467192635392
+286,Breloom,https://i.imgur.com/LzyBMk7.png,Anoea#3441,285861483412193280
+287,Slakoth,https://i.imgur.com/BEtJkTo.png,BluBambii | Jess#6814,712521240602214400
+288,Vigoroth,https://i.imgur.com/s04CitF.png,Anoea#3441,285861483412193280
+289,Slaking,https://i.imgur.com/uXqtkq6.png,Kiyu_067#0591,775549954080899142
+290,Nincada,https://i.imgur.com/Dl5xzwJ.png,Kiyu_067#0591,775549954080899142
+291,Ninjask,https://i.imgur.com/0x7kL90.png,Kiyu_067#0591,775549954080899142
+292,Shedinja,https://i.imgur.com/8CT9TvD.png,Kiyu_067#0591,775549954080899142
+293,Whismur,https://i.imgur.com/57PJ5wW.png,Dagger_Mace#5953,611659645760831506
+294,Loudred,https://i.imgur.com/sKCfToC.png,Anoea#3441,285861483412193280
+295,Exploud,https://i.imgur.com/oIjmXUF.png,Kiyu_067#0591,775549954080899142
+296,Makuhita,https://i.imgur.com/BdLQj5k.png,SuperJedi224#2591,304098467192635392
+297,Hariyama,https://i.imgur.com/ZXdr7Rp.png,Kiyu_067#0591,775549954080899142
+298,Azurill,https://i.imgur.com/XRnxIxt.png,Sept#8911,891522852182982656
+299,Nosepass,https://i.imgur.com/KEXYTqi.png,Anoea#3441,285861483412193280
+300,Skitty,https://i.imgur.com/KexXnnq.png,BluBambii | Jess#6814,712521240602214400
+301,Delcatty,https://i.imgur.com/H5jmgAw.png,BluBambii | Jess#6814,712521240602214400
+302,Sableye,https://i.imgur.com/V2KS5A8.png,Chaotic Havoc#7512,326895657803710477
+303,Mawile,https://i.imgur.com/Z4ykmtM.png,Anoea#3441,285861483412193280
+304,Aron,https://i.imgur.com/ICiThcs.png,Kiyu_067#0591,775549954080899142
+305,Lairon,https://i.imgur.com/QYGlwdG.png,Kiyu_067#0591,775549954080899142
+306,Aggron,https://i.imgur.com/BT4a2iK.png,Kiyu_067#0591,775549954080899142
+307,Meditite,https://i.imgur.com/mBehkqs.png,Anoea#3441,285861483412193280
+308,Medicham,https://i.imgur.com/a9Ed75q.png,Anoea#3441,285861483412193280
+309,Electrike,https://i.imgur.com/trRYapq.png,Kiyu_067#0591,775549954080899142
+310,Manectric,https://i.imgur.com/zK8MSst.png,Kiyu_067#0591,775549954080899142
+311,Plusle,https://i.imgur.com/Sd9ATBW.png,§CrepeMewtwo§#0482,834780655514157116
+312,Minun,https://i.imgur.com/0XEeisE.png?1,JynErso#2806,449792537272516628
+313,Volbeat,https://i.imgur.com/wc9ySlM.png,gazplum#3889,615359666205229076
+314,Illumise,https://i.imgur.com/4yfAgaL.png,BluBambii | Jess#6814,712521240602214400
+315,Roselia,https://i.imgur.com/sb59pZ9.png,BluBambii | Jess#6814,712521240602214400
+316,Gulpin,https://i.imgur.com/Ns7nZnS.png,BluBambii | Jess#6814,712521240602214400
+317,Swalot,https://i.imgur.com/VacDc3U.png,BluBambii | Jess#6814,712521240602214400
+318,Carvanha,https://i.imgur.com/0IlIdft.png,Kiyu_067#0591,775549954080899142
+319,Sharpedo,https://i.imgur.com/bomqnMx.png,Kiyu_067#0591,775549954080899142
+320,Wailmer,https://i.imgur.com/yhzvoOL.png,SuperJedi224#2591,304098467192635392
+321,Wailord,https://i.imgur.com/hK13opI.png,Sept#8911,891522852182982656
+322,Numel,https://i.imgur.com/ZlLXfvb.png,Chaotic Havoc#7512,326895657803710477
+323,Camerupt,https://i.imgur.com/lClRV7J.png,Chaotic Havoc#7512,326895657803710477
+324,Torkoal,https://i.imgur.com/y7j8TMy.png,SuperJedi224#2591,304098467192635392
+325,Spoink,https://i.imgur.com/Xr3rYOP.png,Anoea#3441,285861483412193280
+326,Grumpig,https://i.imgur.com/yn9cXnv.png,Yiqii#6383,297842109514383360
+327,Spinda,https://i.imgur.com/VXizByl.png,BluBambii | Jess#6814,712521240602214400
+328,Trapinch,https://i.imgur.com/XEx9feA.png,Sept#8911,891522852182982656
+329,Vibrava,https://i.imgur.com/Phaietw.png,Kiyu_067#0591,775549954080899142
+330,Flygon,https://i.imgur.com/P4QETlR.png,Sept#8911,891522852182982656
+331,Cacnea,https://i.imgur.com/yHjbx0O.png,Sept#8911,891522852182982656
+332,Cacturne,https://i.imgur.com/LmpBDIu.png,Sept#8911,891522852182982656
+333,Swablu,https://i.imgur.com/4Mbyrts.png,Sept#8911,891522852182982656
+334,Altaria,https://i.imgur.com/MEu1xOP.png,Sept#8911,891522852182982656
+335,Zangoose,https://i.imgur.com/uFmO5Ef.png,Chaotic Havoc#7512,326895657803710477
+336,Seviper,https://i.imgur.com/AUSwrC4.png,Kiyu_067#0591,775549954080899142
+337,Lunatone,https://i.imgur.com/7HW9NF3.png,Anoea#3441,285861483412193280
+338,Solrock,https://i.imgur.com/499rDDN.png,Anoea#3441,285861483412193280
+339,Barboach,https://i.imgur.com/T4rqjRa.png,Anoea#3441,285861483412193280
+340,Whiscash,https://i.imgur.com/KKpfNx2.png,Kiyu_067#0591,775549954080899142
+341,Corphish,https://i.imgur.com/umryfnM.png,Kiyu_067#0591,775549954080899142
+342,Crawdaunt,https://i.imgur.com/5roKiQ3.png,Kiyu_067#0591,775549954080899142
+343,Baltoy,https://i.imgur.com/ydB9v2L.png,Sept#8911,891522852182982656
+344,Claydol,https://i.imgur.com/qG6Oi8i.png,Kiyu_067#0591,775549954080899142
+345,Lileep,https://i.imgur.com/nDlGwWW.png,Anoea#3441,285861483412193280
+346,Cradily,https://i.imgur.com/vPjVHrQ.png,Anoea#3441,285861483412193280
+347,Anorith,https://i.imgur.com/2HJzZE0.png,🍄bwl626🍄#5858,370362708765310977
+348,Armaldo,https://i.imgur.com/Kr4Rac0.png,🍄bwl626🍄#5858,370362708765310977
+349,Feebas,https://i.imgur.com/lwlsNju.png,Anoea#3441,285861483412193280
+350,Milotic,https://i.imgur.com/PCQuho5.png,MozzSylveon700#0772,807345153051590701
+351,Castform,https://i.imgur.com/9O70NWx.png,Dagger_Mace#5953,611659645760831506
+352,Kecleon,https://i.imgur.com/PjR34A3.png,Chaotic Havoc#7512,326895657803710477
+353,Shuppet,https://i.imgur.com/c5AEu7z.png,Sept#8911,891522852182982656
+354,Banette,https://i.imgur.com/OzitPaU.png,Sept#8911,891522852182982656
+355,Duskull,https://i.imgur.com/sAJ4NSJ.png,SuperJedi224#2591,304098467192635392
+356,Dusclops,https://i.imgur.com/RGAkurd.png,BluBambii | Jess#6814,712521240602214400
+357,Tropius,https://i.imgur.com/zYdF8A9.png,Anoea#3441,285861483412193280
+358,Chimecho,https://i.imgur.com/WcyBcc1.png,JynErso#2806,449792537272516628
+359,Absol,https://i.imgur.com/Hi8IwzN.png,SuperJedi224#2591,304098467192635392
+360,Wynaut,https://i.imgur.com/fE5RpP1.png,Kiyu_067#0591,775549954080899142
+361,Snorunt,https://i.imgur.com/NG4W1N8.png,SuperJedi224#2591,304098467192635392
+362,Glalie,https://i.imgur.com/rglhrlK.png,SuperJedi224#2591,304098467192635392
+363,Spheal,https://i.imgur.com/EzKUIHQ.png,Kiyu_067#0591,775549954080899142
+364,Sealeo,https://i.imgur.com/XNnn94w.png,Sept#8911,891522852182982656
+365,Walrein,https://i.imgur.com/hkapbIK.png,Kiyu_067#0591,775549954080899142
+366,Clamperl,https://i.imgur.com/Ao4RU1y.png,BlueLego#2332,711892049842012190
+367,Huntail,https://i.imgur.com/6x3nhbb.png,Anoea#3441,285861483412193280
+368,Gorebyss,https://i.imgur.com/tQDd2HU.png,Sept#8911,891522852182982656
+369,Relicanth,https://i.imgur.com/GMZonvv.png,Taffy#3090,342473674902732810
+370,Luvdisc,https://i.imgur.com/mkr1PnL.png,Kiyu_067#0591,775549954080899142
+371,Bagon,https://i.imgur.com/ioMiSDB.png,Kiyu_067#0591,775549954080899142
+372,Shelgon,https://i.imgur.com/c2WGwZF.png,Kiyu_067#0591,775549954080899142
+373,Salamence,https://i.imgur.com/7NrWsBr.png,Kiyu_067#0591,775549954080899142
+374,Beldum,https://i.imgur.com/U7TvhLI.png,Kiyu_067#0591,775549954080899142
+375,Metang,https://i.imgur.com/Hca6iLs.png,SuperJedi224#2591,304098467192635392
+376,Metagross,https://i.imgur.com/prQum7p.png,Kiyu_067#0591,775549954080899142
+377,Regirock,https://i.imgur.com/is5GrSV.png,SuperJedi224#2591,304098467192635392
+378,Regice,https://i.imgur.com/0PEBPRM.png,SuperJedi224#2591,304098467192635392
+379,Registeel,https://i.imgur.com/ZgJPzFi.png,SuperJedi224#2591,304098467192635392
+380,Latias,https://i.imgur.com/7t9g7Wd.png,Kiyu_067#0591,775549954080899142
+381,Latios,https://i.imgur.com/Pp0mlnW.png,Kiyu_067#0591,775549954080899142
+382,Kyogre,https://i.imgur.com/yroZoFT.png,Kiyu_067#0591,775549954080899142
+383,Groudon,https://i.imgur.com/b2CZU05.png,Chaotic Havoc#7512,326895657803710477
+384,Rayquaza,https://i.imgur.com/fFNffOY.png,Anoea#3441,285861483412193280
+385,Jirachi,https://i.imgur.com/Kd6H62u.png,Kiyu_067#0591,775549954080899142
+386,Deoxys,https://i.imgur.com/rFIM11z.png,SuperJedi224#2591,304098467192635392
+387,Turtwig,https://i.imgur.com/m30bgSo.png,bubblesstann#3132,483265131611029518
+388,Grotle,https://i.imgur.com/PDDsgyM.png,Kiyu_067#0591,775549954080899142
+389,Torterra,https://i.imgur.com/wYGLMwa.png,Purgatory#4604,216317211042775050
+390,Chimchar,https://i.imgur.com/GKUwBOe.png,SuperJedi224#2591,304098467192635392
+391,Monferno,https://i.imgur.com/mrn0E5D.png,BlueLego#2332,711892049842012190
+392,Infernape,https://i.imgur.com/bbwAoRE.png,Chaotic Havoc#7512,326895657803710477
+393,Piplup,https://i.imgur.com/VZyssDo.png,SuperJedi224#2591,304098467192635392
+394,Prinplup,https://i.imgur.com/66uQfiJ.png,SuperJedi224#2591,304098467192635392
+395,Empoleon,https://i.imgur.com/4ZZcs0H.png,SuperJedi224#2591,304098467192635392
+396,Starly,https://i.imgur.com/ifSuF72.png,Kiyu_067#0591,775549954080899142
+397,Staravia,https://i.imgur.com/JoP0m4B.png,BluBambii | Jess#6814,712521240602214400
+398,Staraptor,https://i.imgur.com/sx8uP9B.png,Kiyu_067#0591,775549954080899142
+399,Bidoof,https://i.imgur.com/oFhHVxY.png,BlueLego#2332,711892049842012190
+400,Bibarel,https://i.imgur.com/BB2qGC7.png,BluBambii | Jess#6814,712521240602214400
+401,Kricketot,https://i.imgur.com/fGYSQV1.png,SuperJedi224#2591,304098467192635392
+402,Kricketune,https://i.imgur.com/EniPfLX.png,Witherr🖤#5417,267550284979503104
+403,Shinx,https://i.imgur.com/VpbbJ3v.png,SuperJedi224#2591,304098467192635392
+404,Luxio,https://i.imgur.com/jV0zpGF.png,SuperJedi224#2591,304098467192635392
+405,Luxray,https://i.imgur.com/FiViAQ7.png,SuperJedi224#2591,304098467192635392
+406,Budew,https://i.imgur.com/5mUnt1q.png,Sept#8911,891522852182982656
+407,Roserade,https://i.imgur.com/iNUjnCi.png,Chaotic Havoc#7512,326895657803710477
+408,Cranidos,https://i.imgur.com/uZozKVb.png,Kiyu_067#0591,775549954080899142
+409,Rampardos,https://i.imgur.com/hIZxvtQ.png,Kiyu_067#0591,775549954080899142
+410,Shieldon,https://i.imgur.com/AhFdjoh.png,Anoea#3441,285861483412193280
+411,Bastiodon,https://i.imgur.com/DCvGzVP.png,Kiyu_067#0591,775549954080899142
+412,Burmy,https://i.imgur.com/bfDYUpO.png,Sept#8911,891522852182982656
+413,Wormadam,https://i.imgur.com/l0MC9Zl.png,Taffy#3090,342473674902732810
+414,Mothim,https://i.imgur.com/lHOsK0p.png,SuperJedi224#2591,304098467192635392
+415,Combee,https://i.imgur.com/xVuBilA.png,『𝙍𝙖𝙞𝙣𝙮 𝘿𝙖𝙮 𝘿𝙧𝙚𝙖𝙢𝙞𝙣𝙜』#6794,878907894022701066
+416,Vespiquen,https://i.imgur.com/9XnZE4Q.png,Kiyu_067#0591,775549954080899142
+417,Pachirisu,https://i.imgur.com/joaoDJ3.png,Chaotic Havoc#7512,326895657803710477
+418,Buizel,https://i.imgur.com/hpoEzfp.png,Chaotic Havoc#7512,326895657803710477
+419,Floatzel,https://i.imgur.com/gjW1nEn.png,Kiyu_067#0591,775549954080899142
+420,Cherubi,https://i.imgur.com/hv4LJDr.png,BluBambii | Jess#6814,712521240602214400
+421,Cherrim,https://i.imgur.com/V8e42IJ.png,BlueLego#2332,711892049842012190
+422,Shellos,https://i.imgur.com/jUVbXAQ.png,Kiyu_067#0591,775549954080899142
+423,Gastrodon,https://i.imgur.com/EurAc3v.png,Kiyu_067#0591,775549954080899142
+424,Ambipom,https://i.imgur.com/mGOBolx.png,Anoea#3441,285861483412193280
+425,Drifloon,https://i.imgur.com/iMKtUHX.png,Kiyu_067#0591,775549954080899142
+426,Drifblim,https://i.imgur.com/zhPJenL.png,Taffy#3090,342473674902732810
+427,Buneary,https://i.imgur.com/yELgu65.png,Foxrii_#8364,850079219681722398
+428,Lopunny,https://i.imgur.com/EnzOenc.png,Foxrii_#8364,850079219681722398
+429,Mismagius,https://i.imgur.com/nRF3ZQL.png,BluBambii | Jess#6814,712521240602214400
+430,Honchkrow,https://i.imgur.com/BQn1Kk7.png,Chaotic Havoc#7512,326895657803710477
+431,Glameow,https://i.imgur.com/xRRrw5p.png,Chaotic Havoc#7512,326895657803710477
+432,Purugly,https://i.imgur.com/5D8hOv4.png,Chaotic Havoc#7512,326895657803710477
+433,Chingling,https://i.imgur.com/48C3RE0.png,Sept#8911,891522852182982656
+434,Stunky,https://i.imgur.com/AQMgPEX.png,Chaotic Havoc#7512,326895657803710477
+435,Skuntank,https://i.imgur.com/kTqJVWt.png,Chaotic Havoc#7512,326895657803710477
+436,Bronzor,https://i.imgur.com/mL0NZ0j.png,Certified_Likulau_Simp#6800,657234019012050976
+437,Bronzong,https://i.imgur.com/xK4xg8J.png,SuperJedi224#2591,304098467192635392
+438,Bonsly,https://i.imgur.com/kDej9nB.png,Kiyu_067#0591,775549954080899142
+439,Mime Jr.,https://i.imgur.com/fqXrQdd.png,Sept#8911,891522852182982656
+440,Happiny,https://i.imgur.com/Tp1wo5e.png,Sept#8911,891522852182982656
+441,Chatot,https://i.imgur.com/MXNVpNZ.png,BluBambii | Jess#6814,712521240602214400
+442,Spiritomb,https://i.imgur.com/bbvnoQq.png,Kiyu_067#0591,775549954080899142
+443,Gible,https://i.imgur.com/lKZLiEc.png,Dagger_Mace#5953,611659645760831506
+444,Gabite,https://i.imgur.com/VPU6Ux9.png,Dagger_Mace#5953,611659645760831506
+445,Garchomp,https://i.imgur.com/MEp3vOE.png,Dagger_Mace#5953,611659645760831506
+446,Munchlax,https://i.imgur.com/8OMrLXr.png,Sept#8911,891522852182982656
+447,Riolu,https://i.imgur.com/Gem3q8h.png,SylveDub#3728,602094715890040832
+448,Lucario,https://i.imgur.com/yvGdbgu.png,Anoea#3441,285861483412193280
+449,Hippopotas,https://i.imgur.com/oymPfOu.png,Anoea#3441,285861483412193280
+450,Hippowdon,https://i.imgur.com/t3fgaPS.png,Anoea#3441,285861483412193280
+451,Skorupi,https://i.imgur.com/swb4Upd.png,Anoea#3441,285861483412193280
+452,Drapion,https://i.imgur.com/WVdXcwV.png,Anoea#3441,285861483412193280
+453,Croagunk,https://i.imgur.com/iJv9iRE.png,Anoea#3441,285861483412193280
+454,Toxicroak,https://i.imgur.com/UoXezFt.png,Chaotic Havoc#7512,326895657803710477
+455,Carnivine,https://i.imgur.com/votNex8.png,Chaotic Havoc#7512,326895657803710477
+456,Finneon,https://i.imgur.com/4DcW7z8.png,Foxrii_#8364,850079219681722398
+457,Lumineon,https://i.imgur.com/jlI76Ey.png,Foxrii_#8364,850079219681722398
+458,Mantyke,https://i.imgur.com/s2xW8Hi.png,BlueLego#2332,711892049842012190
+459,Snover,https://i.imgur.com/GGdKdBO.png,Kiyu_067#0591,775549954080899142
+460,Abomasnow,https://i.imgur.com/pnvM73h.png,Anoea#3441,285861483412193280
+461,Weavile,https://i.imgur.com/ziPfjZy.png,Chaotic Havoc#7512,326895657803710477
+462,Magnezone,https://i.imgur.com/org9fPr.png,🍄bwl626🍄#5858,370362708765310977
+463,Lickilicky,https://i.imgur.com/BgGnm1n.png,Chaotic Havoc#7512,326895657803710477
+464,Rhyperior,https://i.imgur.com/pBjuCpK.png,Dagger_Mace#5953,611659645760831506
+465,Tangrowth,https://i.imgur.com/EHblaUK.png,Sept#8911,891522852182982656
+466,Electivire,https://i.imgur.com/Di2seCT.png,Anoea#3441,285861483412193280
+467,Magmortar,https://i.imgur.com/yXLSVdU.png,🍄bwl626🍄#5858,370362708765310977
+468,Togekiss,https://i.imgur.com/06pTuAW.png,Kiyu_067#0591,775549954080899142
+469,Yanmega,https://i.imgur.com/DwP53I9.png,Anoea#3441,285861483412193280
+470,Leafeon,https://i.imgur.com/1vYgvxx.png,SuperJedi224#2591,304098467192635392
+471,Glaceon,https://i.imgur.com/clSXItc.png,Rxinbow🌈~#2434,843155645422108712
+472,Gliscor,https://i.imgur.com/46BbvNm.png,Kiyu_067#0591,775549954080899142
+473,Mamoswine,https://i.imgur.com/BGbgreG.png,Chaotic Havoc#7512,326895657803710477
+474,Porygon-Z,https://i.imgur.com/BVF3cwB.png,Anoea#3441,285861483412193280
+475,Gallade,https://i.imgur.com/wGFBhSC.png,Witherr🖤#5417,267550284979503104
+476,Probopass,https://i.imgur.com/Lo6fD3L.png,Kiyu_067#0591,775549954080899142
+477,Dusknoir,https://i.imgur.com/TA9TVp1.png,Chaotic Havoc#7512,326895657803710477
+478,Froslass,https://i.imgur.com/q7NAOmB.png,🍄bwl626🍄#5858,370362708765310977
+479,Rotom,https://i.imgur.com/PHR2qo3.png,BlueLego#2332,711892049842012190
+480,Uxie,https://i.imgur.com/0zDc58A.png,Dagger_Mace#5953,611659645760831506
+481,Mesprit,https://i.imgur.com/Y7eA1xe.png,Dagger_Mace#5953,611659645760831506
+482,Azelf,https://i.imgur.com/tby47pp.png,Dagger_Mace#5953,611659645760831506
+483,Dialga,https://i.imgur.com/Ajo0mI2.png,Kiyu_067#0591,775549954080899142
+484,Palkia,https://i.imgur.com/VYczbme.png,Kiyu_067#0591,775549954080899142
+485,Heatran,https://i.imgur.com/mbB4b28.png,Taffy#3090,342473674902732810
+486,Regigigas,https://i.imgur.com/T1DefuR.png,SuperJedi224#2591,304098467192635392
+487,Giratina,https://i.imgur.com/KZMVs9R.png,Chaotic Havoc#7512,326895657803710477
+488,Cresselia,https://i.imgur.com/uFlTgox.png,🍄bwl626🍄#5858,370362708765310977
+489,Phione,https://i.imgur.com/JfdfxOx.png,Sept#8911,891522852182982656
+490,Manaphy,https://i.imgur.com/XusjLuS.png,MetSpek#6969,243763234685976577
+491,Darkrai,https://i.imgur.com/lehgfN7.png,Chaotic Havoc#7512,326895657803710477
+492,Shaymin,https://i.imgur.com/ztIUxiX.png,§CrepeMewtwo§#0482,834780655514157116
+493,Arceus,https://i.imgur.com/JF7bcUg.png,SuperJedi224#2591,304098467192635392
+494,Victini,https://i.imgur.com/1S38SWz.png,SuperJedi224#2591,304098467192635392
+495,Snivy,https://i.imgur.com/GWoQXXn.png,Dagger_Mace#5953,611659645760831506
+496,Servine,https://i.imgur.com/PLMDU4d.png,BlueLego#2332,711892049842012190
+497,Serperior,https://i.imgur.com/02jLqVh.png,Kiyu_067#0591,775549954080899142
+498,Tepig,https://i.imgur.com/R9ELlxY.png,Anoea#3441,285861483412193280
+499,Pignite,https://i.imgur.com/tz7Z5Ev.png,Sept#8911,891522852182982656
+500,Emboar,https://i.imgur.com/jaXJEmg.png,🍄bwl626🍄#5858,370362708765310977
+501,Oshawott,https://i.imgur.com/KrXDfmb.png,SuperJedi224#2591,304098467192635392
+502,Dewott,https://i.imgur.com/uufMlcm.png,SuperJedi224#2591,304098467192635392
+503,Samurott,https://i.imgur.com/rURlTqo.png,Kiyu_067#0591,775549954080899142
+504,Patrat,https://i.imgur.com/fbKqZjN.png,Anoea#3441,285861483412193280
+505,Watchog,https://i.imgur.com/zdPZqB9.png,SuperJedi224#2591,304098467192635392
+506,Lillipup,https://i.imgur.com/LXiNz07.png,Kiyu_067#0591,775549954080899142
+507,Herdier,https://i.imgur.com/l0iiE1X.png,SuperJedi224#2591,304098467192635392
+508,Stoutland,https://i.imgur.com/fiZBRTZ.png,Anoea#3441,285861483412193280
+509,Purrloin,https://i.imgur.com/xhefKdu.png,BluBambii | Jess#6814,712521240602214400
+510,Liepard,https://i.imgur.com/th6sOtZ.png,Anoea#3441,285861483412193280
+511,Pansage,https://i.imgur.com/Zd0bXNB.png,Kiyu_067#0591,775549954080899142
+512,Simisage,https://i.imgur.com/Hr72Pru.png,Chaotic Havoc#7512,326895657803710477
+513,Pansear,https://i.imgur.com/tpr89TK.png,BluBambii | Jess#6814,712521240602214400
+514,Simisear,https://i.imgur.com/edWcAEq.png,🦝QWISTAYCAT🦝#1314,285996997641502731
+515,Panpour,https://i.imgur.com/oLB6t4P.png,SuperJedi224#2591,304098467192635392
+516,Simipour,https://i.imgur.com/9YRakC7.png,BlueLego#2332,711892049842012190
+517,Munna,https://i.imgur.com/3CRNIcT.png,Sept#8911,891522852182982656
+518,Musharna,https://i.imgur.com/pZdlNmV.png,MozzSylveon700#0772,807345153051590701
+519,Pidove,https://i.imgur.com/8WxE0cX.png,Sept#8911,891522852182982656
+520,Tranquill,https://i.imgur.com/QpCIFWE.png,Sept#8911,891522852182982656
+521,Unfezant,https://i.imgur.com/AKshY2U.png,Anoea#3441,285861483412193280
+522,Blitzle,https://i.imgur.com/BP6bojO.png,Foxrii_#8364,850079219681722398
+523,Zebstrika,https://i.imgur.com/AyaE98i.png,Foxrii_#8364,850079219681722398
+524,Roggenrola,https://i.imgur.com/2TFtMVa.png,Kiyu_067#0591,775549954080899142
+525,Boldore,https://i.imgur.com/TPg4CRn.png,BluBambii | Jess#6814,712521240602214400
+526,Gigalith,https://i.imgur.com/5li8jpd.png,🍄bwl626🍄#5858,370362708765310977
+527,Woobat,https://i.imgur.com/tCL1FzS.png,BlueLego#2332,711892049842012190
+528,Swoobat,https://i.imgur.com/JHNyF5c.png,Anoea#3441,285861483412193280
+529,Drilbur,https://i.imgur.com/aOEwoDU.png,Sept#8911,891522852182982656
+530,Excadrill,https://i.imgur.com/B4QNess.png,MozzSylveon700#0772,807345153051590701
+531,Audino,https://i.imgur.com/24KDDYs.png,Foxrii_#8364,850079219681722398
+532,Timburr,https://i.imgur.com/4LNZaHs.png,Kiyu_067#0591,775549954080899142
+533,Gurdurr,https://i.imgur.com/vXvcG5G.png,Dagger_Mace#5953,611659645760831506
+534,Conkeldurr,https://i.imgur.com/wvQkT7P.png,MozzSylveon700#0772,807345153051590701
+535,Tympole,https://i.imgur.com/linTfnI.png,Kiyu_067#0591,775549954080899142
+536,Palpitoad,https://i.imgur.com/lCNZ11R.png,Chaotic Havoc#7512,326895657803710477
+537,Seismitoad,https://i.imgur.com/xxESz39.png,Anoea#3441,285861483412193280
+538,Throh,https://i.imgur.com/huzdZuV.png,Kiyu_067#0591,775549954080899142
+539,Sawk,https://i.imgur.com/aycQhZo.png,Kiyu_067#0591,775549954080899142
+540,Sewaddle,https://i.imgur.com/0d55Oll.png,Dagger_Mace#5953,611659645760831506
+541,Swadloon,https://i.imgur.com/pPbnwV7.png,Anoea#3441,285861483412193280
+542,Leavanny,https://i.imgur.com/uZnm7d7.png,Anoea#3441,285861483412193280
+543,Venipede,https://i.imgur.com/u4QzeTq.png,JynErso#2806,449792537272516628
+544,Whirlipede,https://i.imgur.com/itzrOmW.png,Dagger_Mace#5953,611659645760831506
+545,Scolipede,https://i.imgur.com/U1HOFeK.png,Chaotic Havoc#7512,326895657803710477
+546,Cottonee,https://i.imgur.com/b27n0ZG.png,BlueLego#2332,711892049842012190
+547,Whimsicott,https://i.imgur.com/xkx0bOX.png,SuperJedi224#2591,304098467192635392
+548,Petilil,https://i.imgur.com/RWcmlvL.png,BluBambii | Jess#6814,712521240602214400
+549,Lilligant,https://i.imgur.com/bJ4gvsE.png,Anoea#3441,285861483412193280
+550,Basculin,https://i.imgur.com/ZUf9sx8.png,Dagger_Mace#5953,611659645760831506
+551,Sandile,https://i.imgur.com/Za0yMaR.png,Anoea#3441,285861483412193280
+552,Krokorok,https://i.imgur.com/lmgJ9tA.png,Kiyu_067#0591,775549954080899142
+553,Krookodile,https://i.imgur.com/JliRsIK.png,Anoea#3441,285861483412193280
+554,Darumaka,https://i.imgur.com/YTBI5Fl.png,BluBambii | Jess#6814,712521240602214400
+555,Darmanitan,https://i.imgur.com/bngYeNb.png,SuperJedi224#2591,304098467192635392
+556,Maractus,https://i.imgur.com/97kq9Un.png,Dagger_Mace#5953,611659645760831506
+557,Dwebble,https://i.imgur.com/98ZHMc4.png,bubblesstann#3132,483265131611029518
+558,Crustle,https://i.imgur.com/1sSbVJ0.png,Dagger_Mace#5953,611659645760831506
+559,Scraggy,https://i.imgur.com/c00jTqT.png,Anoea#3441,285861483412193280
+560,Scrafty,https://i.imgur.com/cseDj6X.png,Kiyu_067#0591,775549954080899142
+561,Sigilyph,https://i.imgur.com/qON9qQj.png,Anoea#3441,285861483412193280
+562,Yamask,https://i.imgur.com/sv1gRnc.png,Witherr🖤#5417,267550284979503104
+563,Cofagrigus,https://i.imgur.com/aRdbtji.png,SuperJedi224#2591,304098467192635392
+564,Tirtouga,https://i.imgur.com/PVmfPid.png,🍄bwl626🍄#5858,370362708765310977
+565,Carracosta,https://i.imgur.com/hxk0QIo.png,Anoea#3441,285861483412193280
+566,Archen,https://i.imgur.com/JLbKm4L.png,Chaotic Havoc#7512,326895657803710477
+567,Archeops,https://i.imgur.com/YfuevJy.png,Chaotic Havoc#7512,326895657803710477
+568,Trubbish,https://i.imgur.com/A79JWTd.png,BluBambii | Jess#6814,712521240602214400
+569,Garbodor,https://i.imgur.com/Wf07HdX.png,Anoea#3441,285861483412193280
+570,Zorua,https://i.imgur.com/tmuS8vk.png,SuperJedi224#2591,304098467192635392
+571,Zoroark,https://i.imgur.com/dlEwcXg.png,MozzSylveon700#0772,807345153051590701
+572,Minccino,https://i.imgur.com/mGKo4k4.png,Foxrii_#8364,850079219681722398
+573,Cinccino,https://i.imgur.com/c0dAxjG.png,Foxrii_#8364,850079219681722398
+574,Gothita,https://i.imgur.com/VeMUkYH.png,🍄bwl626🍄#5858,370362708765310977
+575,Gothorita,https://i.imgur.com/aHMHQVm.png,BlueLego#2332,711892049842012190
+576,Gothitelle,https://i.imgur.com/NHjPdzk.png,Anoea#3441,285861483412193280
+577,Solosis,https://i.imgur.com/U3SgcZS.png,Kiyu_067#0591,775549954080899142
+578,Duosion,https://i.imgur.com/hp89xIV.png,Sept#8911,891522852182982656
+579,Reuniclus,https://i.imgur.com/iGMHfGU.png,SuperJedi224#2591,304098467192635392
+580,Ducklett,https://i.imgur.com/ULUx5Fa.png,Anoea#3441,285861483412193280
+581,Swanna,https://i.imgur.com/h22nAjI.png,Sept#8911,891522852182982656
+582,Vanillite,https://i.imgur.com/gFPJ39W.png,BluBambii | Jess#6814,712521240602214400
+583,Vanillish,https://i.imgur.com/Zw0HPrY.png,SuperJedi224#2591,304098467192635392
+584,Vanilluxe,https://i.imgur.com/qUgaLCI.png,BluBambii | Jess#6814,712521240602214400
+585,Deerling,https://i.imgur.com/KRleufy.png,MozzSylveon700#0772,807345153051590701
+586,Sawsbuck,https://i.imgur.com/IE4hp6I.png,Anoea#3441,285861483412193280
+587,Emolga,https://i.imgur.com/UiNeJ3f.png,SuperJedi224#2591,304098467192635392
+588,Karrablast,https://i.imgur.com/biPZhQR.png,SuperJedi224#2591,304098467192635392
+589,Escavalier,https://i.imgur.com/PitkegR.png,Anoea#3441,285861483412193280
+590,Foongus,https://i.imgur.com/7VwsbLr.png,Anoea#3441,285861483412193280
+591,Amoonguss,https://i.imgur.com/j7hgiH0.png,🍄bwl626🍄#5858,370362708765310977
+592,Frillish,https://i.imgur.com/nynNY0p.png,Chaotic Havoc#7512,326895657803710477
+593,Jellicent,https://i.imgur.com/q6n0Uxr.png,Chaotic Havoc#7512,326895657803710477
+594,Alomomola,https://i.imgur.com/EOq9kfK.png,Taffy#3090,342473674902732810
+595,Joltik,https://i.imgur.com/oEzxoZa.png,Anoea#3441,285861483412193280
+596,Galvantula,https://i.imgur.com/rYdxdap.png,Anoea#3441,285861483412193280
+597,Ferroseed,https://i.imgur.com/c3u5Elh.png,Certified_Likulau_Simp#6800,657234019012050976
+598,Ferrothorn,https://i.imgur.com/iugjPXG.png,Taffy#3090,342473674902732810
+599,Klink,https://i.imgur.com/DZ3mmTy.png,Kiyu_067#0591,775549954080899142
+600,Klang,https://i.imgur.com/xLmqO4y.png,Sept#8911,891522852182982656
+601,Klinklang,https://i.imgur.com/P6MI3zn.png,Anoea#3441,285861483412193280
+602,Tynamo,https://i.imgur.com/xnQox1U.png,MozzSylveon700#0772,807345153051590701
+603,Eelektrik,https://i.imgur.com/6aU0Ubd.png,Anoea#3441,285861483412193280
+604,Eelektross,https://i.imgur.com/yzq9t9r.png,Anoea#3441,285861483412193280
+605,Elgyem,https://i.imgur.com/2eWg7hQ.png,Sept#8911,891522852182982656
+606,Beheeyem,https://i.imgur.com/tQmt02k.png,Anoea#3441,285861483412193280
+607,Litwick,https://i.imgur.com/P8x8Lx2.png,Kiyu_067#0591,775549954080899142
+608,Lampent,https://i.imgur.com/4atKDwe.png,Anoea#3441,285861483412193280
+609,Chandelure,https://i.imgur.com/IxikpAm.png,SuperJedi224#2591,304098467192635392
+610,Axew,https://i.imgur.com/eJe4s5B.png,Kiyu_067#0591,775549954080899142
+611,Fraxure,https://i.imgur.com/3RlJzuq.png,Kiyu_067#0591,775549954080899142
+612,Haxorus,https://i.imgur.com/7XF3iga.png,Kiyu_067#0591,775549954080899142
+613,Cubchoo,https://i.imgur.com/O2cELtV.png,Anoea#3441,285861483412193280
+614,Beartic,https://i.imgur.com/68lZIVd.png,Chaotic Havoc#7512,326895657803710477
+615,Cryogonal,https://i.imgur.com/LWKKGq1.png,SuperJedi224#2591,304098467192635392
+616,Shelmet,https://i.imgur.com/VOpEHbX.png,🍄bwl626🍄#5858,370362708765310977
+617,Accelgor,https://i.imgur.com/DWpUO1z.png,Anoea#3441,285861483412193280
+618,Stunfisk,https://i.imgur.com/C4QTqlh.png,BlueLego#2332,711892049842012190
+619,Mienfoo,https://i.imgur.com/OgM2IuD.png,Foxrii_#8364,850079219681722398
+620,Mienshao,https://i.imgur.com/fGMfW1A.png,Foxrii_#8364,850079219681722398
+621,Druddigon,https://i.imgur.com/P3ZIyiM.png,Kiyu_067#0591,775549954080899142
+622,Golett,https://i.imgur.com/hLQaeUb.png,BluBambii | Jess#6814,712521240602214400
+623,Golurk,https://i.imgur.com/WFsrJXE.png,Anoea#3441,285861483412193280
+624,Pawniard,https://i.imgur.com/Wm00zDk.png,Kiyu_067#0591,775549954080899142
+625,Bisharp,https://i.imgur.com/y1GeFbh.png,SuperJedi224#2591,304098467192635392
+626,Bouffalant,https://i.imgur.com/obPa5VX.png,Anoea#3441,285861483412193280
+627,Rufflet,https://i.imgur.com/NOX1fuP.png,SuperJedi224#2591,304098467192635392
+628,Braviary,https://i.imgur.com/YVTrdtO.png,Anoea#3441,285861483412193280
+629,Vullaby,https://i.imgur.com/53QycM1.png,Kiyu_067#0591,775549954080899142
+630,Mandibuzz,https://i.imgur.com/0N6w7ax.png,Kiyu_067#0591,775549954080899142
+631,Heatmor,https://i.imgur.com/IDkeAdU.png,Anoea#3441,285861483412193280
+632,Durant,https://i.imgur.com/CRRJFXs.png,Anoea#3441,285861483412193280
+633,Deino,https://i.imgur.com/Hw2r1h8.png,SuperJedi224#2591,304098467192635392
+634,Zweilous,https://i.imgur.com/SBZ45Bs.png,SuperJedi224#2591,304098467192635392
+635,Hydreigon,https://i.imgur.com/Hpi3uep.png,SuperJedi224#2591,304098467192635392
+636,Larvesta,https://i.imgur.com/cWy2Grr.png,Dagger_Mace#5953,611659645760831506
+637,Volcarona,https://i.imgur.com/tH5QDzU.png,SuperJedi224#2591,304098467192635392
+638,Cobalion,https://i.imgur.com/uqOaKiv.png,Foxrii_#8364,850079219681722398
+639,Terrakion,https://i.imgur.com/y09E8O1.png,Foxrii_#8364,850079219681722398
+640,Virizion,https://i.imgur.com/d6Mykka.png,Foxrii_#8364,850079219681722398
+641,Tornadus,https://i.imgur.com/8fCi5kA.png,SuperJedi224#2591,304098467192635392
+642,Thundurus,https://i.imgur.com/ikYvfRq.png,SuperJedi224#2591,304098467192635392
+643,Reshiram,https://i.imgur.com/sPpPRp9.png,MozzSylveon700#0772,807345153051590701
+644,Zekrom,https://i.imgur.com/poMVXr5.png,bubblesstann#3132,483265131611029518
+645,Landorus,https://i.imgur.com/V2j2Dv3.png,SuperJedi224#2591,304098467192635392
+646,Kyurem,https://i.imgur.com/0pxQQnc.png,Chaotic Havoc#7512,326895657803710477
+647,Keldeo,https://i.imgur.com/wpG8XOG.png,bubblesstann#3132,483265131611029518
+648,Meloetta,https://i.imgur.com/SAGKFcM.png,MozzSylveon700#0772,807345153051590701
+649,Genesect,https://i.imgur.com/xTGqbvU.png,Chaotic Havoc#7512,326895657803710477
+650,Chespin,https://i.imgur.com/LibRrpg.png,SuperJedi224#2591,304098467192635392
+651,Quilladin,https://i.imgur.com/m3Rlj5g.png,SuperJedi224#2591,304098467192635392
+652,Chesnaught,https://i.imgur.com/NkA2hem.png,SuperJedi224#2591,304098467192635392
+653,Fennekin,https://i.imgur.com/NMy5Q0B.png,Anoea#3441,285861483412193280
+654,Braixen,https://i.imgur.com/edOUwgs.png,MozzSylveon700#0772,807345153051590701
+655,Delphox,https://i.imgur.com/CjSo0e0.png,MozzSylveon700#0772,807345153051590701
+656,Froakie,https://i.imgur.com/fwONQRk.png,§CrepeMewtwo§#0482,834780655514157116
+657,Frogadier,https://i.imgur.com/HOHEgjz.png,Anoea#3441,285861483412193280
+658,Greninja,https://i.imgur.com/yeu1C1U.png,Kiyu_067#0591,775549954080899142
+659,Bunnelby,https://i.imgur.com/6fmWgNV.png,MozzSylveon700#0772,807345153051590701
+660,Diggersby,https://i.imgur.com/ctrmnFQ.png,Taffy#3090,342473674902732810
+661,Fletchling,https://i.imgur.com/PxG7ebi.png,Foxrii_#8364,850079219681722398
+662,Fletchinder,https://i.imgur.com/5cJRBIL.png,Foxrii_#8364,850079219681722398
+663,Talonflame,https://i.imgur.com/XHdTiyZ.png,Foxrii_#8364,850079219681722398
+664,Scatterbug,https://i.imgur.com/k11CApp.png,SuperJedi224#2591,304098467192635392
+665,Spewpa,https://i.imgur.com/WPXWCoi.png,Anoea#3441,285861483412193280
+666,Vivillon,https://i.imgur.com/MwhReTy.png,MozzSylveon700#0772,807345153051590701
+667,Litleo,https://i.imgur.com/lTLlZB4.png,SuperJedi224#2591,304098467192635392
+668,Pyroar,https://i.imgur.com/B4NSDMY.png,MozzSylveon700#0772,807345153051590701
+669,Flabébé,https://i.imgur.com/XvqeVxU.png,Kiyu_067#0591,775549954080899142
+670,Floette,https://i.imgur.com/khQQdNX.png,§CrepeMewtwo§#0482,834780655514157116
+671,Florges,https://i.imgur.com/SAkxlIH.png,MozzSylveon700#0772,807345153051590701
+672,Skiddo,https://i.imgur.com/QCgzmQq.png,『𝙍𝙖𝙞𝙣𝙮 𝘿𝙖𝙮 𝘿𝙧𝙚𝙖𝙢𝙞𝙣𝙜』#6794,878907894022701066
+673,Gogoat,https://i.imgur.com/UHo4QbR.png,『𝙍𝙖𝙞𝙣𝙮 𝘿𝙖𝙮 𝘿𝙧𝙚𝙖𝙢𝙞𝙣𝙜』#6794,878907894022701066
+674,Pancham,https://i.imgur.com/TEoGtQK.png,Chaotic Havoc#7512,326895657803710477
+675,Pangoro,https://i.imgur.com/rfbCgOx.png,Chaotic Havoc#7512,326895657803710477
+676,Furfrou,https://i.imgur.com/BNcPIb3.png,Purgatory#4604,216317211042775050
+677,Espurr,https://i.imgur.com/z3m1uc9.png,Rxinbow🌈~#2434,843155645422108712
+678,Meowstic,https://i.imgur.com/pN7yKzT.png,§CrepeMewtwo§#0482,834780655514157116
+679,Honedge,https://i.imgur.com/8eQRRlD.png,🍄bwl626🍄#5858,370362708765310977
+680,Doublade,https://i.imgur.com/iLjbbOr.png,SuperJedi224#2591,304098467192635392
+681,Aegislash,https://i.imgur.com/TMDa5xK.png,SuperJedi224#2591,304098467192635392
+682,Spritzee,https://i.imgur.com/6XCOcNf.png,Yiqii#6383,297842109514383360
+683,Aromatisse,https://i.imgur.com/FyMGgNF.png,Yiqii#6383,297842109514383360
+684,Swirlix,https://i.imgur.com/IP56Dc5.png,Yiqii#6383,297842109514383360
+685,Slurpuff,https://i.imgur.com/WgsWPI4.png,Taffy#3090,342473674902732810
+686,Inkay,https://i.imgur.com/Pdj1tgu.png,BluBambii | Jess#6814,712521240602214400
+687,Malamar,https://i.imgur.com/3HyFhqk.png,Sept#8911,891522852182982656
+688,Binacle,https://i.imgur.com/gQKG4cJ.png,Sept#8911,891522852182982656
+689,Barbaracle,https://i.imgur.com/DM1dMvg.png,SuperJedi224#2591,304098467192635392
+690,Skrelp,https://i.imgur.com/T7NOs5Y.png,Taffy#3090,342473674902732810
+691,Dragalge,https://i.imgur.com/AQm1rYO.png,itsonlyanna#1477,286350129265508352
+692,Clauncher,https://i.imgur.com/sYhwszc.png,🍄bwl626🍄#5858,370362708765310977
+693,Clawitzer,https://i.imgur.com/7LVbfYA.png,Chaotic Havoc#7512,326895657803710477
+694,Helioptile,https://i.imgur.com/Rc7kUvK.png,SuperJedi224#2591,304098467192635392
+695,Heliolisk,https://i.imgur.com/mnmKqrb.png,Anoea#3441,285861483412193280
+696,Tyrunt,https://i.imgur.com/zg8hcJm.png,Chaotic Havoc#7512,326895657803710477
+697,Tyrantrum,https://i.imgur.com/277JVOO.png,Chaotic Havoc#7512,326895657803710477
+698,Amaura,https://i.imgur.com/VEp3W7W.png,Dagger_Mace#5953,611659645760831506
+699,Aurorus,https://i.imgur.com/RD336oo.png,Dagger_Mace#5953,611659645760831506
+700,Sylveon,https://i.imgur.com/Jg76CQo.png,SuperJedi224#2591,304098467192635392
+701,Hawlucha,https://i.imgur.com/y73XA4g.png,Chaotic Havoc#7512,326895657803710477
+702,Dedenne,https://i.imgur.com/poibfVI.png,§CrepeMewtwo§#0482,834780655514157116
+703,Carbink,https://i.imgur.com/VbNJYAa.png,bubblesstann#3132,483265131611029518
+704,Goomy,https://i.imgur.com/Qe1N4tR.png,Wolly#2091,663382021569118238
+705,Sliggoo,https://i.imgur.com/0CORbkn.png,Sept#8911,891522852182982656
+706,Goodra,https://i.imgur.com/4AKSo3S.png,Kiyu_067#0591,775549954080899142
+707,Klefki,https://i.imgur.com/G9o1b6O.png,BluBambii | Jess#6814,712521240602214400
+708,Phantump,https://i.imgur.com/FlQynB3.png,Kiyu_067#0591,775549954080899142
+709,Trevenant,https://i.imgur.com/apatXM7.png,BluBambii | Jess#6814,712521240602214400
+710,Pumpkaboo,https://i.imgur.com/pE9aPgA.png,Anoea#3441,285861483412193280
+711,Gourgeist,https://i.imgur.com/L7ntEXy.png,Anoea#3441,285861483412193280
+712,Bergmite,https://i.imgur.com/iyfMvhN.png,BluBambii | Jess#6814,712521240602214400
+713,Avalugg,https://i.imgur.com/XDYCvY3.png,🍄bwl626🍄#5858,370362708765310977
+714,Noibat,https://i.imgur.com/Sz76sjG.png,Anoea#3441,285861483412193280
+715,Noivern,https://i.imgur.com/ceGpeZ0.png,Anoea#3441,285861483412193280
+716,Xerneas,https://i.imgur.com/jl3dymO.png,BluBambii | Jess#6814,712521240602214400
+717,Yveltal,https://i.imgur.com/nOmMEmr.png,SuperJedi224#2591,304098467192635392
+718,Zygarde,https://i.imgur.com/X6NLMef.png,Chaotic Havoc#7512,326895657803710477
+719,Diancie,https://i.imgur.com/3NtLN1i.png,Foxrii_#8364,850079219681722398
+720,Hoopa,https://i.imgur.com/WXCpsXx.png,🍄bwl626🍄#5858,370362708765310977
+721,Volcanion,https://i.imgur.com/9B7ctyy.png,Kiyu_067#0591,775549954080899142
+722,Rowlet,https://i.imgur.com/iqkobtO.png,BluBambii | Jess#6814,712521240602214400
+723,Dartrix,https://i.imgur.com/Vifw40L.png,Kiyu_067#0591,775549954080899142
+724,Decidueye,https://i.imgur.com/EcJkz9S.png,BlueLego#2332,711892049842012190
+725,Litten,https://i.imgur.com/bYKcS6b.png,Rxinbow🌈~#2434,843155645422108712
+726,Torracat,https://i.imgur.com/ObWTHA3.png,🦝QWISTAYCAT🦝#1314,285996997641502731
+727,Incineroar,https://i.imgur.com/qZ6yPX7.png,Kiyu_067#0591,775549954080899142
+728,Popplio,https://i.imgur.com/MsfXfzt.png,Foxrii_#8364,850079219681722398
+729,Brionne,https://i.imgur.com/vlTlkwG.png,Foxrii_#8364,850079219681722398
+730,Primarina,https://i.imgur.com/K1QR6cz.png,Foxrii_#8364,850079219681722398
+731,Pikipek,https://i.imgur.com/cHCo87o.png,🍄bwl626🍄#5858,370362708765310977
+732,Trumbeak,https://i.imgur.com/wZyzV8u.png,🍄bwl626🍄#5858,370362708765310977
+733,Toucannon,https://i.imgur.com/rR6GwGr.png,🍄bwl626🍄#5858,370362708765310977
+734,Yungoos,https://i.imgur.com/LQeAVP7.png,Yiqii#6383,297842109514383360
+735,Gumshoos,https://i.imgur.com/8d8ocR5.png,Anoea#3441,285861483412193280
+736,Grubbin,https://i.imgur.com/bXbcrav.png,BlueLego#2332,711892049842012190
+737,Charjabug,https://i.imgur.com/Gudq5lV.png,Yiqii#6383,297842109514383360
+738,Vikavolt,https://i.imgur.com/EX41RMt.png,Anoea#3441,285861483412193280
+739,Crabrawler,https://i.imgur.com/eHo0qRh.png,🍄bwl626🍄#5858,370362708765310977
+740,Crabominable,https://i.imgur.com/nRUjaCC.png,Kiyu_067#0591,775549954080899142
+741,Oricorio,https://i.imgur.com/8c4PYF6.png,Anoea#3441,285861483412193280
+742,Cutiefly,https://i.imgur.com/GzJ63nz.png,Anoea#3441,285861483412193280
+743,Ribombee,https://i.imgur.com/Z4nhSaZ.png,MozzSylveon700#0772,807345153051590701
+744,Rockruff,https://i.imgur.com/muNjixF.png,Anoea#3441,285861483412193280
+745,Lycanroc,https://i.imgur.com/5QUTFQ9.png,sparki#2080,292439818154278922
+746,Wishiwashi,https://i.imgur.com/IanVwKd.png,🍄bwl626🍄#5858,370362708765310977
+747,Mareanie,https://i.imgur.com/2Gs8C0k.png,MozzSylveon700#0772,807345153051590701
+748,Toxapex,https://i.imgur.com/f7SRMaw.png,BluBambii | Jess#6814,712521240602214400
+749,Mudbray,https://i.imgur.com/ANrtrps.png,Dagger_Mace#5953,611659645760831506
+750,Mudsdale,https://i.imgur.com/Fj4Cur4.png,Anoea#3441,285861483412193280
+751,Dewpider,https://i.imgur.com/op0bBXc.png,Anoea#3441,285861483412193280
+752,Araquanid,https://i.imgur.com/sU8tI8X.png,Anoea#3441,285861483412193280
+753,Fomantis,https://i.imgur.com/t9vQozk.png,MetSpek#6969,243763234685976577
+754,Lurantis,https://i.imgur.com/8EDyDRo.png,Kiyu_067#0591,775549954080899142
+755,Morelull,https://i.imgur.com/axuqfHp.png,Anoea#3441,285861483412193280
+756,Shiinotic,https://i.imgur.com/d3WFh3o.png,Sept#8911,891522852182982656
+757,Salandit,https://i.imgur.com/KArKywT.png,Kiyu_067#0591,775549954080899142
+758,Salazzle,https://i.imgur.com/fNx1Ugk.png,Kiyu_067#0591,775549954080899142
+759,Stufful,https://i.imgur.com/r6bYKVX.png,MozzSylveon700#0772,807345153051590701
+760,Bewear,https://i.imgur.com/bOe0G4d.png,MetSpek#6969,243763234685976577
+761,Bounsweet,https://i.imgur.com/LvbukmR.png,BluBambii | Jess#6814,712521240602214400
+762,Steenee,https://i.imgur.com/NRMk8k4.png,Kiyu_067#0591,775549954080899142
+763,Tsareena,https://i.imgur.com/zSI87NP.png,§CrepeMewtwo§#0482,834780655514157116
+764,Comfey,https://i.imgur.com/YcKsGsh.png,JynErso#2806,449792537272516628
+765,Oranguru,https://i.imgur.com/4VY01JU.png,Kiyu_067#0591,775549954080899142
+766,Passimian,https://i.imgur.com/T8zOniu.png,itsonlyanna#1477,286350129265508352
+767,Wimpod,https://i.imgur.com/Upop51N.png,Kiyu_067#0591,775549954080899142
+768,Golisopod,https://i.imgur.com/mpW72pa.png,Kiyu_067#0591,775549954080899142
+769,Sandygast,https://i.imgur.com/CKYbb0b.png,BluBambii | Jess#6814,712521240602214400
+770,Palossand,https://i.imgur.com/DIuDqij.png,Taffy#3090,342473674902732810
+771,Pyukumuku,https://i.imgur.com/boha2Bs.png,Sept#8911,891522852182982656
+772,Type: Null,https://i.imgur.com/0fx17UL.png,sparki#2080,292439818154278922
+773,Silvally,https://i.imgur.com/vAsC9Wk.png,sparki#2080,292439818154278922
+774,Minior,https://i.imgur.com/hKjvEbY.png,Anoea#3441,285861483412193280
+775,Komala,https://i.imgur.com/0TCGjtc.png,bubblesstann#3132,483265131611029518
+776,Turtonator,https://i.imgur.com/KARWbWM.png,Chaotic Havoc#7512,326895657803710477
+777,Togedemaru,https://i.imgur.com/nPRwv2c.png,SuperJedi224#2591,304098467192635392
+778,Mimikyu,https://i.imgur.com/oLgUJCU.png,Kiyu_067#0591,775549954080899142
+779,Bruxish,https://i.imgur.com/A1bwTb1.png,Dagger_Mace#5953,611659645760831506
+780,Drampa,https://i.imgur.com/CPBuNOI.png,Taffy#3090,342473674902732810
+781,Dhelmise,https://i.imgur.com/XXe1HQV.png,Anoea#3441,285861483412193280
+782,Jangmo-o,https://i.imgur.com/XFAG77E.png,Kiyu_067#0591,775549954080899142
+783,Hakamo-o,https://i.imgur.com/UeHCl6H.png,Kiyu_067#0591,775549954080899142
+784,Kommo-o,https://i.imgur.com/sbSv6OU.png,Kiyu_067#0591,775549954080899142
+785,Tapu Koko,https://i.imgur.com/Kf9YaGa.png,Kiyu_067#0591,775549954080899142
+786,Tapu Lele,https://i.imgur.com/IqEl49y.png,Dagger_Mace#5953,611659645760831506
+787,Tapu Bulu,https://i.imgur.com/O1nzCSE.png,Kiyu_067#0591,775549954080899142
+788,Tapu Fini,https://i.imgur.com/cBT5LPg.png,Kiyu_067#0591,775549954080899142
+789,Cosmog,https://i.imgur.com/5Shj8Ec.png,Anoea#3441,285861483412193280
+790,Cosmoem,https://i.imgur.com/MlR9ApR.png,SuperJedi224#2591,304098467192635392
+791,Solgaleo,https://i.imgur.com/4f8g8J0.png,Kiyu_067#0591,775549954080899142
+792,Lunala,https://i.imgur.com/AJxdqhc.png,Foxrii_#8364,850079219681722398
+793,Nihilego,https://i.imgur.com/fKEdD16.png,kitkat#8097,882428206907555930
+794,Buzzwole,https://i.imgur.com/eAuOcfu.png,Dagger_Mace#5953,611659645760831506
+795,Pheromosa,https://i.imgur.com/v9tvs81.png,BluBambii | Jess#6814,712521240602214400
+796,Xurkitree,https://i.imgur.com/ni68nfS.png,Chaotic Havoc#7512,326895657803710477
+797,Celesteela,https://i.imgur.com/EHqWHVg.png,Kiyu_067#0591,775549954080899142
+798,Kartana,https://i.imgur.com/5rUj22M.png,Kiyu_067#0591,775549954080899142
+799,Guzzlord,https://i.imgur.com/wPb5jnr.png,Kiyu_067#0591,775549954080899142
+800,Necrozma,https://i.imgur.com/6Rmdt3X.png,🍄bwl626🍄#5858,370362708765310977
+801,Magearna,https://i.imgur.com/gRLBBnq.png,SuperJedi224#2591,304098467192635392
+802,Marshadow,https://i.imgur.com/9FTiK1L.png,Kiyu_067#0591,775549954080899142
+803,Poipole,https://i.imgur.com/NUZmyBm.png,BluBambii | Jess#6814,712521240602214400
+804,Naganadel,https://i.imgur.com/tN1cpPD.png,Chaotic Havoc#7512,326895657803710477
+805,Stakataka,https://i.imgur.com/Rft42Xp.png,Kiyu_067#0591,775549954080899142
+806,Blacephalon,https://i.imgur.com/zRJAAwi.png,SuperJedi224#2591,304098467192635392
+807,Zeraora,https://i.imgur.com/oRkI4Fj.png,Purgatory#4604,216317211042775050
+808,Meltan,https://i.imgur.com/y6c1iDZ.png,Kiyu_067#0591,775549954080899142
+809,Melmetal,https://i.imgur.com/xb5HUTM.png,SuperJedi224#2591,304098467192635392
+810,Grookey,https://i.imgur.com/ckQJkQj.png,Kiyu_067#0591,775549954080899142
+811,Thwackey,https://i.imgur.com/GL2o0bz.png,BluBambii | Jess#6814,712521240602214400
+812,Rillaboom,https://i.imgur.com/KMmGjlW.png,Dagger_Mace#5953,611659645760831506
+813,Scorbunny,https://i.imgur.com/oUKbiUg.png,BlueLego#2332,711892049842012190
+814,Raboot,https://i.imgur.com/kiJaoZ6.png,BlueLego#2332,711892049842012190
+815,Cinderace,https://i.imgur.com/dUX7nHG.png,BlueLego#2332,711892049842012190
+816,Sobble,https://i.imgur.com/rjit52Z.png,Chaotic Havoc#7512,326895657803710477
+817,Drizzile,https://i.imgur.com/ShQkuIh.png,Chaotic Havoc#7512,326895657803710477
+818,Inteleon,https://i.imgur.com/b30PWii.png,Chaotic Havoc#7512,326895657803710477
+819,Skwovet,https://i.imgur.com/cPxmDfr.png,BluBambii | Jess#6814,712521240602214400
+820,Greedent,https://i.imgur.com/zxzFX61.png,Yiqii#6383,297842109514383360
+821,Rookidee,https://i.imgur.com/fRPHkMU.png,Anoea#3441,285861483412193280
+822,Corvisquire,https://i.imgur.com/Oggl6eF.png,🍄bwl626🍄#5858,370362708765310977
+823,Corviknight,https://i.imgur.com/vmQjElj.png,Kiyu_067#0591,775549954080899142
+824,Blipbug,https://i.imgur.com/mOFzUoa.png,🍄bwl626🍄#5858,370362708765310977
+825,Dottler,https://i.imgur.com/GYLrV6Q.png,SuperJedi224#2591,304098467192635392
+826,Orbeetle,https://i.imgur.com/RoaTKxW.png,Anoea#3441,285861483412193280
+827,Nickit,https://i.imgur.com/FRWPCho.png,SuperJedi224#2591,304098467192635392
+828,Thievul,https://i.imgur.com/UfEJJX2.png,Anoea#3441,285861483412193280
+829,Gossifleur,https://i.imgur.com/9xmTTRT.png,JynErso#2806,449792537272516628
+830,Eldegoss,https://i.imgur.com/MOwk7G9.png,Anoea#3441,285861483412193280
+831,Wooloo,https://i.imgur.com/s2FRpJb.png,BluBambii | Jess#6814,712521240602214400
+832,Dubwool,https://i.imgur.com/UYAHlGK.png,Foxrii_#8364,850079219681722398
+833,Chewtle,https://i.imgur.com/kKDp4bB.png,BluBambii | Jess#6814,712521240602214400
+834,Drednaw,https://i.imgur.com/cPVkYrk.png,Kiyu_067#0591,775549954080899142
+835,Yamper,https://i.imgur.com/tIQcuTo.png,Chaotic Havoc#7512,326895657803710477
+836,Boltund,https://i.imgur.com/GFwldE1.png,Chaotic Havoc#7512,326895657803710477
+837,Rolycoly,https://i.imgur.com/7tvqokt.png,SuperJedi224#2591,304098467192635392
+838,Carkol,https://i.imgur.com/tw9cZ7X.png,🍄bwl626🍄#5858,370362708765310977
+839,Coalossal,https://i.imgur.com/d3eJ4kl.png,Chaotic Havoc#7512,326895657803710477
+840,Applin,https://i.imgur.com/c17oQ4n.png,Dagger_Mace#5953,611659645760831506
+841,Flapple,https://i.imgur.com/t7l5QWg.png,Dagger_Mace#5953,611659645760831506
+842,Appletun,https://i.imgur.com/UtPB4MU.png,Dagger_Mace#5953,611659645760831506
+843,Silicobra,https://i.imgur.com/9WrwVl1.png,Anoea#3441,285861483412193280
+844,Sandaconda,https://i.imgur.com/VPpDJYz.png,Anoea#3441,285861483412193280
+845,Cramorant,https://i.imgur.com/vImqFSl.png,Sept#8911,891522852182982656
+846,Arrokuda,https://i.imgur.com/l8im2bU.png,BlueLego#2332,711892049842012190
+847,Barraskewda,https://i.imgur.com/1Mdvw5g.png,Anoea#3441,285861483412193280
+848,Toxel,https://i.imgur.com/bWVlCTh.png,Chaotic Havoc#7512,326895657803710477
+849,Toxtricity,https://i.imgur.com/4dVpsdt.png,Chaotic Havoc#7512,326895657803710477
+850,Sizzlipede,https://i.imgur.com/blcS6rC.png,Anoea#3441,285861483412193280
+851,Centiskorch,https://i.imgur.com/RLVKXUB.png,Kiyu_067#0591,775549954080899142
+852,Clobbopus,https://i.imgur.com/XT5TahA.png,MozzSylveon700#0772,807345153051590701
+853,Grapploct,https://i.imgur.com/m4ubWae.png,Anoea#3441,285861483412193280
+854,Sinistea,https://i.imgur.com/P7N5Gvh.png,Chaotic Havoc#7512,326895657803710477
+855,Polteageist,https://i.imgur.com/JMWbkvK.png,Anoea#3441,285861483412193280
+856,Hatenna,https://i.imgur.com/N2iR9R0.png,『𝙍𝙖𝙞𝙣𝙮 𝘿𝙖𝙮 𝘿𝙧𝙚𝙖𝙢𝙞𝙣𝙜』#6794,878907894022701066
+857,Hattrem,https://i.imgur.com/oXVmmrv.png,BluBambii | Jess#6814,712521240602214400
+858,Hatterene,https://i.imgur.com/3QrF0w6.png,BluBambii | Jess#6814,712521240602214400
+859,Impidimp,https://i.imgur.com/KGpq3HS.png,BlueLego#2332,711892049842012190
+860,Morgrem,https://i.imgur.com/javzDWl.png,Kiyu_067#0591,775549954080899142
+861,Grimmsnarl,https://i.imgur.com/EemN9Au.png,SuperJedi224#2591,304098467192635392
+862,Obstagoon,https://i.imgur.com/lhZQ8g8.png,Chaotic Havoc#7512,326895657803710477
+863,Perrserker,https://i.imgur.com/voWhft2.png,Anoea#3441,285861483412193280
+864,Cursola,https://i.imgur.com/5RDG9I5.png,Sept#8911,891522852182982656
+865,Sirfetch'd,https://i.imgur.com/LZo2wZo.png,BlueLego#2332,711892049842012190
+866,Mr. Rime,https://i.imgur.com/Ngh74zJ.png,BluBambii | Jess#6814,712521240602214400
+867,Runerigus,https://i.imgur.com/zOwj4cU.png,SuperJedi224#2591,304098467192635392
+868,Milcery,https://i.imgur.com/w1Kl78v.png,BluBambii | Jess#6814,712521240602214400
+869,Alcremie,https://i.imgur.com/rWfVJFZ.png,Chaotic Havoc#7512,326895657803710477
+870,Falinks,https://i.imgur.com/yNt650N.png,Kiyu_067#0591,775549954080899142
+871,Pincurchin,https://i.imgur.com/V15JHEH.png,Anoea#3441,285861483412193280
+872,Snom,https://i.imgur.com/0ozgcGl.png,Sept#8911,891522852182982656
+873,Frosmoth,https://i.imgur.com/n420qf8.png,Anoea#3441,285861483412193280
+874,Stonjourner,https://i.imgur.com/V4z1vRx.png,BluBambii | Jess#6814,712521240602214400
+875,Eiscue,https://i.imgur.com/j5svyUn.png,Sept#8911,891522852182982656
+876,Indeedee,https://i.imgur.com/3Z0Haoz.png,Chaotic Havoc#7512,326895657803710477
+877,Morpeko,https://i.imgur.com/feLvlgg.png,Rxinbow🌈~#2434,843155645422108712
+878,Cufant,https://i.imgur.com/jbXtOGu.png,Anoea#3441,285861483412193280
+879,Copperajah,https://i.imgur.com/3tl8qxt.png,MozzSylveon700#0772,807345153051590701
+880,Dracozolt,https://i.imgur.com/vyzhU3f.png,Anoea#3441,285861483412193280
+881,Arctozolt,https://i.imgur.com/aC6qdic.png,Anoea#3441,285861483412193280
+882,Dracovish,https://i.imgur.com/XQ4hBn2.png,🍄bwl626🍄#5858,370362708765310977
+883,Arctovish,https://i.imgur.com/uknXpQW.png,Anoea#3441,285861483412193280
+884,Duraludon,https://i.imgur.com/DF5rBeE.png,🍄bwl626🍄#5858,370362708765310977
+885,Dreepy,https://i.imgur.com/tloaPDo.png,Kiyu_067#0591,775549954080899142
+886,Drakloak,https://i.imgur.com/7qakRG6.png,Kiyu_067#0591,775549954080899142
+887,Dragapult,https://i.imgur.com/E64iuWN.png,Kiyu_067#0591,775549954080899142
+888,Zacian,https://i.imgur.com/hkvMYnG.png,sparki#2080,292439818154278922
+889,Zamazenta,https://i.imgur.com/lGv5Itm.png,sparki#2080,292439818154278922
+890,Eternatus,https://i.imgur.com/SN3Zvhd.png,Kiyu_067#0591,775549954080899142
+891,Kubfu,https://i.imgur.com/6xa2Ct6.png,Rxinbow🌈~#2434,843155645422108712
+892,Urshifu,https://i.imgur.com/JePfcta.png,Kiyu_067#0591,775549954080899142
+893,Zarude,https://i.imgur.com/Xfy6x6F.png,Foxrii_#8364,850079219681722398
+894,Regieleki,https://i.imgur.com/bmtVcl0.png,Kiyu_067#0591,775549954080899142
+895,Regidrago,https://i.imgur.com/LkovKxW.png,Kiyu_067#0591,775549954080899142
+896,Glastrier,https://i.imgur.com/hICywIc.png,bubblesstann#3132,483265131611029518
+897,Spectrier,https://i.imgur.com/7uu6ZPR.png,『𝙍𝙖𝙞𝙣𝙮 𝘿𝙖𝙮 𝘿𝙧𝙚𝙖𝙢𝙞𝙣𝙜』#6794,878907894022701066
+898,Calyrex,https://i.imgur.com/zGi3HF2.png,Kiyu_067#0591,775549954080899142
+10001,Attack Deoxys,https://i.imgur.com/otmDDD6.png,SuperJedi224#2591,304098467192635392
+10002,Defense Deoxys,https://i.imgur.com/uAfYEVB.png,SuperJedi224#2591,304098467192635392
+10003,Speed Deoxys,https://i.imgur.com/78BfdHp.png,SuperJedi224#2591,304098467192635392
+10004,Sandy Wormadam,https://i.imgur.com/Wjh7xy4.png,Dagger_Mace#5953,611659645760831506
+10005,Trash Wormadam,https://i.imgur.com/DBcYJBD.png,Dagger_Mace#5953,611659645760831506
+10013,Sunny Castform,https://i.imgur.com/e1Pc2qd.png,Dagger_Mace#5953,611659645760831506
+10014,Rainy Castform,https://i.imgur.com/SK4jMWa.png,Dagger_Mace#5953,611659645760831506
+10015,Snowy Castform,https://i.imgur.com/ESILX2m.png,Dagger_Mace#5953,611659645760831506
+10016,Blue-Striped Basculin,https://i.imgur.com/diUKZr5.png,Dagger_Mace#5953,611659645760831506
+10091,Alolan Rattata,https://i.imgur.com/l2uI8mQ.png,Anoea#3441,285861483412193280
+10092,Alolan Raticate,https://i.imgur.com/HKNQY43.png,Anoea#3441,285861483412193280
+10100,Alolan Raichu,https://i.imgur.com/rPs2Vr4.png,Kiyu_067#0591,775549954080899142
+10101,Alolan Sandshrew,https://i.imgur.com/xQN2htN.png,SuperJedi224#2591,304098467192635392
+10102,Alolan Sandslash,https://i.imgur.com/EnmeoKX.png,Kiyu_067#0591,775549954080899142
+10103,Alolan Vulpix,https://i.imgur.com/tTLXCIc.png,Rxinbow🌈~#2434,843155645422108712
+10104,Alolan Ninetales,https://i.imgur.com/OtiSCW6.png,JynErso#2806,449792537272516628
+10105,Alolan Diglett,https://i.imgur.com/aGdrWY9.png,BluBambii | Jess#6814,712521240602214400
+10106,Alolan Dugtrio,https://i.imgur.com/up6DLtt.png,BluBambii | Jess#6814,712521240602214400
+10107,Alolan Meowth,https://i.imgur.com/8fcMl1j.png,Chaotic Havoc#7512,326895657803710477
+10108,Alolan Persian,https://i.imgur.com/RU6eN1e.png,MozzSylveon700#0772,807345153051590701
+10109,Alolan Geodude,https://i.imgur.com/VUCyBGG.png,Kiyu_067#0591,775549954080899142
+10110,Alolan Graveler,https://i.imgur.com/I8Rsldp.png,Dagger_Mace#5953,611659645760831506
+10111,Alolan Golem,https://i.imgur.com/V21iDWk.png,Dagger_Mace#5953,611659645760831506
+10112,Alolan Grimer,https://i.imgur.com/aaPeFSh.png,Anoea#3441,285861483412193280
+10113,Alolan Muk,https://i.imgur.com/J2HzQMk.png,Anoea#3441,285861483412193280
+10114,Alolan Exeggutor,https://i.imgur.com/pv6k8hj.png,Kiyu_067#0591,775549954080899142
+10115,Alolan Marowak,https://i.imgur.com/Y7b9EjE.png,Kiyu_067#0591,775549954080899142
+10118,10% Zygarde,https://i.imgur.com/AojfnES.png,Kiyu_067#0591,775549954080899142
+10120,Complete Zygarde,https://i.imgur.com/UN4sfmZ.png,SuperJedi224#2591,304098467192635392
+10123,Pom-pom Oricorio,https://i.imgur.com/Z44OJxa.png,Anoea#3441,285861483412193280
+10124,Pa'u Oricorio,https://i.imgur.com/nEwH1rj.png,Anoea#3441,285861483412193280
+10125,Sensu Oricorio,https://i.imgur.com/iOpfwC2.png,Anoea#3441,285861483412193280
+10183,Rapid Strike Urshifu,https://i.imgur.com/5IC1qHr.png,Kiyu_067#0591,775549954080899142
+10160,Galarian Rapidash,https://i.imgur.com/MvmoLi0.png,Chaotic Havoc#7512,326895657803710477
+10161,Galarian Slowpoke,https://i.imgur.com/2wEIard.png,Chaotic Havoc#7512,326895657803710477
+10162,Galarian Slowbro,https://i.imgur.com/O7K6xQk.png,Dagger_Mace#5953,611659645760831506
+10163,Galarian Farfetch'd,https://i.imgur.com/u9OosZJ.png,BlueLego#2332,711892049842012190
+10164,Galarian Weezing,https://i.imgur.com/OlvtdGQ.png,Dagger_Mace#5953,611659645760831506
+10165,Galarian Mr. Mime,https://i.imgur.com/o2iVdR1.png,Dagger_Mace#5953,611659645760831506
+10166,Galarian Articuno,https://i.imgur.com/4fDBhh7.png,Chaotic Havoc#7512,326895657803710477
+10167,Galarian Zapdos,https://i.imgur.com/686lqPf.png,Chaotic Havoc#7512,326895657803710477
+10168,Galarian Moltres,https://i.imgur.com/C8n1xhc.png,Chaotic Havoc#7512,326895657803710477
+10169,Galarian Slowking,https://i.imgur.com/yvwRvrB.png,Dagger_Mace#5953,611659645760831506
+10170,Galarian Corsola,https://i.imgur.com/muNAqmO.png,Chaotic Havoc#7512,326895657803710477
+10171,Galarian Zigzagoon,https://i.imgur.com/k3LcMno.png,Chaotic Havoc#7512,326895657803710477
+10172,Galarian Linoone,https://i.imgur.com/UNEizQj.png,Chaotic Havoc#7512,326895657803710477
+10173,Galarian Darumaka,https://i.imgur.com/TbSWdKO.png,Dagger_Mace#5953,611659645760831506
+10174,Galarian Darmanitan,https://i.imgur.com/6JEy8iD.png,Dagger_Mace#5953,611659645760831506
+10176,Galarian Yamask,https://i.imgur.com/uK7Ys0R.png,Dagger_Mace#5953,611659645760831506
+10177,Galarian Stunfisk,https://i.imgur.com/eKvMBwP.png,Dagger_Mace#5953,611659645760831506
+10158,Galarian Meowth,https://i.imgur.com/7f1a1mV.png,Chaotic Havoc#7512,326895657803710477
+10159,Galarian Ponyta,https://i.imgur.com/48ZASnJ.png,Dagger_Mace#5953,611659645760831506

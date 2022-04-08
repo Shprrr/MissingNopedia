@@ -272,7 +272,7 @@ namespace MissingNopedia
 				if (contentGenerationLearnset is null) return;
 			}
 
-			var doc = new PokemonHtml(content, contentGenerationLearnset);
+			var doc = new PokemonHtml(pokemonName, content, contentGenerationLearnset);
 
 			ShowNewPage(doc.BuildNewPage());
 		}
