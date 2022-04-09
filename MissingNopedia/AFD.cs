@@ -33,9 +33,21 @@ namespace MissingNopedia
 
 		public static string GetImageUrl(string name) => pokemonAFDArt[NormalizeName(name)];
 
+		/// <summary>
+		/// Remove the bug with those strings that don't match.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
 		private static string NormalizeName(string name)
 		{
-			return name.Replace("♀", "(F)").Replace("♂️", "(M)");
+			return name switch
+			{
+				"Nidoran♀️" => "NidoranF",
+				"Nidoran♀" => "NidoranF",
+				"Nidoran♂️" => "NidoranM",
+				"Nidoran♂" => "NidoranM",
+				_ => name,
+			};
 		}
 	}
 }
