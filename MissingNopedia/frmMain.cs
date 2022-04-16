@@ -10,9 +10,6 @@ namespace MissingNopedia
 {
 	public partial class frmMain : Form
 	{
-		private const string WikiPokemonSuffix = "_(Pok%C3%A9mon)";
-		private const string WikiMoveSuffix = "_(move)";
-		private const string WikiAbilitySuffix = "_(Ability)";
 		private readonly string _DefaultText;
 		private readonly HttpClient client = new();
 		private readonly Stack<Uri> history = new();
@@ -91,7 +88,7 @@ namespace MissingNopedia
 
 		private void btnSearchPokemon_Click(object sender, EventArgs e)
 		{
-			webBrowser.Navigate("about:/wiki/" + cboPokemon.Text + WikiPokemonSuffix);
+			webBrowser.Navigate("about:/wiki/" + cboPokemon.Text + PokemonHtml.WikiPokemonSuffix);
 		}
 
 		private void cboPokemon_KeyUp(object sender, KeyEventArgs e)
@@ -105,7 +102,7 @@ namespace MissingNopedia
 
 		private void btnSearchMove_Click(object sender, EventArgs e)
 		{
-			webBrowser.Navigate("about:/wiki/" + cboMove.Text + WikiMoveSuffix);
+			webBrowser.Navigate("about:/wiki/" + cboMove.Text + MoveHtml.WikiMoveSuffix);
 		}
 
 		private void cboMove_KeyUp(object sender, KeyEventArgs e)
@@ -119,7 +116,7 @@ namespace MissingNopedia
 
 		private void btnSearchAbility_Click(object sender, EventArgs e)
 		{
-			webBrowser.Navigate("about:/wiki/" + cboAbility.Text + WikiAbilitySuffix);
+			webBrowser.Navigate("about:/wiki/" + cboAbility.Text + AbilityHtml.WikiAbilitySuffix);
 		}
 
 		private void cboAbility_KeyUp(object sender, KeyEventArgs e)
@@ -138,7 +135,7 @@ namespace MissingNopedia
 
 			if (e.Url.AbsoluteUri == "about:blank") return;
 
-			var i = e.Url.Segments[^1].LastIndexOf(WikiPokemonSuffix);
+			var i = e.Url.Segments[^1].LastIndexOf(PokemonHtml.WikiPokemonSuffix);
 			bool pageProcessed = false;
 			if (i != -1)
 			{
@@ -146,25 +143,32 @@ namespace MissingNopedia
 				await ShowInfoPokemon(Uri.UnescapeDataString(e.Url.Segments[^1].Remove(i)));
 			}
 
-			i = e.Url.Segments[^2].LastIndexOf(WikiPokemonSuffix);
+			i = e.Url.Segments[^2].LastIndexOf(PokemonHtml.WikiPokemonSuffix);
 			if (i != -1)
 			{
 				pageProcessed = true;
 				await ShowInfoPokemon(Uri.UnescapeDataString(e.Url.Segments[^2].Remove(i)), e.Url.Segments[^1]);
 			}
 
-			i = e.Url.Segments[^1].LastIndexOf(WikiMoveSuffix);
+			i = e.Url.Segments[^1].LastIndexOf(MoveHtml.WikiMoveSuffix);
 			if (i != -1)
 			{
 				pageProcessed = true;
 				await ShowInfoMove(Uri.UnescapeDataString(e.Url.Segments[^1].Remove(i)));
 			}
 
-			i = e.Url.Segments[^1].LastIndexOf(WikiAbilitySuffix);
+			i = e.Url.Segments[^1].LastIndexOf(AbilityHtml.WikiAbilitySuffix);
 			if (i != -1)
 			{
 				pageProcessed = true;
 				await ShowInfoAbility(Uri.UnescapeDataString(e.Url.Segments[^1].Remove(i)));
+			}
+
+			i = e.Url.Segments[^1].LastIndexOf(EggGroupHtml.WikiEggGroupSuffix);
+			if (i != -1)
+			{
+				pageProcessed = true;
+				await ShowInfoEggGroup(Uri.UnescapeDataString(e.Url.Segments[^1].Remove(i)));
 			}
 
 			if (pageProcessed && (history.Count == 0 || history.Peek() != e.Url))
@@ -262,13 +266,13 @@ namespace MissingNopedia
 				return;
 			}
 
-			var content = await GetPageContentAsync($"http://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(pokemonName.Replace(' ', '_'))}{WikiPokemonSuffix}");
+			var content = await GetPageContentAsync($"http://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(pokemonName.Replace(' ', '_'))}{PokemonHtml.WikiPokemonSuffix}");
 			if (content is null) return;
 
 			string contentGenerationLearnset = null;
 			if (!string.IsNullOrEmpty(generationLearnset))
 			{
-				contentGenerationLearnset = await GetPageContentAsync($"http://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(pokemonName.Replace(' ', '_'))}{WikiPokemonSuffix}/{generationLearnset}");
+				contentGenerationLearnset = await GetPageContentAsync($"http://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(pokemonName.Replace(' ', '_'))}{PokemonHtml.WikiPokemonSuffix}/{generationLearnset}");
 				if (contentGenerationLearnset is null) return;
 			}
 
@@ -293,7 +297,7 @@ namespace MissingNopedia
 				return;
 			}
 
-			var content = await GetPageContentAsync($"http://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(moveName.Replace(' ', '_'))}{WikiMoveSuffix}");
+			var content = await GetPageContentAsync($"http://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(moveName.Replace(' ', '_'))}{MoveHtml.WikiMoveSuffix}");
 			if (content is null) return;
 
 			var doc = new MoveHtml(content);
@@ -309,10 +313,26 @@ namespace MissingNopedia
 				return;
 			}
 
-			var content = await GetPageContentAsync($"http://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(abilityName.Replace(' ', '_'))}{WikiAbilitySuffix}");
+			var content = await GetPageContentAsync($"http://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(abilityName.Replace(' ', '_'))}{AbilityHtml.WikiAbilitySuffix}");
 			if (content is null) return;
 
 			var doc = new AbilityHtml(content);
+
+			ShowNewPage(doc.BuildNewPage());
+		}
+
+		private async Task ShowInfoEggGroup(string eggGroupName)
+		{
+			if (string.IsNullOrWhiteSpace(eggGroupName))
+			{
+				ShowNewPage("");
+				return;
+			}
+
+			var content = await GetPageContentAsync($"http://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(eggGroupName.Replace(' ', '_'))}{EggGroupHtml.WikiEggGroupSuffix}");
+			if (content is null) return;
+
+			var doc = new EggGroupHtml(content);
 
 			ShowNewPage(doc.BuildNewPage());
 		}

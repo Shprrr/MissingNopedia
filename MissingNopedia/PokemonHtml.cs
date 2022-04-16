@@ -2,6 +2,8 @@
 {
 	public class PokemonHtml : DocumentHtml
 	{
+		public const string WikiPokemonSuffix = "_(Pok%C3%A9mon)";
+
 		private const string Generation1to5 = "Generation_I-V";
 		private const string GameData = "Game_data";
 		private const string GameLocations = "Game_locations";

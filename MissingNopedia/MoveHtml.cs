@@ -4,6 +4,8 @@ namespace MissingNopedia
 {
 	public class MoveHtml : DocumentHtml
 	{
+		public const string WikiMoveSuffix = "_(move)";
+
 		private const string Effect = "Effect";
 		private const string Description = "Description";
 		private const string Learnset = "Learnset";

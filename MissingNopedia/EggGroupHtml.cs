@@ -1,13 +1,14 @@
 ﻿namespace MissingNopedia
 {
-	public class AbilityHtml : DocumentHtml
+	public class EggGroupHtml : DocumentHtml
 	{
-		public const string WikiAbilitySuffix = "_(Ability)";
+		public const string WikiEggGroupSuffix = "_(Egg_Group)";
 
-		private const string Effect = "Effect";
-		private const string PokemonWith = "Pok.C3.A9mon_with_";
+		private const string Characteristics = "Characteristics";
+		private const string Pokemon = "Pok.C3.A9mon";
+		private const string Trivia = "Trivia";
 
-		public AbilityHtml(string html) : base(html)
+		public EggGroupHtml(string html) : base(html)
 		{
 		}
 
@@ -29,14 +30,15 @@
 				body.AppendChild(node.Clone());
 			} while ((node = node.NextSibling) != null);
 
-			var section = AddSection(Effect);
+			var section = AddSection(Characteristics);
 			if (section != null)
 				body.AppendChildren(section);
 
-			var title = doc.DocumentNode.SelectSingleNode("//title").InnerHtml;
-			var abilityName = title.Remove(title.IndexOf('(') - 1).Replace(' ', '_');
+			section = AddSection(Pokemon);
+			if (section != null)
+				body.AppendChildren(section);
 
-			section = AddSection(PokemonWith + abilityName);
+			section = AddSection(Trivia);
 			if (section != null)
 				body.AppendChildren(section);
 
