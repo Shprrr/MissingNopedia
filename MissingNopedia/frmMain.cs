@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -39,13 +40,12 @@ namespace MissingNopedia
 		private async void frmMain_Load(object sender, EventArgs e)
 		{
 			var taskListPokemon = GetListPokemon();
-			var taskListPokemonGen8 = GetListPokemonGen8();
 			var taskListMove = GetListMove();
 			var taskListMoveGen8 = GetListMoveGen8();
 			var taskListAbility = GetListAbility();
 
 			cboPokemon.Items.Clear();
-			cboPokemon.Items.AddRange((await taskListPokemon).Union(await taskListPokemonGen8).ToArray());
+			cboPokemon.Items.AddRange(await taskListPokemon);
 
 			cboMove.Items.Clear();
 			cboMove.Items.AddRange((await taskListMove).Union(await taskListMoveGen8).ToArray());
@@ -189,20 +189,11 @@ namespace MissingNopedia
 
 		private async Task<string[]> GetListPokemon()
 		{
-			var content = await GetPageContentAsync("http://pokemondb.net/pokedex/all");
+			var content = await GetPageContentAsync("https://www.serebii.net/pokemon/nationalpokedex.shtml");
 			if (content is null) return Array.Empty<string>();
 
 			var doc = DocumentHtml.GetHtmlDocument(content);
-			return doc.DocumentNode.SelectNodes("//*[@class='ent-name']").Select(n => n.InnerText).Distinct().ToArray();
-		}
-
-		private async Task<string[]> GetListPokemonGen8()
-		{
-			var content = await GetPageContentAsync("https://www.serebii.net/pokemon/gen8pokemon.shtml");
-			if (content is null) return Array.Empty<string>();
-
-			var doc = DocumentHtml.GetHtmlDocument(content);
-			return doc.DocumentNode.SelectNodes(".//*[@class='dextable']//*[@class='fooinfo'][position()=3]/a").Select(n => n.InnerText).Distinct().ToArray();
+			return doc.DocumentNode.SelectNodes(".//*[@class='dextable']//*[@class='fooinfo'][position()=3]/a").Select(n => WebUtility.HtmlDecode(n.InnerText)).Distinct().ToArray();
 		}
 
 		private async Task<string[]> GetListMove()
