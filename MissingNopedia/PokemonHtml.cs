@@ -23,14 +23,16 @@
 
 		private readonly HtmlAgilityPack.HtmlDocument learnsetDocument;
 
-		public PokemonHtml(string pokemonName, string html, string htmlLearnset) : base(html)
+		public PokemonHtml(string pokemonName, string html, string htmlLearnset, bool isCustomPictures) : base(html)
 		{
 			if (!string.IsNullOrEmpty(htmlLearnset))
 				learnsetDocument = GetHtmlDocument(htmlLearnset);
 			PokemonName = pokemonName;
+			IsCustomPictures = isCustomPictures;
 		}
 
 		public string PokemonName { get; }
+		public bool IsCustomPictures { get; }
 
 		public override string BuildNewPage()
 		{
@@ -40,7 +42,7 @@
 
 			var content = doc.GetElementbyId(ContentText);
 			var summary = content.SelectSingleNode(".//*[@class='roundy']");
-			ReplaceProfilePicture(summary);
+			if (IsCustomPictures) ReplaceProfilePicture(summary);
 
 			var rows = summary.SelectNodes("tbody/tr");
 			rows[^6].SetAttributeValue("style", "display: none"); // Mega Stones

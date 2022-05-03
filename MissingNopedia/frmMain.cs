@@ -15,6 +15,7 @@ namespace MissingNopedia
 		private readonly HttpClient client = new();
 		private readonly Stack<Uri> history = new();
 
+		private Options options = new();
 		private AdvancedSearch.Pokemon[] pokemons;
 
 		public frmMain()
@@ -267,7 +268,7 @@ namespace MissingNopedia
 				if (contentGenerationLearnset is null) return;
 			}
 
-			var doc = new PokemonHtml(pokemonName, content, contentGenerationLearnset);
+			var doc = new PokemonHtml(pokemonName, content, contentGenerationLearnset, options.PokemonProfilePictures == OptionPokemonProfilePictures.Custom);
 
 			ShowNewPage(doc.BuildNewPage());
 		}
@@ -352,6 +353,14 @@ namespace MissingNopedia
 				dgvResult.Rows.AddRange(results.Select(p => p.ConvertRow()).ToArray());
 				lblFound.Text = results.Length + " found";
 			}
+		}
+
+		private void btnOptions_Click(object sender, EventArgs e)
+		{
+			var form = new frmOptions(options);
+			if (form.ShowDialog() != DialogResult.OK) return;
+
+			options = form.Options;
 		}
 	}
 }

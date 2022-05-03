@@ -78,6 +78,7 @@
             this.cboAbility = new System.Windows.Forms.ComboBox();
             this.btnSearchAbility = new System.Windows.Forms.Button();
             this.tabPageSearch = new System.Windows.Forms.TabPage();
+            this.btnOptions = new System.Windows.Forms.Button();
             label1 = new System.Windows.Forms.Label();
             panBtnCriteria = new System.Windows.Forms.Panel();
             panBtnCriteria.SuspendLayout();
@@ -492,7 +493,7 @@
             this.tabPageType.Location = new System.Drawing.Point(0, 25);
             this.tabPageType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPageType.Name = "tabPageType";
-            this.tabPageType.Size = new System.Drawing.Size(959, 29);
+            this.tabPageType.Size = new System.Drawing.Size(1026, 29);
             this.tabPageType.TabIndex = 1;
             this.tabPageType.Text = "Type Effectiveness";
             this.tabPageType.UseVisualStyleBackColor = true;
@@ -505,7 +506,7 @@
             this.tabPageMove.Location = new System.Drawing.Point(0, 25);
             this.tabPageMove.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPageMove.Name = "tabPageMove";
-            this.tabPageMove.Size = new System.Drawing.Size(959, 29);
+            this.tabPageMove.Size = new System.Drawing.Size(1026, 29);
             this.tabPageMove.TabIndex = 2;
             this.tabPageMove.Text = "Move";
             this.tabPageMove.UseVisualStyleBackColor = true;
@@ -558,7 +559,7 @@
             this.tabPageAbility.Location = new System.Drawing.Point(0, 25);
             this.tabPageAbility.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPageAbility.Name = "tabPageAbility";
-            this.tabPageAbility.Size = new System.Drawing.Size(959, 29);
+            this.tabPageAbility.Size = new System.Drawing.Size(1026, 29);
             this.tabPageAbility.TabIndex = 3;
             this.tabPageAbility.Text = "Ability";
             this.tabPageAbility.UseVisualStyleBackColor = true;
@@ -608,16 +609,28 @@
             this.tabPageSearch.Location = new System.Drawing.Point(0, 25);
             this.tabPageSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPageSearch.Name = "tabPageSearch";
-            this.tabPageSearch.Size = new System.Drawing.Size(959, 29);
+            this.tabPageSearch.Size = new System.Drawing.Size(1026, 29);
             this.tabPageSearch.TabIndex = 4;
             this.tabPageSearch.Text = "Advanced Search";
             this.tabPageSearch.UseVisualStyleBackColor = true;
+            // 
+            // btnOptions
+            // 
+            this.btnOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOptions.Location = new System.Drawing.Point(965, 9);
+            this.btnOptions.Name = "btnOptions";
+            this.btnOptions.Size = new System.Drawing.Size(75, 23);
+            this.btnOptions.TabIndex = 4;
+            this.btnOptions.Text = "&Options";
+            this.btnOptions.UseVisualStyleBackColor = true;
+            this.btnOptions.Click += new System.EventHandler(this.btnOptions_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1054, 881);
+            this.Controls.Add(this.btnOptions);
             this.Controls.Add(this.splitSearch);
             this.Controls.Add(this.tabControlEx);
             this.Controls.Add(this.webBrowser);
@@ -689,6 +702,7 @@
 		private System.Windows.Forms.Button btnAddCriterion;
 		private System.Windows.Forms.Label lblFound;
 		private System.Windows.Forms.TableLayoutPanel tlpCriteria;
+		private System.Windows.Forms.Button btnOptions;
 	}
 }
 
