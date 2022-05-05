@@ -72,7 +72,7 @@ namespace MissingNopedia
 		private async void tabControlEx_Selected(object sender, TabControlEventArgs e)
 		{
 			if (e.TabPage.Name == tabPagePokemon.Name)
-				await ShowInfoPokemon(cboPokemon?.Text);
+				await ShowInfoPokemon(cboPokemon?.Text, GetGenerationLearnset());
 
 			if (e.TabPage.Name == tabPageType.Name)
 				ShowTypeEffectiveness();
@@ -87,9 +87,28 @@ namespace MissingNopedia
 			splitSearch.Visible = e.TabPage.Name == tabPageSearch.Name;
 		}
 
+		private string GetGenerationLearnset()
+		{
+			return options.DefaultGeneration switch
+			{
+				OptionGenerations.Generation1 => "Generation_I_learnset",
+				OptionGenerations.Generation2 => "Generation_II_learnset",
+				OptionGenerations.Generation3 => "Generation_III_learnset",
+				OptionGenerations.Generation4 => "Generation_IV_learnset",
+				OptionGenerations.Generation5 => "Generation_V_learnset",
+				OptionGenerations.Generation6 => "Generation_VI_learnset",
+				OptionGenerations.Generation7 => "Generation_VII_learnset",
+				_ => null
+			};
+		}
+
 		private void btnSearchPokemon_Click(object sender, EventArgs e)
 		{
-			webBrowser.Navigate("about:/wiki/" + cboPokemon.Text + PokemonHtml.WikiPokemonSuffix);
+			var url = $"about:/wiki/{cboPokemon.Text}{PokemonHtml.WikiPokemonSuffix}";
+			var generationLearnset = GetGenerationLearnset();
+			if (!string.IsNullOrEmpty(generationLearnset))
+				url += "/" + generationLearnset;
+			webBrowser.Navigate(url);
 		}
 
 		private void cboPokemon_KeyUp(object sender, KeyEventArgs e)

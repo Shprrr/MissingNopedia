@@ -35,15 +35,18 @@ namespace MissingNopedia
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.rbOfficialPictures = new System.Windows.Forms.RadioButton();
             this.rbCustomPictures = new System.Windows.Forms.RadioButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cboDefaultGeneration = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(10, 92);
+            this.btnOk.Location = new System.Drawing.Point(172, 82);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 0;
@@ -54,7 +57,7 @@ namespace MissingNopedia
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(91, 92);
+            this.btnCancel.Location = new System.Drawing.Point(253, 82);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
@@ -107,11 +110,32 @@ namespace MissingNopedia
             this.rbCustomPictures.Text = "Custom pictures";
             this.rbCustomPictures.UseVisualStyleBackColor = true;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.AutoSize = true;
+            this.groupBox2.Controls.Add(this.cboDefaultGeneration);
+            this.groupBox2.Location = new System.Drawing.Point(168, 12);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(159, 64);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Default Generation";
+            // 
+            // cboDefaultGeneration
+            // 
+            this.cboDefaultGeneration.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboDefaultGeneration.FormattingEnabled = true;
+            this.cboDefaultGeneration.Location = new System.Drawing.Point(3, 19);
+            this.cboDefaultGeneration.Name = "cboDefaultGeneration";
+            this.cboDefaultGeneration.Size = new System.Drawing.Size(150, 23);
+            this.cboDefaultGeneration.TabIndex = 0;
+            // 
             // frmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(178, 127);
+            this.ClientSize = new System.Drawing.Size(340, 117);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
@@ -126,6 +150,7 @@ namespace MissingNopedia
             this.groupBox1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -139,5 +164,7 @@ namespace MissingNopedia
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 		private System.Windows.Forms.RadioButton rbOfficialPictures;
 		private System.Windows.Forms.RadioButton rbCustomPictures;
+		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.ComboBox cboDefaultGeneration;
 	}
 }
