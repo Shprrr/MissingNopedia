@@ -16,7 +16,6 @@ namespace MissingNopedia
 		private readonly Stack<Uri> history = new();
 
 		private Options options = new();
-		private AdvancedSearch.Pokemon[] pokemons;
 
 		public frmMain()
 		{
@@ -53,18 +52,6 @@ namespace MissingNopedia
 
 			cboAbility.Items.Clear();
 			cboAbility.Items.AddRange(await taskListAbility);
-
-#if DEBUG
-#pragma warning disable CS4014 // Dans la mesure où cet appel n'est pas attendu, l'exécution de la méthode actuelle continue avant la fin de l'appel
-			AdvancedSearch.Pokemon[] pokemonsWeb = null;
-			AdvancedSearch.Pokemon.GetListPokemonWeb().ContinueWith(p =>
-			{
-				pokemonsWeb = p.Result;
-			});
-#pragma warning restore CS4014 // Dans la mesure où cet appel n'est pas attendu, l'exécution de la méthode actuelle continue avant la fin de l'appel
-#endif
-
-			pokemons = AdvancedSearch.Pokemon.GetListPokemonDB();
 
 			Text = _DefaultText;
 		}
@@ -362,16 +349,16 @@ namespace MissingNopedia
 		private void btnAdvancedSearch_Click(object sender, EventArgs e)
 		{
 			dgvResult.Rows.Clear();
-			if (pokemons != null)
-			{
-				var results = pokemons;
-				foreach (var criterion in flpCriteria.Controls)
-				{
-					results = ((Criterion)criterion).ApplyCriterion(results);
-				}
-				dgvResult.Rows.AddRange(results.Select(p => p.ConvertRow()).ToArray());
-				lblFound.Text = results.Length + " found";
-			}
+			//if (pokemons != null)
+			//{
+			//	var results = pokemons;
+			//	foreach (var criterion in flpCriteria.Controls)
+			//	{
+			//		results = ((Criterion)criterion).ApplyCriterion(results);
+			//	}
+			//	dgvResult.Rows.AddRange(results.Select(p => p.ConvertRow()).ToArray());
+			//	lblFound.Text = results.Length + " found";
+			//}
 		}
 
 		private void btnOptions_Click(object sender, EventArgs e)
