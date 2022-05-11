@@ -534,7 +534,7 @@
             this.cboMove.Location = new System.Drawing.Point(34, 1);
             this.cboMove.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cboMove.Name = "cboMove";
-            this.cboMove.Size = new System.Drawing.Size(835, 23);
+            this.cboMove.Size = new System.Drawing.Size(902, 23);
             this.cboMove.TabIndex = 0;
             this.cboMove.SelectedIndexChanged += new System.EventHandler(this.btnSearchMove_Click);
             this.cboMove.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cboMove_KeyUp);
@@ -542,7 +542,7 @@
             // btnSearchMove
             // 
             this.btnSearchMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearchMove.Location = new System.Drawing.Point(871, -1);
+            this.btnSearchMove.Location = new System.Drawing.Point(938, -1);
             this.btnSearchMove.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSearchMove.Name = "btnSearchMove";
             this.btnSearchMove.Size = new System.Drawing.Size(88, 27);
@@ -587,7 +587,7 @@
             this.cboAbility.Location = new System.Drawing.Point(34, 1);
             this.cboAbility.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cboAbility.Name = "cboAbility";
-            this.cboAbility.Size = new System.Drawing.Size(835, 23);
+            this.cboAbility.Size = new System.Drawing.Size(902, 23);
             this.cboAbility.TabIndex = 0;
             this.cboAbility.SelectedIndexChanged += new System.EventHandler(this.btnSearchAbility_Click);
             this.cboAbility.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cboAbility_KeyUp);
@@ -595,7 +595,7 @@
             // btnSearchAbility
             // 
             this.btnSearchAbility.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearchAbility.Location = new System.Drawing.Point(871, -1);
+            this.btnSearchAbility.Location = new System.Drawing.Point(938, -1);
             this.btnSearchAbility.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSearchAbility.Name = "btnSearchAbility";
             this.btnSearchAbility.Size = new System.Drawing.Size(88, 27);
