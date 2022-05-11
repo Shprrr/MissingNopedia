@@ -16,6 +16,7 @@ namespace MissingNopedia
 		private readonly Stack<Uri> history = new();
 
 		private Options options = new();
+		private readonly AdvancedSearch.AdvancedSearch advancedSearch = new();
 
 		public frmMain()
 		{
@@ -346,19 +347,19 @@ namespace MissingNopedia
 				flpCriteria.Controls.RemoveAt(flpCriteria.Controls.Count - 1);
 		}
 
+		delegate void AdvancedSearchDelegate();
 		private void btnAdvancedSearch_Click(object sender, EventArgs e)
 		{
 			dgvResult.Rows.Clear();
-			//if (pokemons != null)
-			//{
-			//	var results = pokemons;
-			//	foreach (var criterion in flpCriteria.Controls)
-			//	{
-			//		results = ((Criterion)criterion).ApplyCriterion(results);
-			//	}
-			//	dgvResult.Rows.AddRange(results.Select(p => p.ConvertRow()).ToArray());
-			//	lblFound.Text = results.Length + " found";
-			//}
+			advancedSearch.RequestAsync(flpCriteria.Controls.OfType<Criterion>()).ContinueWith(async p =>
+			{
+				var pokemons = await p;
+				Invoke((AdvancedSearchDelegate)delegate
+				{
+					dgvResult.Rows.AddRange(pokemons.Select(p => p.ConvertRow()).ToArray());
+					lblFound.Text = pokemons.Length + " found";
+				});
+			}).ConfigureAwait(false);
 		}
 
 		private void btnOptions_Click(object sender, EventArgs e)

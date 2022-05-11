@@ -1,11 +1,14 @@
-﻿using System.Drawing;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace MissingNopedia.AdvancedSearch
 {
 	public class Pokemon
 	{
 		public int Number { get; set; }
+		[JsonConverter(typeof(PokemonNameConverter))]
 		public string Name { get; set; }
 		public string Form { get; set; }
 		public Type Type1 { get; set; }
@@ -77,6 +80,20 @@ namespace MissingNopedia.AdvancedSearch
 			row.Cells.Add(new DataGridViewTextBoxCell { Value = Ability2 });
 			row.Cells.Add(new DataGridViewTextBoxCell { Value = HiddenAbility });
 			return row;
+		}
+
+		private class PokemonNameConverter : JsonConverter<string>
+		{
+			private class PokemonName
+			{
+				public string Name { get; set; }
+			}
+
+			public override string ReadJson(JsonReader reader, System.Type objectType, [AllowNull] string existingValue, bool hasExistingValue, JsonSerializer serializer)
+			{
+				return serializer.Deserialize<PokemonName[]>(reader)[0].Name;
+			}
+			public override void WriteJson(JsonWriter writer, [AllowNull] string value, JsonSerializer serializer) => throw new System.NotImplementedException();
 		}
 	}
 }
