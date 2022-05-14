@@ -351,7 +351,7 @@ namespace MissingNopedia
 		private void btnAdvancedSearch_Click(object sender, EventArgs e)
 		{
 			dgvResult.Rows.Clear();
-			advancedSearch.RequestAsync(flpCriteria.Controls.OfType<Criterion>()).ContinueWith(async p =>
+			advancedSearch.RequestAsync(flpCriteria.Controls.OfType<Criterion>(), chkIncludeForms.Checked).ContinueWith(async p =>
 			{
 				var pokemons = await p;
 				Invoke((AdvancedSearchDelegate)delegate

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Client.Abstractions;
@@ -11,7 +12,7 @@ namespace MissingNopedia.AdvancedSearch
 	{
 		private readonly GraphQLHttpClient client = new("https://beta.pokeapi.co/graphql/v1beta", new NewtonsoftJsonSerializer());
 
-		public async Task<Pokemon[]> RequestAsync(IEnumerable<Criteria.Criterion> criteria)
+		public async Task<Pokemon[]> RequestAsync(IEnumerable<Criteria.Criterion> criteria, bool includeForms)
 		{
 			GraphQLRequest request = new(@"query PokeAPIquery {
   pokemons: pokemon_v2_pokemonspecies(order_by: {id: asc}) {
@@ -20,8 +21,18 @@ namespace MissingNopedia.AdvancedSearch
     name: pokemon_v2_pokemonspeciesnames(where: {language_id: {_eq: 9}}) {
       name
     }
-    forms: pokemon_v2_pokemons(where: {is_default: {_eq: true}}) {
+    forms: pokemon_v2_pokemons {
       id
+      form: pokemon_v2_pokemonforms {
+        form_order
+        form_name
+        is_default
+        is_battle_only
+        is_mega
+        name: pokemon_v2_pokemonformnames(where: {language_id: {_eq: 9}}) {
+          name
+        }
+      }
       types: pokemon_v2_pokemontypes {
         type: pokemon_v2_type {
           name
@@ -46,6 +57,7 @@ namespace MissingNopedia.AdvancedSearch
 			var response = await client.SendQueryAsync(request, () => new { pokemons = new List<Pokemon>() });
 
 			Pokemon[] results = response.Data.pokemons.ToArray();
+			if (includeForms) results = results.SelectMany(p => p.GetForms()).ToArray();
 			foreach (var criterion in criteria)
 			{
 				results = criterion.ApplyCriterion(results);

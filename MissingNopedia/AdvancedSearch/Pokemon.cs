@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace MissingNopedia.AdvancedSearch
 		public int Number { get; set; }
 		[JsonConverter(typeof(PokemonNameConverter))]
 		public string Name { get; set; }
-		public string Form { get; set; }
+		public string Form => GetPokemonForm().Form.Name;
 		public Type Type1 => GetPokemonForm().Types[0];
 		public Type? Type2 => GetPokemonForm().Types.Length > 1 ? GetPokemonForm().Types[1] : null;
 
@@ -93,6 +94,8 @@ namespace MissingNopedia.AdvancedSearch
 			return s;
 		}
 
+		public IEnumerable<Pokemon> GetForms() => pokemonForms.Select(f => new Pokemon(f.Id, Name) { pokemonForm = f });
+
 		public DataGridViewRow ConvertRow()
 		{
 			var row = new DataGridViewRow();
@@ -132,10 +135,28 @@ namespace MissingNopedia.AdvancedSearch
 		private class PokemonForm
 		{
 			public int Id { get; set; }
+			[JsonConverter(typeof(PokemonFormConverter))]
+			public PokemonFormForm Form { get; set; }
 			[JsonConverter(typeof(PokemonTypesConverter))]
 			public Type[] Types { get; set; }
 			public PokemonStat[] BaseStats { get; set; }
 			public PokemonAbility[] Abilities { get; set; }
+
+			public class PokemonFormForm
+			{
+				[JsonProperty("form_order")]
+				public int FormOrder { get; set; }
+				[JsonProperty("form_name")]
+				public string FormName { get; set; }
+				[JsonProperty("is_default")]
+				public bool IsDefault { get; set; }
+				[JsonProperty("is_battle_only")]
+				public bool IsBattleOnly { get; set; }
+				[JsonProperty("is_mega")]
+				public bool IsMega { get; set; }
+				[JsonConverter(typeof(PokemonNameConverter))]
+				public string Name { get; set; }
+			}
 
 			public class PokemonStat
 			{
@@ -169,10 +190,21 @@ namespace MissingNopedia.AdvancedSearch
 
 			public override string ReadJson(JsonReader reader, System.Type objectType, [AllowNull] string existingValue, bool hasExistingValue, JsonSerializer serializer)
 			{
-				return serializer.Deserialize<PokemonName[]>(reader)[0].Name;
+				PokemonName[] pokemonNames = serializer.Deserialize<PokemonName[]>(reader);
+				return pokemonNames.Length == 0 ? null : pokemonNames[0].Name;
 			}
 
 			public override void WriteJson(JsonWriter writer, [AllowNull] string value, JsonSerializer serializer) => throw new NotImplementedException();
+		}
+
+		private class PokemonFormConverter : JsonConverter<PokemonForm.PokemonFormForm>
+		{
+			public override PokemonForm.PokemonFormForm ReadJson(JsonReader reader, System.Type objectType, [AllowNull] PokemonForm.PokemonFormForm existingValue, bool hasExistingValue, JsonSerializer serializer)
+			{
+				return serializer.Deserialize<PokemonForm.PokemonFormForm[]>(reader)[0];
+			}
+
+			public override void WriteJson(JsonWriter writer, [AllowNull] PokemonForm.PokemonFormForm value, JsonSerializer serializer) => throw new NotImplementedException();
 		}
 
 		private class PokemonTypesConverter : JsonConverter<Type[]>
