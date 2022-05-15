@@ -1,32 +1,49 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace MissingNopedia.AdvancedSearch
 {
 	public class Pokemon
 	{
-		private static readonly HttpClient client = new();
+		[JsonProperty("forms")]
+		private readonly PokemonForm[] pokemonForms = new PokemonForm[1];
+		/// <summary>
+		/// Do not use this directly.
+		/// </summary>
+		private PokemonForm pokemonForm;
+		private string ability1 = "";
+		private string ability2 = "";
+		private string hiddenAbility = "";
+
+		/// <summary>
+		/// Get additional data for the current form.
+		/// </summary>
+		/// <returns></returns>
+		private PokemonForm GetPokemonForm()
+		{
+			if (pokemonForm == null)
+				pokemonForm = pokemonForms.Single(f => f.Id == Number);
+			return pokemonForm;
+		}
 
 		public int Number { get; set; }
+		[JsonConverter(typeof(PokemonNameConverter))]
 		public string Name { get; set; }
-		public string Form { get; set; }
-		public Type Type1 { get; set; }
-		public Type? Type2 { get; set; }
+		public string Form => GetPokemonForm().Form.Name;
+		public Type Type1 => GetPokemonForm().Types[0];
+		public Type? Type2 => GetPokemonForm().Types.Length > 1 ? GetPokemonForm().Types[1] : null;
 
-		public int BaseHP { get; set; }
-		public int BaseAttack { get; set; }
-		public int BaseDefense { get; set; }
-		public int BaseSpAttack { get; set; }
-		public int BaseSpDefense { get; set; }
-		public int BaseSpeed { get; set; }
+		public int BaseHP => GetPokemonForm().BaseStats[0].BaseStat;
+		public int BaseAttack => GetPokemonForm().BaseStats[1].BaseStat;
+		public int BaseDefense => GetPokemonForm().BaseStats[2].BaseStat;
+		public int BaseSpAttack => GetPokemonForm().BaseStats[3].BaseStat;
+		public int BaseSpDefense => GetPokemonForm().BaseStats[4].BaseStat;
+		public int BaseSpeed => GetPokemonForm().BaseStats[5].BaseStat;
 
 		public int TotalStat { get { return BaseHP + BaseAttack + BaseDefense + BaseSpAttack + BaseSpDefense + BaseSpeed; } }
 		public int PhysicalSweeper { get { return BaseAttack + BaseSpeed; } }
@@ -35,9 +52,33 @@ namespace MissingNopedia.AdvancedSearch
 		public int PhysicalTank { get { return BaseAttack + BaseDefense; } }
 		public int SpecialTank { get { return BaseSpAttack + BaseSpDefense; } }
 
-		public string Ability1 { get; set; }
-		public string Ability2 { get; set; }
-		public string HiddenAbility { get; set; }
+		public string Ability1
+		{
+			get
+			{
+				if (ability1 == "")
+					ability1 = GetPokemonForm().Abilities.Single(a => a.Slot == 1).Ability.Name;
+				return ability1;
+			}
+		}
+		public string Ability2
+		{
+			get
+			{
+				if (ability2 == "")
+					ability2 = GetPokemonForm().Abilities.SingleOrDefault(a => a.Slot == 2)?.Ability.Name;
+				return ability2;
+			}
+		}
+		public string HiddenAbility
+		{
+			get
+			{
+				if (hiddenAbility == "")
+					hiddenAbility = GetPokemonForm().Abilities.SingleOrDefault(a => a.IsHidden)?.Ability.Name;
+				return hiddenAbility;
+			}
+		}
 
 		public Pokemon(int number, string name)
 		{
@@ -53,6 +94,8 @@ namespace MissingNopedia.AdvancedSearch
 			return s;
 		}
 
+		public IEnumerable<Pokemon> GetForms() => pokemonForms.Select(f => new Pokemon(f.Id, Name) { pokemonForm = f });
+
 		public DataGridViewRow ConvertRow()
 		{
 			var row = new DataGridViewRow();
@@ -67,7 +110,7 @@ namespace MissingNopedia.AdvancedSearch
 			row.Cells.Add(new DataGridViewTextBoxCell
 			{
 				Value = Type2,
-				Style = new DataGridViewCellStyle { BackColor = Type2.HasValue ? Type2.Value.BackColor() : Color.White }
+				Style = new DataGridViewCellStyle { BackColor = Type2.HasValue ? Type2.Value.BackColor() : Color.Empty }
 			});
 
 			row.Cells.Add(new DataGridViewTextBoxCell { Value = BaseHP });
@@ -89,183 +132,98 @@ namespace MissingNopedia.AdvancedSearch
 			return row;
 		}
 
-		public static async Task<Pokemon[]> GetListPokemonWeb()
+		private class PokemonForm
 		{
-			return null;
-			var watch = new System.Diagnostics.Stopwatch(); watch.Start();
-			string content = "";
-			HttpResponseMessage response;
-			try
+			public int Id { get; set; }
+			[JsonConverter(typeof(PokemonFormConverter))]
+			public PokemonFormForm Form { get; set; }
+			[JsonConverter(typeof(PokemonTypesConverter))]
+			public Type[] Types { get; set; }
+			public PokemonStat[] BaseStats { get; set; }
+			public PokemonAbility[] Abilities { get; set; }
+
+			public class PokemonFormForm
 			{
-				response = await client.GetAsync("http://pokemondb.net/pokedex/all");
-			}
-			catch (HttpRequestException ex)
-			{
-				MessageBox.Show("Error getting informations : " + ex.Message);
-				return null;
+				[JsonProperty("form_order")]
+				public int FormOrder { get; set; }
+				[JsonProperty("form_name")]
+				public string FormName { get; set; }
+				[JsonProperty("is_default")]
+				public bool IsDefault { get; set; }
+				[JsonProperty("is_battle_only")]
+				public bool IsBattleOnly { get; set; }
+				[JsonProperty("is_mega")]
+				public bool IsMega { get; set; }
+				[JsonConverter(typeof(PokemonNameConverter))]
+				public string Name { get; set; }
 			}
 
-			if (!response.IsSuccessStatusCode)
+			public class PokemonStat
 			{
-				MessageBox.Show("Error getting informations : " + response.StatusCode);
-				return null;
+				[JsonProperty("stat_id")]
+				public int StatId { get; set; }
+				[JsonProperty("base_stat")]
+				public int BaseStat { get; set; }
 			}
-			content = await response.Content.ReadAsStringAsync();
 
-			var doc = DocumentHtml.GetHtmlDocument(content);
-
-			var rows = doc.DocumentNode.SelectNodes("//*[@id='pokedex']/tbody/tr");
-			var pokeList = new List<Pokemon>(rows.Count);
-			var actionBlock = new ActionBlock<Pokemon>(p => p.GetDetailedInfo(), new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = rows.Count });
-			foreach (var row in rows)
+			public class PokemonAbility
 			{
-				var types = row.SelectNodes(".//*[contains(@class, 'type-icon')]").Select(n => n.InnerText).ToArray();
-				var nums = row.SelectNodes(".//*[@class='num']").Select(n => int.Parse(n.InnerText)).ToArray();
-				var pkmn = new Pokemon(int.Parse(row.SelectSingleNode(".//*[@class='num cell-icon-string']").InnerText), row.SelectSingleNode(".//*[@class='ent-name']").InnerText)
+				public int Slot { get; set; }
+				[JsonProperty("is_hidden")]
+				public bool IsHidden { get; set; }
+				public PokemonAbilityAbility Ability { get; set; }
+
+				public class PokemonAbilityAbility
 				{
-					Form = row.SelectSingleNode(".//*[@class='aside']")?.InnerText,
-
-					Type1 = Type.Parse(types[0]),
-					Type2 = types.Length == 2 ? Type.Parse(types[1]) : null,
-
-					BaseHP = nums[0],
-					BaseAttack = nums[1],
-					BaseDefense = nums[2],
-					BaseSpAttack = nums[3],
-					BaseSpDefense = nums[4],
-					BaseSpeed = nums[5]
-				};
-
-				actionBlock.Post(pkmn);
-
-				pokeList.Add(pkmn);
+					[JsonConverter(typeof(PokemonNameConverter))]
+					public string Name { get; set; }
+				}
 			}
-
-			actionBlock.Complete();
-			await actionBlock.Completion;
-			watch.Stop(); System.Diagnostics.Debug.Print("ListPokemon a pris " + watch.ElapsedMilliseconds + " ms.");
-			return pokeList.ToArray();
 		}
 
-		private async Task GetDetailedInfo()
+		private class PokemonNameConverter : JsonConverter<string>
 		{
-			string content = "";
-			HttpResponseMessage response;
-			try
+			private class PokemonName
 			{
-				// Remove diacritics.
-				string name = Encoding.UTF8.GetString(Encoding.GetEncoding("ISO-8859-8").GetBytes(Name.ToLower()));
-				if (Name == "Nidoran♀")
-					name = "nidoran-f";
-				if (Name == "Nidoran♂")
-					name = "nidoran-m";
-				// Remove "'" and replace everything else with a "-".
-				name = Regex.Replace(name.Replace("'", ""), @"\W+", "-").Trim('-');
-				response = await client.GetAsync("http://pokemondb.net/pokedex/" + name);
-			}
-			catch (HttpRequestException ex)
-			{
-				MessageBox.Show("Error getting informations : " + ex.Message);
-				return;
+				public string Name { get; set; }
 			}
 
-			if (!response.IsSuccessStatusCode)
+			public override string ReadJson(JsonReader reader, System.Type objectType, [AllowNull] string existingValue, bool hasExistingValue, JsonSerializer serializer)
 			{
-				MessageBox.Show("Error getting informations : " + response.StatusCode);
-				return;
+				PokemonName[] pokemonNames = serializer.Deserialize<PokemonName[]>(reader);
+				return pokemonNames.Length == 0 ? null : pokemonNames[0].Name;
 			}
-			content = await response.Content.ReadAsStringAsync();
 
-			var doc = DocumentHtml.GetHtmlDocument(content);
-
-			var tables = doc.DocumentNode.SelectNodes("//*[@class='vitals-table']");
-			//0=Summary
-			var abilities = tables[0].SelectNodes(".//*[contains(@href, '/ability/')]");
-			Ability1 = abilities[0].InnerText;
-			if (abilities.Count > 1 && abilities[1].ParentNode.Name != "small")
-				Ability2 = abilities[1].InnerText;
-			if (abilities.Last().ParentNode.Name == "small")
-				HiddenAbility = abilities.Last().InnerText;
-			//1=Training
-			//2=Breeding
-			//3=Base Stats
-			//4=Pokédex
-			//5=Locations
-
-			var typeDefenseValues = doc.DocumentNode.SelectNodes("//*[@class='type-table']//td").Select(n => WebUtility.HtmlDecode(n.InnerText)).ToArray();
+			public override void WriteJson(JsonWriter writer, [AllowNull] string value, JsonSerializer serializer) => throw new NotImplementedException();
 		}
 
-		public static Pokemon[] GetListPokemonDB()
+		private class PokemonFormConverter : JsonConverter<PokemonForm.PokemonFormForm>
 		{
-#if DEBUG
-			DifferencesSunMoon.ExecuteRemoveConquest();
-			DifferencesSunMoon.ExecuteDifferences();
-			var watch = new System.Diagnostics.Stopwatch(); watch.Start();
-#endif
-			var pokeList = new List<Pokemon>();
-
-			using var sql = new SQLite.SQLiteConnection("pokedex.sqlite");
-			var pokemonsMap = Mappings.Pokemon.GetAllPokemons(sql);
-			pokeList.Capacity = pokemonsMap.Count;
-			var pokemonSpecies = Mappings.PokemonSpecie.GetAllPokemonSpecies(sql);
-			var pokemonSpeciesNames = Mappings.PokemonSpecieName.GetAllPokemonSpeciesNames(sql);
-			var pokemonForms = Mappings.PokemonForm.GetAllPokemonForms(sql);
-			var pokemonFormNames = Mappings.PokemonFormName.GetAllPokemonFormNames(sql);
-			var pokemonTypes = Mappings.PokemonType.GetAllPokemonTypes(sql);
-			var pokemonStats = Mappings.PokemonStat.GetAllPokemonStats(sql);
-			var pokemonAbilities = Mappings.PokemonAbility.GetAllPokemonAbilities(sql);
-			var pokemons = pokemonsMap
-				.Join(pokemonSpecies, p => p.SpeciesId, ps => ps.Id, (p, ps) => new { p, ps })
-				.Join(pokemonSpeciesNames, p => p.ps.Id, psn => psn.PokemonSpeciesId, (p, psn) => new { p.p, p.ps, psn })
-				.GroupJoin(pokemonForms, p => p.p.Id, pf => pf.PokemonId, (p, pf) => new { p.p, p.ps, p.psn, pf }).SelectMany(p => p.pf.DefaultIfEmpty(), (p, pf) => new { p.p, p.ps, p.psn, pf })
-				.GroupJoin(pokemonFormNames, p => p.pf.Id, pfn => pfn.PokemonFormId, (p, pfn) => new { p.p, p.ps, p.psn, p.pf, pfn }).SelectMany(p => p.pfn.DefaultIfEmpty(), (p, pfn) => new { p.p, p.ps, p.psn, p.pf, pfn })
-				.GroupJoin(pokemonTypes, p => p.p.Id, pt => pt.PokemonId, (p, pt) => new { p.p, p.ps, p.psn, p.pf, p.pfn, pt = pt.ToArray() })
-				.GroupJoin(pokemonStats, p => p.p.Id, ps => ps.PokemonId, (p, ps) => new { p.p, p.ps, p.psn, p.pf, p.pfn, p.pt, pst = ps.ToArray() })
-				.GroupJoin(pokemonAbilities, p => p.p.Id, pa => pa.PokemonId, (p, pa) => new ExtendedMappings.Pokemon(p.p, p.ps, p.psn, p.pf, p.pfn, p.pt, p.pst, pa.ToArray())).ToList();
-
-			var types = Mappings.Type.GetAllTypes(sql);
-
-			var stats = Mappings.Stat.GetAllStats(sql);
-			var statHP = stats.Single(s => s.IsHP);
-			var statAttack = stats.Single(s => s.IsAttack);
-			var statDefense = stats.Single(s => s.IsDefense);
-			var statSpecialAttack = stats.Single(s => s.IsSpecialAttack);
-			var statSpecialDefense = stats.Single(s => s.IsSpecialDefense);
-			var statSpeed = stats.Single(s => s.IsSpeed);
-
-			var abilitiesMap = Mappings.Ability.GetAllAbilities(sql);
-			var abilitieNames = Mappings.AbilityName.GetAllAbilityNames(sql);
-			var abilities = abilitiesMap.Join(abilitieNames, a => a.Id, an => an.AbilityId, (a, an) => new ExtendedMappings.Ability(a, an));
-
-			foreach (var pkmn in pokemons)
+			public override PokemonForm.PokemonFormForm ReadJson(JsonReader reader, System.Type objectType, [AllowNull] PokemonForm.PokemonFormForm existingValue, bool hasExistingValue, JsonSerializer serializer)
 			{
-				var pokemonType2 = pkmn.Types.SingleOrDefault(pt => pt.Slot == 2);
-				var pokemon = new Pokemon(pkmn.SpeciesId, pkmn.Name)
-				{
-					Form = pkmn.FormName,
-
-					Type1 = Type.Parse(types.Single(t => t.Id == pkmn.Types.Single(pt => pt.Slot == 1).TypeId).Identifier),
-					Type2 = pokemonType2 != null ? Type.Parse(types.Single(t => t.Id == pokemonType2.TypeId).Identifier) : null,
-
-					BaseHP = pkmn.Stats.Single(ps => ps.StatId == statHP.Id).BaseStat,
-					BaseAttack = pkmn.Stats.Single(ps => ps.StatId == statAttack.Id).BaseStat,
-					BaseDefense = pkmn.Stats.Single(ps => ps.StatId == statDefense.Id).BaseStat,
-					BaseSpAttack = pkmn.Stats.Single(ps => ps.StatId == statSpecialAttack.Id).BaseStat,
-					BaseSpDefense = pkmn.Stats.Single(ps => ps.StatId == statSpecialDefense.Id).BaseStat,
-					BaseSpeed = pkmn.Stats.Single(ps => ps.StatId == statSpeed.Id).BaseStat,
-
-					Ability1 = abilities.Single(a => a.Id == pkmn.Abilities.Single(pa => pa.Slot == 1).AbilityId).Name,
-					Ability2 = abilities.SingleOrDefault(a => a.Id == pkmn.Abilities.SingleOrDefault(pa => pa.Slot == 2)?.AbilityId)?.Name,
-					HiddenAbility = abilities.SingleOrDefault(a => a.Id == pkmn.Abilities.SingleOrDefault(pa => pa.IsHidden)?.AbilityId)?.Name
-				};
-
-				pokeList.Add(pokemon);
+				return serializer.Deserialize<PokemonForm.PokemonFormForm[]>(reader)[0];
 			}
-#if DEBUG
-			watch.Stop(); System.Diagnostics.Debug.Print("ListPokemonDB a pris " + watch.ElapsedMilliseconds + " ms.");
-#endif
 
-			return pokeList.ToArray();
+			public override void WriteJson(JsonWriter writer, [AllowNull] PokemonForm.PokemonFormForm value, JsonSerializer serializer) => throw new NotImplementedException();
+		}
+
+		private class PokemonTypesConverter : JsonConverter<Type[]>
+		{
+			private class PokemonTypes
+			{
+				public class PokemonType
+				{
+					public string Name { get; set; }
+				}
+				public PokemonType Type { get; set; }
+			}
+
+			public override Type[] ReadJson(JsonReader reader, System.Type objectType, [AllowNull] Type[] existingValue, bool hasExistingValue, JsonSerializer serializer)
+			{
+				return serializer.Deserialize<PokemonTypes[]>(reader).Select(t => new Type(Enum.Parse<Type.TypeValue>(t.Type.Name, true))).ToArray();
+			}
+
+			public override void WriteJson(JsonWriter writer, [AllowNull] Type[] value, JsonSerializer serializer) => throw new NotImplementedException();
 		}
 	}
 }

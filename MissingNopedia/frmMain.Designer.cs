@@ -79,6 +79,7 @@
             this.btnSearchAbility = new System.Windows.Forms.Button();
             this.tabPageSearch = new System.Windows.Forms.TabPage();
             this.btnOptions = new System.Windows.Forms.Button();
+            this.chkIncludeForms = new System.Windows.Forms.CheckBox();
             label1 = new System.Windows.Forms.Label();
             panBtnCriteria = new System.Windows.Forms.Panel();
             panBtnCriteria.SuspendLayout();
@@ -110,12 +111,13 @@
             panBtnCriteria.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             panBtnCriteria.AutoSize = true;
             panBtnCriteria.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            panBtnCriteria.Controls.Add(this.chkIncludeForms);
             panBtnCriteria.Controls.Add(this.btnAddCriterion);
             panBtnCriteria.Controls.Add(this.btnRemoveCriterion);
             panBtnCriteria.Location = new System.Drawing.Point(0, 115);
             panBtnCriteria.Margin = new System.Windows.Forms.Padding(0);
             panBtnCriteria.Name = "panBtnCriteria";
-            panBtnCriteria.Size = new System.Drawing.Size(215, 30);
+            panBtnCriteria.Size = new System.Drawing.Size(322, 30);
             panBtnCriteria.TabIndex = 5;
             // 
             // btnAddCriterion
@@ -231,7 +233,7 @@
             this.dgvResult.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.dgvResult.Name = "dgvResult";
             this.dgvResult.ReadOnly = true;
-            this.dgvResult.Size = new System.Drawing.Size(1026, 605);
+            this.dgvResult.Size = new System.Drawing.Size(1026, 604);
             this.dgvResult.TabIndex = 3;
             // 
             // ColNumber
@@ -625,6 +627,16 @@
             this.btnOptions.UseVisualStyleBackColor = true;
             this.btnOptions.Click += new System.EventHandler(this.btnOptions_Click);
             // 
+            // chkIncludeForms
+            // 
+            this.chkIncludeForms.AutoSize = true;
+            this.chkIncludeForms.Location = new System.Drawing.Point(218, 5);
+            this.chkIncludeForms.Name = "chkIncludeForms";
+            this.chkIncludeForms.Size = new System.Drawing.Size(101, 19);
+            this.chkIncludeForms.TabIndex = 5;
+            this.chkIncludeForms.Text = "Include &Forms";
+            this.chkIncludeForms.UseVisualStyleBackColor = true;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -640,6 +652,7 @@
             this.Text = "MissingNopedia";
             this.Load += new System.EventHandler(this.frmMain_Load);
             panBtnCriteria.ResumeLayout(false);
+            panBtnCriteria.PerformLayout();
             this.tlpCriteria.ResumeLayout(false);
             this.tlpCriteria.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResult)).EndInit();
@@ -703,6 +716,7 @@
 		private System.Windows.Forms.Label lblFound;
 		private System.Windows.Forms.TableLayoutPanel tlpCriteria;
 		private System.Windows.Forms.Button btnOptions;
+		private System.Windows.Forms.CheckBox chkIncludeForms;
 	}
 }
 
