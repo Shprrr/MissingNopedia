@@ -70,7 +70,7 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 					pokemons = pokemons.Where(p => CompareOperator(p.Name)).ToArray();
 					break;
 				case Type.Type:
-					pokemons = pokemons.Where(p => CompareOperator(p.Type1.ToString()) || CompareOperator(p.Type2.ToString())).ToArray();
+					pokemons = pokemons.Where(p => CompareOperator(p.Type1.ToString()) || p.Type2 != null && CompareOperator(p.Type2.ToString())).ToArray();
 					break;
 				case Type.HP:
 					pokemons = pokemons.Where(p => CompareOperator(p.BaseHP)).ToArray();
@@ -109,7 +109,7 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 					pokemons = pokemons.Where(p => CompareOperator(p.SpecialTank)).ToArray();
 					break;
 				case Type.AbilityName:
-					pokemons = pokemons.Where(p => CompareOperator(p.Ability1) || CompareOperator(p.Ability2) || CompareOperator(p.HiddenAbility)).ToArray();
+					pokemons = pokemons.Where(p => CompareOperator(p.Ability1) || p.Ability2 != null && CompareOperator(p.Ability2) || p.HiddenAbility != null && CompareOperator(p.HiddenAbility)).ToArray();
 					break;
 			}
 			return pokemons;
