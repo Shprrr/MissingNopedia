@@ -35,6 +35,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+            this.chkIncludeForms = new System.Windows.Forms.CheckBox();
             this.btnAddCriterion = new System.Windows.Forms.Button();
             this.btnRemoveCriterion = new System.Windows.Forms.Button();
             this.tlpCriteria = new System.Windows.Forms.TableLayoutPanel();
@@ -79,7 +80,6 @@
             this.btnSearchAbility = new System.Windows.Forms.Button();
             this.tabPageSearch = new System.Windows.Forms.TabPage();
             this.btnOptions = new System.Windows.Forms.Button();
-            this.chkIncludeForms = new System.Windows.Forms.CheckBox();
             label1 = new System.Windows.Forms.Label();
             panBtnCriteria = new System.Windows.Forms.Panel();
             panBtnCriteria.SuspendLayout();
@@ -119,6 +119,16 @@
             panBtnCriteria.Name = "panBtnCriteria";
             panBtnCriteria.Size = new System.Drawing.Size(322, 30);
             panBtnCriteria.TabIndex = 5;
+            // 
+            // chkIncludeForms
+            // 
+            this.chkIncludeForms.AutoSize = true;
+            this.chkIncludeForms.Location = new System.Drawing.Point(218, 5);
+            this.chkIncludeForms.Name = "chkIncludeForms";
+            this.chkIncludeForms.Size = new System.Drawing.Size(101, 19);
+            this.chkIncludeForms.TabIndex = 5;
+            this.chkIncludeForms.Text = "Include &Forms";
+            this.chkIncludeForms.UseVisualStyleBackColor = true;
             // 
             // btnAddCriterion
             // 
@@ -233,8 +243,10 @@
             this.dgvResult.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.dgvResult.Name = "dgvResult";
             this.dgvResult.ReadOnly = true;
-            this.dgvResult.Size = new System.Drawing.Size(1026, 604);
+            this.dgvResult.RowHeadersWidth = 64;
+            this.dgvResult.Size = new System.Drawing.Size(1026, 601);
             this.dgvResult.TabIndex = 3;
+            this.dgvResult.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvResult_RowPostPaint);
             // 
             // ColNumber
             // 
@@ -626,16 +638,6 @@
             this.btnOptions.Text = "&Options";
             this.btnOptions.UseVisualStyleBackColor = true;
             this.btnOptions.Click += new System.EventHandler(this.btnOptions_Click);
-            // 
-            // chkIncludeForms
-            // 
-            this.chkIncludeForms.AutoSize = true;
-            this.chkIncludeForms.Location = new System.Drawing.Point(218, 5);
-            this.chkIncludeForms.Name = "chkIncludeForms";
-            this.chkIncludeForms.Size = new System.Drawing.Size(101, 19);
-            this.chkIncludeForms.TabIndex = 5;
-            this.chkIncludeForms.Text = "Include &Forms";
-            this.chkIncludeForms.UseVisualStyleBackColor = true;
             // 
             // frmMain
             // 

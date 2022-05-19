@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -360,6 +361,24 @@ namespace MissingNopedia
 					lblFound.Text = pokemons.Length + " found";
 				});
 			}).ConfigureAwait(false);
+		}
+
+		private void dgvResult_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+		{
+			if (!OperatingSystem.IsWindows()) return;
+
+			var grid = sender as DataGridView;
+			var rowIdx = (e.RowIndex + 1).ToString();
+
+			var centerFormat = new StringFormat()
+			{
+				// right alignment might actually make more sense for numbers
+				Alignment = StringAlignment.Center,
+				LineAlignment = StringAlignment.Center
+			};
+
+			var headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, grid.RowHeadersWidth, e.RowBounds.Height);
+			e.Graphics.DrawString(rowIdx, grid.Font, SystemBrushes.ControlText, headerBounds, centerFormat);
 		}
 
 		private void btnOptions_Click(object sender, EventArgs e)
