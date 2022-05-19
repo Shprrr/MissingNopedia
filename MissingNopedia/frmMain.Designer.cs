@@ -29,6 +29,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Panel panBtnCriteria;
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -80,6 +81,7 @@
             this.btnSearchAbility = new System.Windows.Forms.Button();
             this.tabPageSearch = new System.Windows.Forms.TabPage();
             this.btnOptions = new System.Windows.Forms.Button();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             label1 = new System.Windows.Forms.Label();
             panBtnCriteria = new System.Windows.Forms.Panel();
             panBtnCriteria.SuspendLayout();
@@ -240,11 +242,11 @@
             this.ColAbility2,
             this.ColHiddenAbility});
             this.dgvResult.Location = new System.Drawing.Point(0, 33);
-            this.dgvResult.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.dgvResult.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
             this.dgvResult.Name = "dgvResult";
             this.dgvResult.ReadOnly = true;
             this.dgvResult.RowHeadersWidth = 64;
-            this.dgvResult.Size = new System.Drawing.Size(1026, 601);
+            this.dgvResult.Size = new System.Drawing.Size(1026, 608);
             this.dgvResult.TabIndex = 3;
             this.dgvResult.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvResult_RowPostPaint);
             // 
@@ -338,6 +340,7 @@
             this.ColPhysicalSweeper.HeaderText = "Physical Sweeper";
             this.ColPhysicalSweeper.Name = "ColPhysicalSweeper";
             this.ColPhysicalSweeper.ReadOnly = true;
+            this.ColPhysicalSweeper.ToolTipText = "Physical Sweeper\nAttack + Speed";
             this.ColPhysicalSweeper.Width = 5;
             // 
             // ColSpecialSweeper
@@ -345,6 +348,7 @@
             this.ColSpecialSweeper.HeaderText = "Special Sweeper";
             this.ColSpecialSweeper.Name = "ColSpecialSweeper";
             this.ColSpecialSweeper.ReadOnly = true;
+            this.ColSpecialSweeper.ToolTipText = "Special Sweeper\nSpecial Attack + Speed";
             this.ColSpecialSweeper.Width = 5;
             // 
             // ColWall
@@ -352,6 +356,7 @@
             this.ColWall.HeaderText = "Wall";
             this.ColWall.Name = "ColWall";
             this.ColWall.ReadOnly = true;
+            this.ColWall.ToolTipText = "Wall\nHP + Defense + Special Defense";
             this.ColWall.Width = 5;
             // 
             // ColPhysicalTank
@@ -359,6 +364,7 @@
             this.ColPhysicalTank.HeaderText = "Physical Tank";
             this.ColPhysicalTank.Name = "ColPhysicalTank";
             this.ColPhysicalTank.ReadOnly = true;
+            this.ColPhysicalTank.ToolTipText = "Physical Tank\nAttack + Defense";
             this.ColPhysicalTank.Width = 5;
             // 
             // ColSpecialTank
@@ -367,6 +373,7 @@
             this.ColSpecialTank.HeaderText = "Special Tank";
             this.ColSpecialTank.Name = "ColSpecialTank";
             this.ColSpecialTank.ReadOnly = true;
+            this.ColSpecialTank.ToolTipText = "Special Tank\nSpecial Attack + Special Defense";
             this.ColSpecialTank.Width = 5;
             // 
             // ColAbility1
@@ -691,6 +698,16 @@
 		private System.Windows.Forms.Button btnAdvancedSearch;
 		private System.Windows.Forms.DataGridView dgvResult;
 		private System.Windows.Forms.SplitContainer splitSearch;
+		private System.Windows.Forms.Button btnBackPokemon;
+		private System.Windows.Forms.Button btnBackMove;
+		private System.Windows.Forms.Button btnBackAbility;
+		private System.Windows.Forms.Button btnRemoveCriterion;
+		private System.Windows.Forms.Button btnAddCriterion;
+		private System.Windows.Forms.Label lblFound;
+		private System.Windows.Forms.TableLayoutPanel tlpCriteria;
+		private System.Windows.Forms.Button btnOptions;
+		private System.Windows.Forms.CheckBox chkIncludeForms;
+		private System.Windows.Forms.ToolTip toolTip;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColNumber;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColName;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColType1;
@@ -710,15 +727,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColAbility1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColAbility2;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColHiddenAbility;
-		private System.Windows.Forms.Button btnBackPokemon;
-		private System.Windows.Forms.Button btnBackMove;
-		private System.Windows.Forms.Button btnBackAbility;
-		private System.Windows.Forms.Button btnRemoveCriterion;
-		private System.Windows.Forms.Button btnAddCriterion;
-		private System.Windows.Forms.Label lblFound;
-		private System.Windows.Forms.TableLayoutPanel tlpCriteria;
-		private System.Windows.Forms.Button btnOptions;
-		private System.Windows.Forms.CheckBox chkIncludeForms;
 	}
 }
 
