@@ -1,11 +1,16 @@
-﻿using System.Data;
-using System.Linq;
+﻿using System;
 using System.Windows.Forms;
 
 namespace MissingNopedia.AdvancedSearch.Criteria
 {
 	public partial class Criterion : UserControl
 	{
+		public enum Conjonction
+		{
+			And,
+			Or
+		}
+
 		public enum Type
 		{
 			PokemonNumber,
@@ -42,6 +47,8 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 		{
 			InitializeComponent();
 
+			cboConjonction.SelectedIndex = 0;
+
 			var types = new[] { new { Display = "Pokemon Number", Value = Type.PokemonNumber }, new { Display = "Pokemon Name", Value = Type.PokemonName }, new { Display = "Type", Value = Type.Type }, new { Display = "HP Base Stat", Value = Type.HP }, new { Display = "Attack Base Stat", Value = Type.Attack }, new { Display = "Defense Base Stat", Value = Type.Defense }, new { Display = "Special Attack Base Stat", Value = Type.SpecialAttack }, new { Display = "Special Defense Base Stat", Value = Type.SpecialDefense }, new { Display = "Total Base Stat", Value = Type.Total }, new { Display = "Physical Sweeper Base Stat", Value = Type.PhysicalSweeper }, new { Display = "Special Sweeper Base Stat", Value = Type.SpecialSweeper }, new { Display = "Wall Base Stat", Value = Type.Wall }, new { Display = "Physical Tank Base Stat", Value = Type.PhysicalTank }, new { Display = "Special Tank Base Stat", Value = Type.SpecialTank }, new { Display = "Ability Name", Value = Type.AbilityName } };
 			cboType.DataSource = types;
 			cboType.DisplayMember = "Display";
@@ -53,66 +60,92 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 			cboOperator.ValueMember = "Value";
 		}
 
-		public Type TypeValue { get { return (Type)cboType.SelectedValue; } set { cboType.SelectedValue = value; } }
-
-		public Operator OperatorValue { get { return (Operator)cboOperator.SelectedValue; } set { cboOperator.SelectedValue = value; } }
-
-		public string Value { get { return txtValue.Text; } set { txtValue.Text = value; } }
-
-		public Pokemon[] ApplyCriterion(Pokemon[] pokemons)
+		private void Criterion_ParentChanged(object sender, EventArgs e)
 		{
+			if (Parent == null) return;
+
+			var parentIndex = Parent.Controls.GetChildIndex(this);
+			cboConjonction.Visible = parentIndex != 0;
+		}
+
+		public Conjonction? ConjonctionValue
+		{
+			get
+			{
+				if (!cboConjonction.Visible) return null;
+				return cboConjonction.SelectedIndex == 1 ? Conjonction.Or : Conjonction.And;
+			}
+
+			set => cboConjonction.SelectedIndex = value == Conjonction.Or ? 1 : 0;
+		}
+
+		public Type TypeValue { get => (Type)cboType.SelectedValue; set => cboType.SelectedValue = value; }
+
+		public Operator OperatorValue { get => (Operator)cboOperator.SelectedValue; set => cboOperator.SelectedValue = value; }
+
+		public string Value { get => txtValue.Text; set => txtValue.Text = value; }
+
+		public Func<Pokemon, bool> ApplyCriterion(Func<Pokemon, bool> filter)
+		{
+			var criterion = (Pokemon p) => filter(p);
 			switch (TypeValue)
 			{
 				case Type.PokemonNumber:
-					pokemons = pokemons.Where(p => CompareOperator(p.Number)).ToArray();
+					criterion = (Pokemon p) => CompareOperator(p.Number);
 					break;
 				case Type.PokemonName:
-					pokemons = pokemons.Where(p => CompareOperator(p.Name)).ToArray();
+					criterion = (Pokemon p) => CompareOperator(p.Name);
 					break;
 				case Type.Type:
-					pokemons = pokemons.Where(p => CompareOperator(p.Type1.ToString()) || p.Type2 != null && CompareOperator(p.Type2.ToString())).ToArray();
+					criterion = (Pokemon p) => CompareOperator(p.Type1.ToString()) || p.Type2 != null && CompareOperator(p.Type2.ToString());
 					break;
 				case Type.HP:
-					pokemons = pokemons.Where(p => CompareOperator(p.BaseHP)).ToArray();
+					criterion = (Pokemon p) => CompareOperator(p.BaseHP);
 					break;
 				case Type.Attack:
-					pokemons = pokemons.Where(p => CompareOperator(p.BaseAttack)).ToArray();
+					criterion = (Pokemon p) => CompareOperator(p.BaseAttack);
 					break;
 				case Type.Defense:
-					pokemons = pokemons.Where(p => CompareOperator(p.BaseDefense)).ToArray();
+					criterion = (Pokemon p) => CompareOperator(p.BaseDefense);
 					break;
 				case Type.SpecialAttack:
-					pokemons = pokemons.Where(p => CompareOperator(p.BaseSpAttack)).ToArray();
+					criterion = (Pokemon p) => CompareOperator(p.BaseSpAttack);
 					break;
 				case Type.SpecialDefense:
-					pokemons = pokemons.Where(p => CompareOperator(p.BaseSpDefense)).ToArray();
+					criterion = (Pokemon p) => CompareOperator(p.BaseSpDefense);
 					break;
 				case Type.Speed:
-					pokemons = pokemons.Where(p => CompareOperator(p.BaseSpeed)).ToArray();
+					criterion = (Pokemon p) => CompareOperator(p.BaseSpeed);
 					break;
 				case Type.Total:
-					pokemons = pokemons.Where(p => CompareOperator(p.TotalStat)).ToArray();
+					criterion = (Pokemon p) => CompareOperator(p.TotalStat);
 					break;
 				case Type.PhysicalSweeper:
-					pokemons = pokemons.Where(p => CompareOperator(p.PhysicalSweeper)).ToArray();
+					criterion = (Pokemon p) => CompareOperator(p.PhysicalSweeper);
 					break;
 				case Type.SpecialSweeper:
-					pokemons = pokemons.Where(p => CompareOperator(p.SpecialSweeper)).ToArray();
+					criterion = (Pokemon p) => CompareOperator(p.SpecialSweeper);
 					break;
 				case Type.Wall:
-					pokemons = pokemons.Where(p => CompareOperator(p.Wall)).ToArray();
+					criterion = (Pokemon p) => CompareOperator(p.Wall);
 					break;
 				case Type.PhysicalTank:
-					pokemons = pokemons.Where(p => CompareOperator(p.PhysicalTank)).ToArray();
+					criterion = (Pokemon p) => CompareOperator(p.PhysicalTank);
 					break;
 				case Type.SpecialTank:
-					pokemons = pokemons.Where(p => CompareOperator(p.SpecialTank)).ToArray();
+					criterion = (Pokemon p) => CompareOperator(p.SpecialTank);
 					break;
 				case Type.AbilityName:
-					pokemons = pokemons.Where(p => CompareOperator(p.Ability1) || p.Ability2 != null && CompareOperator(p.Ability2) || p.HiddenAbility != null && CompareOperator(p.HiddenAbility)).ToArray();
+					criterion = (Pokemon p) => CompareOperator(p.Ability1) || p.Ability2 != null && CompareOperator(p.Ability2) || p.HiddenAbility != null && CompareOperator(p.HiddenAbility);
 					break;
 			}
-			return pokemons;
+
+			return ConjonctionValue switch
+			{
+				Conjonction.And => (p) => filter(p) && criterion(p),
+				Conjonction.Or => (p) => filter(p) || criterion(p),
+				_ => (p) => criterion(p)
+			};
 		}
 
 		public bool CompareOperator(string valueToCompare)

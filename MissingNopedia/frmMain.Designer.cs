@@ -176,8 +176,8 @@
             // 
             this.flpCriteria.AutoSize = true;
             this.flpCriteria.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpCriteria.Location = new System.Drawing.Point(4, 3);
-            this.flpCriteria.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.flpCriteria.Location = new System.Drawing.Point(0, 0);
+            this.flpCriteria.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
             this.flpCriteria.Name = "flpCriteria";
             this.flpCriteria.Size = new System.Drawing.Size(0, 0);
             this.flpCriteria.TabIndex = 0;
