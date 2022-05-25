@@ -68,6 +68,11 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 			cboConjonction.Visible = parentIndex != 0;
 		}
 
+		private void picHandle_MouseDown(object sender, MouseEventArgs e)
+		{
+			DoDragDrop(this, DragDropEffects.Move);
+		}
+
 		public Conjonction? ConjonctionValue
 		{
 			get

@@ -348,6 +348,24 @@ namespace MissingNopedia
 				flpCriteria.Controls.RemoveAt(flpCriteria.Controls.Count - 1);
 		}
 
+		private void flpCriteria_DragEnter(object sender, DragEventArgs e)
+		{
+			if (e.Data.GetDataPresent(typeof(Criterion).FullName))
+				e.Effect = DragDropEffects.Move;
+			else
+				e.Effect = DragDropEffects.None;
+		}
+
+		private void flpCriteria_DragDrop(object sender, DragEventArgs e)
+		{
+			if (e.Data.GetData(typeof(Criterion).FullName) is not Criterion criterion) return;
+
+			var criteriaBounds = flpCriteria.Controls.OfType<Criterion>().Select((c, i) => (c.Bounds, Index: i));
+			var clientPoint = flpCriteria.PointToClient(new Point(e.X, e.Y));
+			var newIndex = criteriaBounds.OrderBy(b => clientPoint.Distance(b.Bounds)).First().Index;
+			flpCriteria.Controls.SetChildIndex(criterion, newIndex);
+		}
+
 		delegate void AdvancedSearchDelegate();
 		private void btnAdvancedSearch_Click(object sender, EventArgs e)
 		{

@@ -156,8 +156,6 @@
             // 
             // tlpCriteria
             // 
-            this.tlpCriteria.AutoScroll = true;
-            this.tlpCriteria.AutoSize = true;
             this.tlpCriteria.ColumnCount = 1;
             this.tlpCriteria.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpCriteria.Controls.Add(this.flpCriteria, 0, 0);
@@ -167,20 +165,25 @@
             this.tlpCriteria.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tlpCriteria.Name = "tlpCriteria";
             this.tlpCriteria.RowCount = 2;
-            this.tlpCriteria.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpCriteria.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpCriteria.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpCriteria.Size = new System.Drawing.Size(1026, 145);
             this.tlpCriteria.TabIndex = 6;
             // 
             // flpCriteria
             // 
-            this.flpCriteria.AutoSize = true;
+            this.flpCriteria.AllowDrop = true;
+            this.flpCriteria.AutoScroll = true;
+            this.flpCriteria.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpCriteria.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpCriteria.Location = new System.Drawing.Point(0, 0);
             this.flpCriteria.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
             this.flpCriteria.Name = "flpCriteria";
-            this.flpCriteria.Size = new System.Drawing.Size(0, 0);
+            this.flpCriteria.Size = new System.Drawing.Size(1026, 112);
             this.flpCriteria.TabIndex = 0;
+            this.flpCriteria.WrapContents = false;
+            this.flpCriteria.DragDrop += new System.Windows.Forms.DragEventHandler(this.flpCriteria_DragDrop);
+            this.flpCriteria.DragEnter += new System.Windows.Forms.DragEventHandler(this.flpCriteria_DragEnter);
             // 
             // webBrowser
             // 
@@ -666,7 +669,6 @@
             this.tlpCriteria.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResult)).EndInit();
             this.splitSearch.Panel1.ResumeLayout(false);
-            this.splitSearch.Panel1.PerformLayout();
             this.splitSearch.Panel2.ResumeLayout(false);
             this.splitSearch.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitSearch)).EndInit();
