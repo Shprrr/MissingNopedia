@@ -110,6 +110,7 @@ namespace MissingNopedia.AdvancedSearch
 			row.Cells.Add(new DataGridViewTextBoxCell
 			{
 				Value = Type2,
+				ToolTipText = Type2?.ToString(),
 				Style = new DataGridViewCellStyle { BackColor = Type2.HasValue ? Type2.Value.BackColor() : Color.Empty }
 			});
 
@@ -127,8 +128,16 @@ namespace MissingNopedia.AdvancedSearch
 			row.Cells.Add(new DataGridViewTextBoxCell { Value = SpecialTank });
 
 			row.Cells.Add(new DataGridViewTextBoxCell { Value = Ability1 });
-			row.Cells.Add(new DataGridViewTextBoxCell { Value = Ability2 });
-			row.Cells.Add(new DataGridViewTextBoxCell { Value = HiddenAbility });
+			row.Cells.Add(new DataGridViewTextBoxCell
+			{
+				Value = Ability2,
+				ToolTipText = Ability2?.ToString()
+			});
+			row.Cells.Add(new DataGridViewTextBoxCell
+			{
+				Value = HiddenAbility,
+				ToolTipText = HiddenAbility?.ToString()
+			});
 			return row;
 		}
 

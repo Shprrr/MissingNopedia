@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -347,6 +348,24 @@ namespace MissingNopedia
 				flpCriteria.Controls.RemoveAt(flpCriteria.Controls.Count - 1);
 		}
 
+		private void flpCriteria_DragEnter(object sender, DragEventArgs e)
+		{
+			if (e.Data.GetDataPresent(typeof(Criterion).FullName))
+				e.Effect = DragDropEffects.Move;
+			else
+				e.Effect = DragDropEffects.None;
+		}
+
+		private void flpCriteria_DragDrop(object sender, DragEventArgs e)
+		{
+			if (e.Data.GetData(typeof(Criterion).FullName) is not Criterion criterion) return;
+
+			var criteriaBounds = flpCriteria.Controls.OfType<Criterion>().Select((c, i) => (c.Bounds, Index: i));
+			var clientPoint = flpCriteria.PointToClient(new Point(e.X, e.Y));
+			var newIndex = criteriaBounds.OrderBy(b => clientPoint.Distance(b.Bounds)).First().Index;
+			flpCriteria.Controls.SetChildIndex(criterion, newIndex);
+		}
+
 		delegate void AdvancedSearchDelegate();
 		private void btnAdvancedSearch_Click(object sender, EventArgs e)
 		{
@@ -360,6 +379,24 @@ namespace MissingNopedia
 					lblFound.Text = pokemons.Length + " found";
 				});
 			}).ConfigureAwait(false);
+		}
+
+		private void dgvResult_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+		{
+			if (!OperatingSystem.IsWindows()) return;
+
+			var grid = sender as DataGridView;
+			var rowIdx = (e.RowIndex + 1).ToString();
+
+			var centerFormat = new StringFormat()
+			{
+				// right alignment might actually make more sense for numbers
+				Alignment = StringAlignment.Center,
+				LineAlignment = StringAlignment.Center
+			};
+
+			var headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, grid.RowHeadersWidth, e.RowBounds.Height);
+			e.Graphics.DrawString(rowIdx, grid.Font, SystemBrushes.ControlText, headerBounds, centerFormat);
 		}
 
 		private void btnOptions_Click(object sender, EventArgs e)

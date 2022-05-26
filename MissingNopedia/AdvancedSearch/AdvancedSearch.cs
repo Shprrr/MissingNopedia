@@ -58,12 +58,14 @@ namespace MissingNopedia.AdvancedSearch
 
 			Pokemon[] results = response.Data.pokemons.ToArray();
 			if (includeForms) results = results.SelectMany(p => p.GetForms()).ToArray();
+
+			var filter = (Pokemon pokemon) => true;
 			foreach (var criterion in criteria)
 			{
-				results = criterion.ApplyCriterion(results);
+				filter = criterion.ApplyCriterion(filter);
 			}
 
-			return results;
+			return results.Where(filter).ToArray();
 		}
 	}
 }
