@@ -35,8 +35,8 @@ namespace MissingNopedia.AdvancedSearch
 		[JsonConverter(typeof(PokemonNameConverter))]
 		public string Name { get; set; }
 		public string Form => GetPokemonForm().Form.Name;
-		public Type Type1 => GetPokemonForm().Types[0];
-		public Type? Type2 => GetPokemonForm().Types.Length > 1 ? GetPokemonForm().Types[1] : null;
+		public Type Type1 => GetPokemonForm().Types.Types[0];
+		public Type? Type2 => GetPokemonForm().Types.Types.Length > 1 ? GetPokemonForm().Types.Types[1] : null;
 
 		public int BaseHP => GetPokemonForm().BaseStats[0].BaseStat;
 		public int BaseAttack => GetPokemonForm().BaseStats[1].BaseStat;
@@ -79,6 +79,9 @@ namespace MissingNopedia.AdvancedSearch
 				return hiddenAbility;
 			}
 		}
+
+		public Type[] Weaknesses => GetPokemonForm().Types.Efficacies.Where(t => t.DamageMultiplier > 1).Select(t => t.DamageType).ToArray();
+		public Type[] Resistances => GetPokemonForm().Types.Efficacies.Where(t => t.DamageMultiplier < 1).Select(t => t.DamageType).ToArray();
 
 		public Pokemon(int number, string name)
 		{
@@ -147,7 +150,7 @@ namespace MissingNopedia.AdvancedSearch
 			[JsonConverter(typeof(PokemonFormConverter))]
 			public PokemonFormForm Form { get; set; }
 			[JsonConverter(typeof(PokemonTypesConverter))]
-			public Type[] Types { get; set; }
+			public PokemonTypes Types { get; set; }
 			public PokemonStat[] BaseStats { get; set; }
 			public PokemonAbility[] Abilities { get; set; }
 
@@ -165,6 +168,22 @@ namespace MissingNopedia.AdvancedSearch
 				public bool IsMega { get; set; }
 				[JsonConverter(typeof(PokemonNameConverter))]
 				public string Name { get; set; }
+
+				public override string ToString() => FormName;
+			}
+
+			public class PokemonTypes
+			{
+				public Type[] Types { get; set; }
+				public PokemonTypesEfficacy[] Efficacies { get; set; }
+
+				public class PokemonTypesEfficacy
+				{
+					public Type DamageType { get; set; }
+					public float DamageMultiplier { get; set; }
+					public override string ToString() => $"{DamageType} > {DamageMultiplier}";
+				}
+				public override string ToString() => string.Join(' ', Types);
 			}
 
 			public class PokemonStat
@@ -173,6 +192,8 @@ namespace MissingNopedia.AdvancedSearch
 				public int StatId { get; set; }
 				[JsonProperty("base_stat")]
 				public int BaseStat { get; set; }
+
+				public override string ToString() => BaseStat.ToString();
 			}
 
 			public class PokemonAbility
@@ -187,6 +208,8 @@ namespace MissingNopedia.AdvancedSearch
 					[JsonConverter(typeof(PokemonNameConverter))]
 					public string Name { get; set; }
 				}
+
+				public override string ToString() => Ability.Name;
 			}
 		}
 
@@ -206,6 +229,24 @@ namespace MissingNopedia.AdvancedSearch
 			public override void WriteJson(JsonWriter writer, [AllowNull] string value, JsonSerializer serializer) => throw new NotImplementedException();
 		}
 
+		private class PokemonTypeConverter : JsonConverter<Type>
+		{
+			private class TypeName
+			{
+				public string Name { get; set; }
+			}
+
+			public override Type ReadJson(JsonReader reader, System.Type objectType, [AllowNull] Type existingValue, bool hasExistingValue, JsonSerializer serializer)
+			{
+				if (reader.ValueType == typeof(string))
+					return new Type(Enum.Parse<Type.TypeValue>(serializer.Deserialize<string>(reader), true));
+
+				return new Type(Enum.Parse<Type.TypeValue>(serializer.Deserialize<TypeName>(reader).Name, true));
+			}
+
+			public override void WriteJson(JsonWriter writer, [AllowNull] Type value, JsonSerializer serializer) => throw new NotImplementedException();
+		}
+
 		private class PokemonFormConverter : JsonConverter<PokemonForm.PokemonFormForm>
 		{
 			public override PokemonForm.PokemonFormForm ReadJson(JsonReader reader, System.Type objectType, [AllowNull] PokemonForm.PokemonFormForm existingValue, bool hasExistingValue, JsonSerializer serializer)
@@ -216,23 +257,40 @@ namespace MissingNopedia.AdvancedSearch
 			public override void WriteJson(JsonWriter writer, [AllowNull] PokemonForm.PokemonFormForm value, JsonSerializer serializer) => throw new NotImplementedException();
 		}
 
-		private class PokemonTypesConverter : JsonConverter<Type[]>
+		private class PokemonTypesConverter : JsonConverter<PokemonForm.PokemonTypes>
 		{
 			private class PokemonTypes
 			{
 				public class PokemonType
 				{
-					public string Name { get; set; }
+					public class PokemonTypeEfficacy
+					{
+						[JsonProperty("damage_type"), JsonConverter(typeof(PokemonTypeConverter))]
+						public Type DamageType { get; set; }
+						[JsonProperty("target_type"), JsonConverter(typeof(PokemonTypeConverter))]
+						public Type TargetType { get; set; }
+						[JsonProperty("damage_factor")]
+						public int DamageFactor { get; set; }
+						public float DamageMultiplier => DamageFactor / 100f;
+					}
+					[JsonProperty("name"), JsonConverter(typeof(PokemonTypeConverter))]
+					public Type Type { get; set; }
+					public PokemonTypeEfficacy[] Efficacies { get; set; }
 				}
 				public PokemonType Type { get; set; }
 			}
 
-			public override Type[] ReadJson(JsonReader reader, System.Type objectType, [AllowNull] Type[] existingValue, bool hasExistingValue, JsonSerializer serializer)
+			public override PokemonForm.PokemonTypes ReadJson(JsonReader reader, System.Type objectType, [AllowNull] PokemonForm.PokemonTypes existingValue, bool hasExistingValue, JsonSerializer serializer)
 			{
-				return serializer.Deserialize<PokemonTypes[]>(reader).Select(t => new Type(Enum.Parse<Type.TypeValue>(t.Type.Name, true))).ToArray();
+				PokemonTypes[] pokemonTypes = serializer.Deserialize<PokemonTypes[]>(reader);
+				return new PokemonForm.PokemonTypes
+				{
+					Types = pokemonTypes.Select(t => t.Type.Type).ToArray(),
+					Efficacies = pokemonTypes.SelectMany(t => t.Type.Efficacies).GroupBy(t => t.DamageType, (d, ts) => new PokemonForm.PokemonTypes.PokemonTypesEfficacy { DamageType = d, DamageMultiplier = ts.Aggregate(1f, (dm, t) => dm * t.DamageMultiplier) }).ToArray()
+				};
 			}
 
-			public override void WriteJson(JsonWriter writer, [AllowNull] Type[] value, JsonSerializer serializer) => throw new NotImplementedException();
+			public override void WriteJson(JsonWriter writer, [AllowNull] PokemonForm.PokemonTypes value, JsonSerializer serializer) => throw new NotImplementedException();
 		}
 	}
 }

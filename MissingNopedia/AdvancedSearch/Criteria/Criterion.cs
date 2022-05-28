@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace MissingNopedia.AdvancedSearch.Criteria
@@ -28,7 +29,9 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 			Wall,
 			PhysicalTank,
 			SpecialTank,
-			AbilityName
+			AbilityName,
+			Weakness,
+			Resistance
 		}
 
 		public enum Operator
@@ -49,7 +52,7 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 
 			cboConjonction.SelectedIndex = 0;
 
-			var types = new[] { new { Display = "Pokemon Number", Value = Type.PokemonNumber }, new { Display = "Pokemon Name", Value = Type.PokemonName }, new { Display = "Type", Value = Type.Type }, new { Display = "HP Base Stat", Value = Type.HP }, new { Display = "Attack Base Stat", Value = Type.Attack }, new { Display = "Defense Base Stat", Value = Type.Defense }, new { Display = "Special Attack Base Stat", Value = Type.SpecialAttack }, new { Display = "Special Defense Base Stat", Value = Type.SpecialDefense }, new { Display = "Total Base Stat", Value = Type.Total }, new { Display = "Physical Sweeper Base Stat", Value = Type.PhysicalSweeper }, new { Display = "Special Sweeper Base Stat", Value = Type.SpecialSweeper }, new { Display = "Wall Base Stat", Value = Type.Wall }, new { Display = "Physical Tank Base Stat", Value = Type.PhysicalTank }, new { Display = "Special Tank Base Stat", Value = Type.SpecialTank }, new { Display = "Ability Name", Value = Type.AbilityName } };
+			var types = new[] { new { Display = "Pokemon Number", Value = Type.PokemonNumber }, new { Display = "Pokemon Name", Value = Type.PokemonName }, new { Display = "Type", Value = Type.Type }, new { Display = "HP Base Stat", Value = Type.HP }, new { Display = "Attack Base Stat", Value = Type.Attack }, new { Display = "Defense Base Stat", Value = Type.Defense }, new { Display = "Special Attack Base Stat", Value = Type.SpecialAttack }, new { Display = "Special Defense Base Stat", Value = Type.SpecialDefense }, new { Display = "Total Base Stat", Value = Type.Total }, new { Display = "Physical Sweeper Base Stat", Value = Type.PhysicalSweeper }, new { Display = "Special Sweeper Base Stat", Value = Type.SpecialSweeper }, new { Display = "Wall Base Stat", Value = Type.Wall }, new { Display = "Physical Tank Base Stat", Value = Type.PhysicalTank }, new { Display = "Special Tank Base Stat", Value = Type.SpecialTank }, new { Display = "Ability Name", Value = Type.AbilityName }, new { Display = "Weakness to Type", Value = Type.Weakness }, new { Display = "Resistance to Type", Value = Type.Resistance } };
 			cboType.DataSource = types;
 			cboType.DisplayMember = "Display";
 			cboType.ValueMember = "Value";
@@ -142,6 +145,12 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 					break;
 				case Type.AbilityName:
 					criterion = (Pokemon p) => CompareOperator(p.Ability1) || p.Ability2 != null && CompareOperator(p.Ability2) || p.HiddenAbility != null && CompareOperator(p.HiddenAbility);
+					break;
+				case Type.Weakness:
+					criterion = (Pokemon p) => p.Weaknesses.Select(t => t.ToString()).Any(CompareOperator);
+					break;
+				case Type.Resistance:
+					criterion = (Pokemon p) => p.Resistances.Select(t => t.ToString()).Any(CompareOperator);
 					break;
 			}
 

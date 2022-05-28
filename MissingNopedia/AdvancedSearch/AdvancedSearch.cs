@@ -36,6 +36,15 @@ namespace MissingNopedia.AdvancedSearch
       types: pokemon_v2_pokemontypes {
         type: pokemon_v2_type {
           name
+          efficacies: pokemonV2TypeefficaciesByTargetTypeId {
+            damage_type: pokemon_v2_type {
+              name
+            }
+            target_type: pokemonV2TypeByTargetTypeId {
+              name
+            }
+            damage_factor
+          }
         }
       }
       baseStats: pokemon_v2_pokemonstats {
