@@ -147,10 +147,10 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 					criterion = (Pokemon p) => CompareOperator(p.Ability1) || p.Ability2 != null && CompareOperator(p.Ability2) || p.HiddenAbility != null && CompareOperator(p.HiddenAbility);
 					break;
 				case Type.Weakness:
-					criterion = (Pokemon p) => p.Weaknesses.Select(t => t.ToString()).Any(CompareOperator);
+					criterion = (Pokemon p) => CompareOperator(p.Weaknesses.Select(t => t.ToString()).ToArray());
 					break;
 				case Type.Resistance:
-					criterion = (Pokemon p) => p.Resistances.Select(t => t.ToString()).Any(CompareOperator);
+					criterion = (Pokemon p) => CompareOperator(p.Resistances.Select(t => t.ToString()).ToArray());
 					break;
 			}
 
@@ -245,6 +245,16 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 					return valueToCompare >= value;
 			}
 			return false;
+		}
+
+		public bool CompareOperator(params string[] valuesToCompare)
+		{
+			return OperatorValue switch
+			{
+				Operator.Equals or Operator.Like or Operator.Lesser or Operator.LesserEqual or Operator.Greater or Operator.GreaterEqual => valuesToCompare.Any(CompareOperator),
+				Operator.NotEquals or Operator.NotLike => valuesToCompare.All(CompareOperator),
+				_ => false,
+			};
 		}
 	}
 }
