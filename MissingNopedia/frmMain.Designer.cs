@@ -79,9 +79,13 @@
             this.btnBackAbility = new System.Windows.Forms.Button();
             this.cboAbility = new System.Windows.Forms.ComboBox();
             this.btnSearchAbility = new System.Windows.Forms.Button();
+            this.tabPageItem = new System.Windows.Forms.TabPage();
             this.tabPageSearch = new System.Windows.Forms.TabPage();
             this.btnOptions = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.btnBackItem = new System.Windows.Forms.Button();
+            this.cboItem = new System.Windows.Forms.ComboBox();
+            this.btnSearchItem = new System.Windows.Forms.Button();
             label1 = new System.Windows.Forms.Label();
             panBtnCriteria = new System.Windows.Forms.Panel();
             panBtnCriteria.SuspendLayout();
@@ -95,6 +99,7 @@
             this.tabPagePokemon.SuspendLayout();
             this.tabPageMove.SuspendLayout();
             this.tabPageAbility.SuspendLayout();
+            this.tabPageItem.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -116,7 +121,7 @@
             panBtnCriteria.Controls.Add(this.chkIncludeForms);
             panBtnCriteria.Controls.Add(this.btnAddCriterion);
             panBtnCriteria.Controls.Add(this.btnRemoveCriterion);
-            panBtnCriteria.Location = new System.Drawing.Point(0, 115);
+            panBtnCriteria.Location = new System.Drawing.Point(0, 116);
             panBtnCriteria.Margin = new System.Windows.Forms.Padding(0);
             panBtnCriteria.Name = "panBtnCriteria";
             panBtnCriteria.Size = new System.Drawing.Size(322, 30);
@@ -167,7 +172,7 @@
             this.tlpCriteria.RowCount = 2;
             this.tlpCriteria.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpCriteria.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpCriteria.Size = new System.Drawing.Size(1026, 145);
+            this.tlpCriteria.Size = new System.Drawing.Size(1030, 146);
             this.tlpCriteria.TabIndex = 6;
             // 
             // flpCriteria
@@ -179,7 +184,7 @@
             this.flpCriteria.Location = new System.Drawing.Point(0, 0);
             this.flpCriteria.Margin = new System.Windows.Forms.Padding(0, 0, 0, 3);
             this.flpCriteria.Name = "flpCriteria";
-            this.flpCriteria.Size = new System.Drawing.Size(1026, 112);
+            this.flpCriteria.Size = new System.Drawing.Size(1030, 113);
             this.flpCriteria.TabIndex = 0;
             this.flpCriteria.WrapContents = false;
             this.flpCriteria.DragDrop += new System.Windows.Forms.DragEventHandler(this.flpCriteria_DragDrop);
@@ -191,11 +196,10 @@
             this.webBrowser.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.webBrowser.Location = new System.Drawing.Point(14, 76);
-            this.webBrowser.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.webBrowser.Location = new System.Drawing.Point(12, 67);
             this.webBrowser.MinimumSize = new System.Drawing.Size(23, 23);
             this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(1026, 791);
+            this.webBrowser.Size = new System.Drawing.Size(1030, 802);
             this.webBrowser.TabIndex = 1;
             this.webBrowser.WebBrowserShortcutsEnabled = false;
             this.webBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.webBrowser_Navigating);
@@ -203,7 +207,7 @@
             // btnAdvancedSearch
             // 
             this.btnAdvancedSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAdvancedSearch.Location = new System.Drawing.Point(938, 0);
+            this.btnAdvancedSearch.Location = new System.Drawing.Point(942, 0);
             this.btnAdvancedSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnAdvancedSearch.Name = "btnAdvancedSearch";
             this.btnAdvancedSearch.Size = new System.Drawing.Size(88, 27);
@@ -249,7 +253,7 @@
             this.dgvResult.Name = "dgvResult";
             this.dgvResult.ReadOnly = true;
             this.dgvResult.RowHeadersWidth = 64;
-            this.dgvResult.Size = new System.Drawing.Size(1026, 608);
+            this.dgvResult.Size = new System.Drawing.Size(1030, 618);
             this.dgvResult.TabIndex = 3;
             this.dgvResult.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvResult_RowPostPaint);
             // 
@@ -406,8 +410,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.splitSearch.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.splitSearch.Location = new System.Drawing.Point(14, 76);
-            this.splitSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.splitSearch.Location = new System.Drawing.Point(12, 67);
             this.splitSearch.Name = "splitSearch";
             this.splitSearch.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -424,8 +427,8 @@
             this.splitSearch.Panel2.Controls.Add(this.btnAdvancedSearch);
             this.splitSearch.Panel2.Controls.Add(this.dgvResult);
             this.splitSearch.Panel2.Controls.Add(label1);
-            this.splitSearch.Size = new System.Drawing.Size(1026, 791);
-            this.splitSearch.SplitterDistance = 145;
+            this.splitSearch.Size = new System.Drawing.Size(1030, 802);
+            this.splitSearch.SplitterDistance = 146;
             this.splitSearch.SplitterWidth = 5;
             this.splitSearch.TabIndex = 3;
             // 
@@ -448,13 +451,13 @@
             this.tabControlEx.Controls.Add(this.tabPageType);
             this.tabControlEx.Controls.Add(this.tabPageMove);
             this.tabControlEx.Controls.Add(this.tabPageAbility);
+            this.tabControlEx.Controls.Add(this.tabPageItem);
             this.tabControlEx.Controls.Add(this.tabPageSearch);
             this.tabControlEx.ItemSize = new System.Drawing.Size(103, 21);
-            this.tabControlEx.Location = new System.Drawing.Point(14, 14);
-            this.tabControlEx.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabControlEx.Location = new System.Drawing.Point(12, 12);
             this.tabControlEx.Name = "tabControlEx";
             this.tabControlEx.SelectedIndex = 0;
-            this.tabControlEx.Size = new System.Drawing.Size(1026, 55);
+            this.tabControlEx.Size = new System.Drawing.Size(1030, 49);
             this.tabControlEx.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControlEx.TabIndex = 0;
             this.tabControlEx.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlEx_Selected);
@@ -465,9 +468,9 @@
             this.tabPagePokemon.Controls.Add(this.cboPokemon);
             this.tabPagePokemon.Controls.Add(this.btnSearchPokemon);
             this.tabPagePokemon.Location = new System.Drawing.Point(0, 25);
-            this.tabPagePokemon.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabPagePokemon.Margin = new System.Windows.Forms.Padding(0);
             this.tabPagePokemon.Name = "tabPagePokemon";
-            this.tabPagePokemon.Size = new System.Drawing.Size(1026, 29);
+            this.tabPagePokemon.Size = new System.Drawing.Size(1030, 23);
             this.tabPagePokemon.TabIndex = 0;
             this.tabPagePokemon.Text = "Pokémon";
             this.tabPagePokemon.UseVisualStyleBackColor = true;
@@ -476,10 +479,9 @@
             // 
             this.btnBackPokemon.Enabled = false;
             this.btnBackPokemon.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnBackPokemon.Location = new System.Drawing.Point(0, -1);
-            this.btnBackPokemon.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnBackPokemon.Location = new System.Drawing.Point(0, 0);
             this.btnBackPokemon.Name = "btnBackPokemon";
-            this.btnBackPokemon.Size = new System.Drawing.Size(27, 27);
+            this.btnBackPokemon.Size = new System.Drawing.Size(23, 23);
             this.btnBackPokemon.TabIndex = 2;
             this.btnBackPokemon.Text = "&<";
             this.btnBackPokemon.UseVisualStyleBackColor = true;
@@ -492,10 +494,9 @@
             this.cboPokemon.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cboPokemon.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cboPokemon.FormattingEnabled = true;
-            this.cboPokemon.Location = new System.Drawing.Point(34, 1);
-            this.cboPokemon.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cboPokemon.Location = new System.Drawing.Point(29, 0);
             this.cboPokemon.Name = "cboPokemon";
-            this.cboPokemon.Size = new System.Drawing.Size(902, 23);
+            this.cboPokemon.Size = new System.Drawing.Size(907, 23);
             this.cboPokemon.TabIndex = 0;
             this.cboPokemon.SelectedIndexChanged += new System.EventHandler(this.btnSearchPokemon_Click);
             this.cboPokemon.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cboPokemon_KeyUp);
@@ -503,10 +504,9 @@
             // btnSearchPokemon
             // 
             this.btnSearchPokemon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearchPokemon.Location = new System.Drawing.Point(938, -1);
-            this.btnSearchPokemon.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnSearchPokemon.Location = new System.Drawing.Point(942, 0);
             this.btnSearchPokemon.Name = "btnSearchPokemon";
-            this.btnSearchPokemon.Size = new System.Drawing.Size(88, 27);
+            this.btnSearchPokemon.Size = new System.Drawing.Size(88, 23);
             this.btnSearchPokemon.TabIndex = 1;
             this.btnSearchPokemon.Text = "&Search";
             this.btnSearchPokemon.UseVisualStyleBackColor = true;
@@ -515,9 +515,8 @@
             // tabPageType
             // 
             this.tabPageType.Location = new System.Drawing.Point(0, 25);
-            this.tabPageType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPageType.Name = "tabPageType";
-            this.tabPageType.Size = new System.Drawing.Size(1026, 29);
+            this.tabPageType.Size = new System.Drawing.Size(1030, 23);
             this.tabPageType.TabIndex = 1;
             this.tabPageType.Text = "Type Effectiveness";
             this.tabPageType.UseVisualStyleBackColor = true;
@@ -528,9 +527,9 @@
             this.tabPageMove.Controls.Add(this.cboMove);
             this.tabPageMove.Controls.Add(this.btnSearchMove);
             this.tabPageMove.Location = new System.Drawing.Point(0, 25);
-            this.tabPageMove.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabPageMove.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageMove.Name = "tabPageMove";
-            this.tabPageMove.Size = new System.Drawing.Size(1026, 29);
+            this.tabPageMove.Size = new System.Drawing.Size(1030, 23);
             this.tabPageMove.TabIndex = 2;
             this.tabPageMove.Text = "Move";
             this.tabPageMove.UseVisualStyleBackColor = true;
@@ -539,10 +538,9 @@
             // 
             this.btnBackMove.Enabled = false;
             this.btnBackMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnBackMove.Location = new System.Drawing.Point(0, -1);
-            this.btnBackMove.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnBackMove.Location = new System.Drawing.Point(0, 0);
             this.btnBackMove.Name = "btnBackMove";
-            this.btnBackMove.Size = new System.Drawing.Size(27, 27);
+            this.btnBackMove.Size = new System.Drawing.Size(23, 23);
             this.btnBackMove.TabIndex = 2;
             this.btnBackMove.Text = "&<";
             this.btnBackMove.UseVisualStyleBackColor = true;
@@ -555,10 +553,9 @@
             this.cboMove.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cboMove.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cboMove.FormattingEnabled = true;
-            this.cboMove.Location = new System.Drawing.Point(34, 1);
-            this.cboMove.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cboMove.Location = new System.Drawing.Point(29, 0);
             this.cboMove.Name = "cboMove";
-            this.cboMove.Size = new System.Drawing.Size(902, 23);
+            this.cboMove.Size = new System.Drawing.Size(907, 23);
             this.cboMove.TabIndex = 0;
             this.cboMove.SelectedIndexChanged += new System.EventHandler(this.btnSearchMove_Click);
             this.cboMove.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cboMove_KeyUp);
@@ -566,10 +563,9 @@
             // btnSearchMove
             // 
             this.btnSearchMove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearchMove.Location = new System.Drawing.Point(938, -1);
-            this.btnSearchMove.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnSearchMove.Location = new System.Drawing.Point(942, 0);
             this.btnSearchMove.Name = "btnSearchMove";
-            this.btnSearchMove.Size = new System.Drawing.Size(88, 27);
+            this.btnSearchMove.Size = new System.Drawing.Size(88, 23);
             this.btnSearchMove.TabIndex = 1;
             this.btnSearchMove.Text = "&Search";
             this.btnSearchMove.UseVisualStyleBackColor = true;
@@ -581,9 +577,9 @@
             this.tabPageAbility.Controls.Add(this.cboAbility);
             this.tabPageAbility.Controls.Add(this.btnSearchAbility);
             this.tabPageAbility.Location = new System.Drawing.Point(0, 25);
-            this.tabPageAbility.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabPageAbility.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageAbility.Name = "tabPageAbility";
-            this.tabPageAbility.Size = new System.Drawing.Size(1026, 29);
+            this.tabPageAbility.Size = new System.Drawing.Size(1030, 23);
             this.tabPageAbility.TabIndex = 3;
             this.tabPageAbility.Text = "Ability";
             this.tabPageAbility.UseVisualStyleBackColor = true;
@@ -592,10 +588,9 @@
             // 
             this.btnBackAbility.Enabled = false;
             this.btnBackAbility.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnBackAbility.Location = new System.Drawing.Point(0, -1);
-            this.btnBackAbility.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnBackAbility.Location = new System.Drawing.Point(0, 0);
             this.btnBackAbility.Name = "btnBackAbility";
-            this.btnBackAbility.Size = new System.Drawing.Size(27, 27);
+            this.btnBackAbility.Size = new System.Drawing.Size(23, 23);
             this.btnBackAbility.TabIndex = 2;
             this.btnBackAbility.Text = "&<";
             this.btnBackAbility.UseVisualStyleBackColor = true;
@@ -608,10 +603,9 @@
             this.cboAbility.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cboAbility.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cboAbility.FormattingEnabled = true;
-            this.cboAbility.Location = new System.Drawing.Point(34, 1);
-            this.cboAbility.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cboAbility.Location = new System.Drawing.Point(29, 0);
             this.cboAbility.Name = "cboAbility";
-            this.cboAbility.Size = new System.Drawing.Size(902, 23);
+            this.cboAbility.Size = new System.Drawing.Size(907, 23);
             this.cboAbility.TabIndex = 0;
             this.cboAbility.SelectedIndexChanged += new System.EventHandler(this.btnSearchAbility_Click);
             this.cboAbility.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cboAbility_KeyUp);
@@ -619,21 +613,32 @@
             // btnSearchAbility
             // 
             this.btnSearchAbility.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearchAbility.Location = new System.Drawing.Point(938, -1);
-            this.btnSearchAbility.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnSearchAbility.Location = new System.Drawing.Point(942, 0);
             this.btnSearchAbility.Name = "btnSearchAbility";
-            this.btnSearchAbility.Size = new System.Drawing.Size(88, 27);
+            this.btnSearchAbility.Size = new System.Drawing.Size(88, 23);
             this.btnSearchAbility.TabIndex = 1;
             this.btnSearchAbility.Text = "&Search";
             this.btnSearchAbility.UseVisualStyleBackColor = true;
             this.btnSearchAbility.Click += new System.EventHandler(this.btnSearchAbility_Click);
             // 
+            // tabPageItem
+            // 
+            this.tabPageItem.Controls.Add(this.btnBackItem);
+            this.tabPageItem.Controls.Add(this.cboItem);
+            this.tabPageItem.Controls.Add(this.btnSearchItem);
+            this.tabPageItem.Location = new System.Drawing.Point(0, 25);
+            this.tabPageItem.Margin = new System.Windows.Forms.Padding(0);
+            this.tabPageItem.Name = "tabPageItem";
+            this.tabPageItem.Size = new System.Drawing.Size(1030, 23);
+            this.tabPageItem.TabIndex = 5;
+            this.tabPageItem.Text = "Item";
+            this.tabPageItem.UseVisualStyleBackColor = true;
+            // 
             // tabPageSearch
             // 
             this.tabPageSearch.Location = new System.Drawing.Point(0, 25);
-            this.tabPageSearch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPageSearch.Name = "tabPageSearch";
-            this.tabPageSearch.Size = new System.Drawing.Size(1026, 29);
+            this.tabPageSearch.Size = new System.Drawing.Size(1030, 23);
             this.tabPageSearch.TabIndex = 4;
             this.tabPageSearch.Text = "Advanced Search";
             this.tabPageSearch.UseVisualStyleBackColor = true;
@@ -641,13 +646,50 @@
             // btnOptions
             // 
             this.btnOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOptions.Location = new System.Drawing.Point(965, 9);
+            this.btnOptions.Location = new System.Drawing.Point(967, 9);
             this.btnOptions.Name = "btnOptions";
             this.btnOptions.Size = new System.Drawing.Size(75, 23);
             this.btnOptions.TabIndex = 4;
             this.btnOptions.Text = "&Options";
             this.btnOptions.UseVisualStyleBackColor = true;
             this.btnOptions.Click += new System.EventHandler(this.btnOptions_Click);
+            // 
+            // btnBackItem
+            // 
+            this.btnBackItem.Enabled = false;
+            this.btnBackItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnBackItem.Location = new System.Drawing.Point(0, 0);
+            this.btnBackItem.Name = "btnBackItem";
+            this.btnBackItem.Size = new System.Drawing.Size(23, 23);
+            this.btnBackItem.TabIndex = 2;
+            this.btnBackItem.Text = "&<";
+            this.btnBackItem.UseVisualStyleBackColor = true;
+            this.btnBackItem.Click += new System.EventHandler(this.btnBack_Click);
+            // 
+            // cboItem
+            // 
+            this.cboItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboItem.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cboItem.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cboItem.FormattingEnabled = true;
+            this.cboItem.Location = new System.Drawing.Point(29, 0);
+            this.cboItem.Name = "cboItem";
+            this.cboItem.Size = new System.Drawing.Size(907, 23);
+            this.cboItem.TabIndex = 0;
+            this.cboItem.SelectedIndexChanged += new System.EventHandler(this.btnSearchItem_Click);
+            this.cboItem.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cboItem_KeyUp);
+            // 
+            // btnSearchItem
+            // 
+            this.btnSearchItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSearchItem.Location = new System.Drawing.Point(942, 0);
+            this.btnSearchItem.Name = "btnSearchItem";
+            this.btnSearchItem.Size = new System.Drawing.Size(88, 23);
+            this.btnSearchItem.TabIndex = 1;
+            this.btnSearchItem.Text = "&Search";
+            this.btnSearchItem.UseVisualStyleBackColor = true;
+            this.btnSearchItem.Click += new System.EventHandler(this.btnSearchItem_Click);
             // 
             // frmMain
             // 
@@ -677,6 +719,7 @@
             this.tabPagePokemon.ResumeLayout(false);
             this.tabPageMove.ResumeLayout(false);
             this.tabPageAbility.ResumeLayout(false);
+            this.tabPageItem.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -729,6 +772,10 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColAbility1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColAbility2;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ColHiddenAbility;
+		private System.Windows.Forms.TabPage tabPageItem;
+		private System.Windows.Forms.Button btnBackItem;
+		private System.Windows.Forms.ComboBox cboItem;
+		private System.Windows.Forms.Button btnSearchItem;
 	}
 }
 

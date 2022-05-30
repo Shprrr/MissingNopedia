@@ -6,6 +6,10 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GraphQL;
+using GraphQL.Client.Abstractions;
+using GraphQL.Client.Http;
+using GraphQL.Client.Serializer.Newtonsoft;
 using MissingNopedia.AdvancedSearch.Criteria;
 
 namespace MissingNopedia
@@ -45,6 +49,7 @@ namespace MissingNopedia
 			var taskListMove = GetListMove();
 			var taskListMoveGen8 = GetListMoveGen8();
 			var taskListAbility = GetListAbility();
+			var taskListItem = GetListItemApi();
 
 			cboPokemon.Items.Clear();
 			cboPokemon.Items.AddRange(await taskListPokemon);
@@ -54,6 +59,9 @@ namespace MissingNopedia
 
 			cboAbility.Items.Clear();
 			cboAbility.Items.AddRange(await taskListAbility);
+
+			cboItem.Items.Clear();
+			cboItem.Items.AddRange(await taskListItem);
 
 			Text = _DefaultText;
 		}
@@ -71,6 +79,9 @@ namespace MissingNopedia
 
 			if (e.TabPage.Name == tabPageAbility.Name)
 				await ShowInfoAbility(cboAbility?.Text);
+
+			if (e.TabPage.Name == tabPageItem.Name)
+				await ShowInfoItem(cboItem?.Text);
 
 			webBrowser.Visible = e.TabPage.Name != tabPageSearch.Name;
 			splitSearch.Visible = e.TabPage.Name == tabPageSearch.Name;
@@ -137,6 +148,20 @@ namespace MissingNopedia
 			}
 		}
 
+		private void btnSearchItem_Click(object sender, EventArgs e)
+		{
+			webBrowser.Navigate("about:/wiki/" + cboItem.Text + ItemHtml.ItemSuffix);
+		}
+
+		private void cboItem_KeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.KeyData == Keys.Enter && cboItem.SelectedIndex < 0)
+			{
+				btnSearchItem_Click(sender, e);
+				e.SuppressKeyPress = true;
+			}
+		}
+
 		private async void webBrowser_Navigating(object sender, WebBrowserNavigatingEventArgs e)
 		{
 			if (e.Url.AbsolutePath != "blank")
@@ -173,6 +198,13 @@ namespace MissingNopedia
 				await ShowInfoAbility(Uri.UnescapeDataString(e.Url.Segments[^1].Remove(i)));
 			}
 
+			i = e.Url.Segments[^1].LastIndexOf(ItemHtml.ItemSuffix);
+			if (i != -1)
+			{
+				pageProcessed = true;
+				await ShowInfoItem(Uri.UnescapeDataString(e.Url.Segments[^1].Remove(i)));
+			}
+
 			i = e.Url.Segments[^1].LastIndexOf(EggGroupHtml.WikiEggGroupSuffix);
 			if (i != -1)
 			{
@@ -185,6 +217,7 @@ namespace MissingNopedia
 			btnBackPokemon.Enabled = history.Count > 1;
 			btnBackMove.Enabled = history.Count > 1;
 			btnBackAbility.Enabled = history.Count > 1;
+			btnBackItem.Enabled = history.Count > 1;
 		}
 
 		private void btnBack_Click(object sender, EventArgs e)
@@ -194,6 +227,7 @@ namespace MissingNopedia
 			btnBackPokemon.Enabled = history.Count > 1;
 			btnBackMove.Enabled = history.Count > 1;
 			btnBackAbility.Enabled = history.Count > 1;
+			btnBackItem.Enabled = history.Count > 1;
 		}
 
 		private async Task<string[]> GetListPokemon()
@@ -230,6 +264,40 @@ namespace MissingNopedia
 
 			var doc = DocumentHtml.GetHtmlDocument(content);
 			return doc.DocumentNode.SelectNodes("//*[@class='ent-name']").Select(n => n.InnerText).ToArray();
+		}
+
+		private async Task<string[]> GetListItemDb()
+		{
+			string content = await GetPageContentAsync("http://pokemondb.net/item/all");
+			string contentKeyItem = await GetPageContentAsync("http://pokemondb.net/item/type/key");
+
+			var item = Array.Empty<string>();
+			if (content is not null)
+			{
+				var doc = DocumentHtml.GetHtmlDocument(content);
+				item = doc.DocumentNode.SelectNodes("//*[@class='ent-name']").Select(n => n.InnerText).ToArray();
+			}
+
+			if (contentKeyItem is not null)
+			{
+				var doc = DocumentHtml.GetHtmlDocument(contentKeyItem);
+				item = item.Concat(doc.DocumentNode.SelectNodes("//*[@class='ent-name']").Select(n => n.InnerText)).ToArray();
+			}
+
+			return item;
+		}
+
+		private readonly GraphQLHttpClient graphClient = new("https://beta.pokeapi.co/graphql/v1beta", new NewtonsoftJsonSerializer());
+		private async Task<string[]> GetListItemApi()
+		{
+			GraphQLRequest request = new(@"query itemPokeAPIquery {
+  items: pokemon_v2_itemname(where: {language_id: {_eq: 9}, pokemon_v2_item: {item_category_id: {_neq: 49}}}, order_by: {item_id: asc}) {
+    name
+  }
+}", operationName: "itemPokeAPIquery");
+			var response = await graphClient.SendQueryAsync(request, () => new { items = new List<dynamic>() });
+
+			return response.Data.items.Select(i => (string)i.name).ToArray();
 		}
 
 		private void ShowNewPage(string newDoc)
@@ -317,6 +385,22 @@ namespace MissingNopedia
 			if (content is null) return;
 
 			var doc = new AbilityHtml(content);
+
+			ShowNewPage(doc.BuildNewPage());
+		}
+
+		private async Task ShowInfoItem(string itemName)
+		{
+			if (string.IsNullOrWhiteSpace(itemName))
+			{
+				ShowNewPage("");
+				return;
+			}
+
+			var content = await GetPageContentAsync($"http://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(itemName.Replace(' ', '_'))}");
+			if (content is null) return;
+
+			var doc = new ItemHtml(content);
 
 			ShowNewPage(doc.BuildNewPage());
 		}
