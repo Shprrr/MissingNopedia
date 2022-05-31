@@ -2,7 +2,7 @@
 {
 	public class ItemHtml : DocumentHtml
 	{
-		public const string ItemSuffix = "_(Item)";
+		public const string ItemSuffix = "_(item)";
 
 		public ItemHtml(string html) : base(html)
 		{
@@ -14,8 +14,17 @@
 			var body = newDoc.DocumentNode.LastChild.LastChild.FirstChild;
 
 			var content = doc.GetElementbyId(ContentText);
+			var summary = content.SelectSingleNode(".//table");
+			body.AppendChild(summary.Clone());
 
-			body.AppendChild(content.Clone());
+			var node = summary.NextSibling;
+			do
+			{
+				if (node.Id == TableOfContents)
+					continue;
+
+				body.AppendChild(node.Clone());
+			} while ((node = node.NextSibling) != null);
 
 			return newDoc.DocumentNode.OuterHtml;
 		}

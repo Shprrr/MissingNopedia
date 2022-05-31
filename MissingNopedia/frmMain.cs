@@ -81,7 +81,7 @@ namespace MissingNopedia
 				await ShowInfoAbility(cboAbility?.Text);
 
 			if (e.TabPage.Name == tabPageItem.Name)
-				await ShowInfoItem(cboItem?.Text);
+				await ShowInfoItem(Uri.EscapeDataString(cboItem?.Text));
 
 			webBrowser.Visible = e.TabPage.Name != tabPageSearch.Name;
 			splitSearch.Visible = e.TabPage.Name == tabPageSearch.Name;
@@ -150,7 +150,7 @@ namespace MissingNopedia
 
 		private void btnSearchItem_Click(object sender, EventArgs e)
 		{
-			webBrowser.Navigate("about:/wiki/" + cboItem.Text + ItemHtml.ItemSuffix);
+			webBrowser.Navigate("about:/wiki/" + Uri.EscapeDataString(cboItem.Text) + ItemHtml.ItemSuffix);
 		}
 
 		private void cboItem_KeyUp(object sender, KeyEventArgs e)
@@ -291,13 +291,13 @@ namespace MissingNopedia
 		private async Task<string[]> GetListItemApi()
 		{
 			GraphQLRequest request = new(@"query itemPokeAPIquery {
-  items: pokemon_v2_itemname(where: {language_id: {_eq: 9}, pokemon_v2_item: {item_category_id: {_neq: 49}}}, order_by: {item_id: asc}) {
+  items: pokemon_v2_itemname(where: {language_id: {_eq: 9}, pokemon_v2_item: {item_category_id: {_nin: [49,23]}}}, order_by: {item_id: asc}) {
     name
   }
 }", operationName: "itemPokeAPIquery");
 			var response = await graphClient.SendQueryAsync(request, () => new { items = new List<dynamic>() });
 
-			return response.Data.items.Select(i => (string)i.name).ToArray();
+			return response.Data.items.Select(i => (string)i.name).Distinct().ToArray();
 		}
 
 		private void ShowNewPage(string newDoc)
