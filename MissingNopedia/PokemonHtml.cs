@@ -36,7 +36,6 @@
 
 		public override string BuildNewPage()
 		{
-			var title = doc.DocumentNode.SelectSingleNode("//title").InnerHtml;
 			var newDoc = ConstructBulbapediaPage();
 			var body = newDoc.DocumentNode.LastChild.LastChild.FirstChild;
 
