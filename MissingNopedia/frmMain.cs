@@ -21,6 +21,7 @@ namespace MissingNopedia
 
 		public frmMain()
 		{
+			DocumentHtml.client = client;
 			InitializeComponent();
 
 			// Remove auto horizontal scroll.
@@ -61,16 +62,16 @@ namespace MissingNopedia
 		private async void tabControlEx_Selected(object sender, TabControlEventArgs e)
 		{
 			if (e.TabPage.Name == tabPagePokemon.Name)
-				await ShowInfoPokemon(cboPokemon?.Text, GetGenerationLearnset());
+				await ShowInfoAsync(ShowInfoPokemon(cboPokemon?.Text, GetGenerationLearnset()));
 
 			if (e.TabPage.Name == tabPageType.Name)
 				ShowTypeEffectiveness();
 
 			if (e.TabPage.Name == tabPageMove.Name)
-				await ShowInfoMove(cboMove?.Text);
+				await ShowInfoAsync(ShowInfoMove(cboMove?.Text));
 
 			if (e.TabPage.Name == tabPageAbility.Name)
-				await ShowInfoAbility(cboAbility?.Text);
+				await ShowInfoAsync(ShowInfoAbility(cboAbility?.Text));
 
 			webBrowser.Visible = e.TabPage.Name != tabPageSearch.Name;
 			splitSearch.Visible = e.TabPage.Name == tabPageSearch.Name;
@@ -149,35 +150,35 @@ namespace MissingNopedia
 			if (i != -1)
 			{
 				pageProcessed = true;
-				await ShowInfoPokemon(Uri.UnescapeDataString(e.Url.Segments[^1].Remove(i)));
+				await ShowInfoAsync(ShowInfoPokemon(Uri.UnescapeDataString(e.Url.Segments[^1].Remove(i))));
 			}
 
 			i = e.Url.Segments[^2].LastIndexOf(PokemonHtml.WikiPokemonSuffix);
 			if (i != -1)
 			{
 				pageProcessed = true;
-				await ShowInfoPokemon(Uri.UnescapeDataString(e.Url.Segments[^2].Remove(i)), e.Url.Segments[^1]);
+				await ShowInfoAsync(ShowInfoPokemon(Uri.UnescapeDataString(e.Url.Segments[^2].Remove(i)), e.Url.Segments[^1]));
 			}
 
 			i = e.Url.Segments[^1].LastIndexOf(MoveHtml.WikiMoveSuffix);
 			if (i != -1)
 			{
 				pageProcessed = true;
-				await ShowInfoMove(Uri.UnescapeDataString(e.Url.Segments[^1].Remove(i)));
+				await ShowInfoAsync(ShowInfoMove(Uri.UnescapeDataString(e.Url.Segments[^1].Remove(i))));
 			}
 
 			i = e.Url.Segments[^1].LastIndexOf(AbilityHtml.WikiAbilitySuffix);
 			if (i != -1)
 			{
 				pageProcessed = true;
-				await ShowInfoAbility(Uri.UnescapeDataString(e.Url.Segments[^1].Remove(i)));
+				await ShowInfoAsync(ShowInfoAbility(Uri.UnescapeDataString(e.Url.Segments[^1].Remove(i))));
 			}
 
 			i = e.Url.Segments[^1].LastIndexOf(EggGroupHtml.WikiEggGroupSuffix);
 			if (i != -1)
 			{
 				pageProcessed = true;
-				await ShowInfoEggGroup(Uri.UnescapeDataString(e.Url.Segments[^1].Remove(i)));
+				await ShowInfoAsync(ShowInfoEggGroup(Uri.UnescapeDataString(e.Url.Segments[^1].Remove(i))));
 			}
 
 			if (pageProcessed && (history.Count == 0 || history.Peek() != e.Url))
@@ -258,27 +259,22 @@ namespace MissingNopedia
 			return await response.Content.ReadAsStringAsync();
 		}
 
-		private async Task ShowInfoPokemon(string pokemonName, string generationLearnset = null)
+		private async Task ShowInfoAsync(DocumentHtml document)
 		{
-			if (string.IsNullOrWhiteSpace(pokemonName))
+			try
 			{
-				ShowNewPage("");
-				return;
+				await document.LoadAsync();
+				ShowNewPage(document.BuildNewPage());
 			}
-
-			var content = await GetPageContentAsync($"https://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(pokemonName.Replace(' ', '_'))}{PokemonHtml.WikiPokemonSuffix}");
-			if (content is null) return;
-
-			string contentGenerationLearnset = null;
-			if (!string.IsNullOrEmpty(generationLearnset))
+			catch (ApplicationException ex)
 			{
-				contentGenerationLearnset = await GetPageContentAsync($"https://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(pokemonName.Replace(' ', '_'))}{PokemonHtml.WikiPokemonSuffix}/{generationLearnset}");
-				if (contentGenerationLearnset is null) return;
+				MessageBox.Show(ex.Message);
 			}
+		}
 
-			var doc = new PokemonHtml(pokemonName, content, contentGenerationLearnset, options.PokemonProfilePictures == OptionPokemonProfilePictures.Custom);
-
-			ShowNewPage(doc.BuildNewPage());
+		private DocumentHtml ShowInfoPokemon(string pokemonName, string generationLearnset = null)
+		{
+			return new PokemonDbPokemonHtml(pokemonName, generationLearnset, options.PokemonProfilePictures == OptionPokemonProfilePictures.Custom);
 		}
 
 		private void ShowTypeEffectiveness()
@@ -289,52 +285,19 @@ namespace MissingNopedia
 				+ "</html>");
 		}
 
-		private async Task ShowInfoMove(string moveName)
+		private static DocumentHtml ShowInfoMove(string moveName)
 		{
-			if (string.IsNullOrWhiteSpace(moveName))
-			{
-				ShowNewPage("");
-				return;
-			}
-
-			var content = await GetPageContentAsync($"https://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(moveName.Replace(' ', '_'))}{MoveHtml.WikiMoveSuffix}");
-			if (content is null) return;
-
-			var doc = new MoveHtml(content);
-
-			ShowNewPage(doc.BuildNewPage());
+			return new MoveHtml(moveName);
 		}
 
-		private async Task ShowInfoAbility(string abilityName)
+		private static DocumentHtml ShowInfoAbility(string abilityName)
 		{
-			if (string.IsNullOrWhiteSpace(abilityName))
-			{
-				ShowNewPage("");
-				return;
-			}
-
-			var content = await GetPageContentAsync($"https://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(abilityName.Replace(' ', '_'))}{AbilityHtml.WikiAbilitySuffix}");
-			if (content is null) return;
-
-			var doc = new AbilityHtml(content);
-
-			ShowNewPage(doc.BuildNewPage());
+			return	new AbilityHtml(abilityName);
 		}
 
-		private async Task ShowInfoEggGroup(string eggGroupName)
+		private static DocumentHtml ShowInfoEggGroup(string eggGroupName)
 		{
-			if (string.IsNullOrWhiteSpace(eggGroupName))
-			{
-				ShowNewPage("");
-				return;
-			}
-
-			var content = await GetPageContentAsync($"https://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(eggGroupName.Replace(' ', '_'))}{EggGroupHtml.WikiEggGroupSuffix}");
-			if (content is null) return;
-
-			var doc = new EggGroupHtml(content);
-
-			ShowNewPage(doc.BuildNewPage());
+			return new EggGroupHtml(eggGroupName);
 		}
 
 		private void btnAddCriterion_Click(object sender, EventArgs e)

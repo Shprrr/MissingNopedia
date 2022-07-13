@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MissingNopedia
 {
@@ -12,12 +14,27 @@ namespace MissingNopedia
 		private const string MoveVariations = "Move variations";
 		private const string TM = "TM";
 
-		public MoveHtml(string html) : base(html)
+		public string MoveName { get; }
+
+		public MoveHtml(string moveName)
 		{
+			MoveName = moveName;
+		}
+
+		public override async Task LoadAsync()
+		{
+			if (string.IsNullOrWhiteSpace(MoveName))
+				return;
+
+			var content = await GetPageContentAsync($"https://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(MoveName.Replace(' ', '_'))}{WikiMoveSuffix}");
+			if (content is null) return;
+
+			doc = GetHtmlDocument(content);
 		}
 
 		public override string BuildNewPage()
 		{
+			if (doc is null) return "";
 			var newDoc = ConstructBulbapediaPage();
 			var body = newDoc.DocumentNode.LastChild.LastChild.FirstChild;
 

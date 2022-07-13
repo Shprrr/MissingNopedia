@@ -1,23 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using HtmlAgilityPack;
 
 namespace MissingNopedia
 {
 	public abstract class DocumentHtml
 	{
+		public static HttpClient client;
 		protected const string FirstHeader = "firstHeading";
 		protected const string SiteSource = "siteSub";
 		protected const string ContentText = "mw-content-text";
 		protected const string TableOfContents = "toc";
 
 		protected HtmlDocument doc;
-
-		public DocumentHtml(string html)
-		{
-			doc = GetHtmlDocument(html);
-		}
 
 		protected HtmlDocument ConstructBulbapediaPage()
 		{
@@ -39,6 +38,51 @@ namespace MissingNopedia
 			body.FirstChild.AppendChild(doc.GetElementbyId(SiteSource));
 
 			return newDoc;
+		}
+
+		protected HtmlDocument ConstructPokemonDbPage()
+		{
+			var newDoc = new HtmlDocument();
+			newDoc.DocumentNode.InnerHtml = "<!DOCTYPE html><html lang=\"en\" dir=\"ltr\"><head></head><body></body></html>";
+
+			var head = newDoc.DocumentNode.LastChild.FirstChild;
+			head.AppendChild(HtmlNode.CreateNode("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" />"));
+			head.AppendChild(HtmlNode.CreateNode("<meta charset=\"UTF-8\">"));
+			var title = doc.DocumentNode.SelectSingleNode("//title").InnerHtml;
+			head.AppendChild(HtmlNode.CreateNode("<title>" + title + "</title>"));
+			head.AppendChild(HtmlNode.CreateNode("<link rel=\"stylesheet\" href=\"https://pokemondb.net/static/css/pokemondb-891d908d4e.css\">"));
+			head.AppendChild(HtmlNode.CreateNode("<link rel=\"stylesheet\" href=\"https://pokemondb.net/static/css/type-chart-76998cbd3d.css\">"));
+			head.AppendChild(HtmlNode.CreateNode("<link rel=\"stylesheet\" href=\"https://pokemondb.net/static/css/evolution-6ccf58cfbe.css\">"));
+
+			var body = newDoc.DocumentNode.LastChild.LastChild;
+			body.AppendChild(HtmlNode.CreateNode("<main id=\"main\" class=\"main-content grid-container\"></main>"));
+
+			return newDoc;
+		}
+
+		/// <summary>
+		/// Load the doc member.
+		/// </summary>
+		/// <returns></returns>
+		public abstract Task LoadAsync();
+
+		public static async Task<string> GetPageContentAsync(string url)
+		{
+			HttpResponseMessage response;
+			try
+			{
+				response = await client.GetAsync(url);
+			}
+			catch (HttpRequestException ex)
+			{
+				throw new ApplicationException($"Error getting informations : { ex.Message }");
+			}
+
+			if (!response.IsSuccessStatusCode)
+			{
+				throw new ApplicationException($"Error getting informations : { response.StatusCode }");
+			}
+			return await response.Content.ReadAsStringAsync();
 		}
 
 		public abstract string BuildNewPage();

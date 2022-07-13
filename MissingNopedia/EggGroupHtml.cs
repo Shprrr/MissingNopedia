@@ -1,4 +1,7 @@
-﻿namespace MissingNopedia
+﻿using System;
+using System.Threading.Tasks;
+
+namespace MissingNopedia
 {
 	public class EggGroupHtml : DocumentHtml
 	{
@@ -8,12 +11,27 @@
 		private const string Pokemon = "Pok.C3.A9mon";
 		private const string Trivia = "Trivia";
 
-		public EggGroupHtml(string html) : base(html)
+		public string EggGroupName { get; }
+
+		public EggGroupHtml(string eggGroupName)
 		{
+			EggGroupName = eggGroupName;
+		}
+
+		public override async Task LoadAsync()
+		{
+			if (string.IsNullOrWhiteSpace(EggGroupName))
+				return;
+
+			var content = await GetPageContentAsync($"https://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(EggGroupName.Replace(' ', '_'))}{WikiEggGroupSuffix}");
+			if (content is null) return;
+
+			doc = GetHtmlDocument(content);
 		}
 
 		public override string BuildNewPage()
 		{
+			if (doc is null) return "";
 			var newDoc = ConstructBulbapediaPage();
 			var body = newDoc.DocumentNode.LastChild.LastChild.FirstChild;
 

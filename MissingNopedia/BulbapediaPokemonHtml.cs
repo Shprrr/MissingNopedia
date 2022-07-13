@@ -1,6 +1,9 @@
-﻿namespace MissingNopedia
+﻿using System;
+using System.Threading.Tasks;
+
+namespace MissingNopedia
 {
-	public class PokemonHtml : DocumentHtml
+	public class BulbapediaPokemonHtml : DocumentHtml
 	{
 		public const string WikiPokemonSuffix = "_(Pok%C3%A9mon)";
 
@@ -21,21 +24,42 @@
 		private const string Trivia = "Trivia";
 		private const string InOtherLanguages = "In_other_languages";
 
-		private readonly HtmlAgilityPack.HtmlDocument learnsetDocument;
+		private HtmlAgilityPack.HtmlDocument learnsetDocument;
 
-		public PokemonHtml(string pokemonName, string html, string htmlLearnset, bool isCustomPictures) : base(html)
+		public BulbapediaPokemonHtml(string pokemonName, string generationLearnset, bool isCustomPictures)
 		{
-			if (!string.IsNullOrEmpty(htmlLearnset))
-				learnsetDocument = GetHtmlDocument(htmlLearnset);
 			PokemonName = pokemonName;
+			GenerationLearnset = generationLearnset;
 			IsCustomPictures = isCustomPictures;
 		}
 
 		public string PokemonName { get; }
+		public string GenerationLearnset { get; }
 		public bool IsCustomPictures { get; }
+
+		public override async Task LoadAsync()
+		{
+			if (string.IsNullOrWhiteSpace(PokemonName))
+				return;
+
+			var content = await GetPageContentAsync($"https://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(PokemonName.Replace(' ', '_'))}{WikiPokemonSuffix}");
+			if (content is null) return;
+
+			string contentGenerationLearnset = null;
+			if (!string.IsNullOrEmpty(GenerationLearnset))
+			{
+				contentGenerationLearnset = await GetPageContentAsync($"https://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(PokemonName.Replace(' ', '_'))}{WikiPokemonSuffix}/{GenerationLearnset}");
+				if (contentGenerationLearnset is null) return;
+			}
+
+			doc = GetHtmlDocument(content);
+			if (!string.IsNullOrEmpty(contentGenerationLearnset))
+				learnsetDocument = GetHtmlDocument(contentGenerationLearnset);
+		}
 
 		public override string BuildNewPage()
 		{
+			if (doc is null) return "";
 			var newDoc = ConstructBulbapediaPage();
 			var body = newDoc.DocumentNode.LastChild.LastChild.FirstChild;
 

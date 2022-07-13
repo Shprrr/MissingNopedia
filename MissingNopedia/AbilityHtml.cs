@@ -1,4 +1,7 @@
-﻿namespace MissingNopedia
+﻿using System;
+using System.Threading.Tasks;
+
+namespace MissingNopedia
 {
 	public class AbilityHtml : DocumentHtml
 	{
@@ -7,12 +10,27 @@
 		private const string Effect = "Effect";
 		private const string PokemonWith = "Pok.C3.A9mon_with_";
 
-		public AbilityHtml(string html) : base(html)
+		public string AbilityName { get; }
+
+		public AbilityHtml(string abilityName) 
 		{
+			AbilityName = abilityName;
+		}
+
+		public override async Task LoadAsync()
+		{
+			if (string.IsNullOrWhiteSpace(AbilityName))
+				return;
+
+			var content = await GetPageContentAsync($"https://bulbapedia.bulbagarden.net/wiki/{Uri.EscapeDataString(AbilityName.Replace(' ', '_'))}{WikiAbilitySuffix}");
+			if (content is null) return;
+
+			doc = GetHtmlDocument(content);
 		}
 
 		public override string BuildNewPage()
 		{
+			if (doc is null) return "";
 			var newDoc = ConstructBulbapediaPage();
 			var body = newDoc.DocumentNode.LastChild.LastChild.FirstChild;
 
