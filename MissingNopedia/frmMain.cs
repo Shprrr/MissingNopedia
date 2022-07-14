@@ -370,15 +370,22 @@ namespace MissingNopedia
 		private void btnAdvancedSearch_Click(object sender, EventArgs e)
 		{
 			dgvResult.Rows.Clear();
-			advancedSearch.RequestAsync(flpCriteria.Controls.OfType<Criterion>(), chkIncludeForms.Checked).ContinueWith(async p =>
-			{
-				var pokemons = await p;
-				Invoke((AdvancedSearchDelegate)delegate
-				{
-					dgvResult.Rows.AddRange(pokemons.Select(p => p.ConvertRow()).ToArray());
-					lblFound.Text = pokemons.Length + " found";
-				});
-			}).ConfigureAwait(false);
+			advancedSearch.RequestAsync(flpCriteria.Controls.OfType<Criterion>(), chkIncludeForms.Checked)
+				.ContinueWith(t =>
+					{
+						if (t.IsFaulted)
+						{
+							MessageBox.Show("Error with the search");
+							return;
+						}
+
+						var pokemons = t.Result;
+						Invoke((AdvancedSearchDelegate)delegate
+						{
+							dgvResult.Rows.AddRange(pokemons.Select(p => p.ConvertRow()).ToArray());
+							lblFound.Text = pokemons.Length + " found";
+						});
+					}, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 
 		private void dgvResult_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
