@@ -18,10 +18,26 @@ namespace MissingNopedia
 
 		protected HtmlDocument doc;
 
+		protected static HtmlDocument ConstructNewPage(string title)
+		{
+			HtmlDocument newDoc = new();
+			newDoc.LoadHtml("<!DOCTYPE html><html lang=\"en\" dir=\"ltr\"><head></head><body></body></html>");
+
+			var head = newDoc.DocumentNode.LastChild.FirstChild;
+			head.AppendChild(HtmlNode.CreateNode("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" />"));
+			head.AppendChild(HtmlNode.CreateNode("<meta charset=\"UTF-8\">"));
+			head.AppendChild(HtmlNode.CreateNode($"<title>{title}</title>"));
+
+			var body = newDoc.DocumentNode.LastChild.LastChild;
+			body.AppendChild(HtmlNode.CreateNode("<main id=\"main\"></main>"));
+
+			return newDoc;
+		}
+
 		protected HtmlDocument ConstructBulbapediaPage()
 		{
-			var newDoc = new HtmlDocument();
-			newDoc.DocumentNode.InnerHtml = "<!DOCTYPE html><html lang=\"en\" dir=\"ltr\" class=\"client-js desktop landscape\"><head></head><body></body></html>";
+			HtmlDocument newDoc = new();
+			newDoc.LoadHtml("<!DOCTYPE html><html lang=\"en\" dir=\"ltr\" class=\"client-js desktop landscape\"><head></head><body></body></html>");
 
 			var head = newDoc.DocumentNode.LastChild.FirstChild;
 			head.AppendChild(HtmlNode.CreateNode("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" />"));
@@ -42,8 +58,8 @@ namespace MissingNopedia
 
 		protected HtmlDocument ConstructPokemonDbPage()
 		{
-			var newDoc = new HtmlDocument();
-			newDoc.DocumentNode.InnerHtml = "<!DOCTYPE html><html lang=\"en\" dir=\"ltr\"><head></head><body></body></html>";
+			HtmlDocument newDoc = new();
+			newDoc.LoadHtml("<!DOCTYPE html><html lang=\"en\" dir=\"ltr\"><head></head><body></body></html>");
 
 			var head = newDoc.DocumentNode.LastChild.FirstChild;
 			head.AppendChild(HtmlNode.CreateNode("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" />"));
@@ -75,12 +91,12 @@ namespace MissingNopedia
 			}
 			catch (HttpRequestException ex)
 			{
-				throw new ApplicationException($"Error getting informations : { ex.Message }");
+				throw new ApplicationException($"Error getting informations : {ex.Message}");
 			}
 
 			if (!response.IsSuccessStatusCode)
 			{
-				throw new ApplicationException($"Error getting informations : { response.StatusCode }");
+				throw new ApplicationException($"Error getting informations : {response.StatusCode}");
 			}
 			return await response.Content.ReadAsStringAsync();
 		}

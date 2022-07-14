@@ -274,7 +274,7 @@ namespace MissingNopedia
 
 		private DocumentHtml ShowInfoPokemon(string pokemonName, string generationLearnset = null)
 		{
-			return new PokemonDbPokemonHtml(pokemonName, generationLearnset, options.PokemonProfilePictures == OptionPokemonProfilePictures.Custom);
+			return new PokemonHtml(pokemonName, generationLearnset, options.PokemonProfilePictures == OptionPokemonProfilePictures.Custom);
 		}
 
 		private void ShowTypeEffectiveness()
@@ -292,7 +292,7 @@ namespace MissingNopedia
 
 		private static DocumentHtml ShowInfoAbility(string abilityName)
 		{
-			return	new AbilityHtml(abilityName);
+			return new AbilityHtml(abilityName);
 		}
 
 		private static DocumentHtml ShowInfoEggGroup(string eggGroupName)
