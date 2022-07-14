@@ -34,7 +34,7 @@ namespace MissingNopedia.AdvancedSearch
 		public int Number { get; set; }
 		[JsonConverter(typeof(PokemonNameConverter))]
 		public string Name { get; set; }
-		public string Form => GetPokemonForm().Form.Name;
+		public string Form => GetPokemonForm().Form?.Name;
 		public Type Type1 => GetPokemonForm().Types.Types[0];
 		public Type? Type2 => GetPokemonForm().Types.Types.Length > 1 ? GetPokemonForm().Types.Types[1] : null;
 
@@ -57,7 +57,7 @@ namespace MissingNopedia.AdvancedSearch
 			get
 			{
 				if (ability1 == "")
-					ability1 = GetPokemonForm().Abilities.Single(a => a.Slot == 1).Ability.Name;
+					ability1 = GetPokemonForm().Abilities.SingleOrDefault(a => a.Slot == 1)?.Ability.Name;
 				return ability1;
 			}
 		}
@@ -251,7 +251,7 @@ namespace MissingNopedia.AdvancedSearch
 		{
 			public override PokemonForm.PokemonFormForm ReadJson(JsonReader reader, System.Type objectType, [AllowNull] PokemonForm.PokemonFormForm existingValue, bool hasExistingValue, JsonSerializer serializer)
 			{
-				return serializer.Deserialize<PokemonForm.PokemonFormForm[]>(reader)[0];
+				return serializer.Deserialize<PokemonForm.PokemonFormForm[]>(reader).FirstOrDefault();
 			}
 
 			public override void WriteJson(JsonWriter writer, [AllowNull] PokemonForm.PokemonFormForm value, JsonSerializer serializer) => throw new NotImplementedException();
