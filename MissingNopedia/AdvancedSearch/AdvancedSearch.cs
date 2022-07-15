@@ -8,12 +8,16 @@ using GraphQL.Client.Serializer.Newtonsoft;
 
 namespace MissingNopedia.AdvancedSearch
 {
-	public class AdvancedSearch
+	public static class AdvancedSearch
 	{
-		private readonly GraphQLHttpClient client = new("https://beta.pokeapi.co/graphql/v1beta", new NewtonsoftJsonSerializer());
+		private static readonly GraphQLHttpClient client = new("https://beta.pokeapi.co/graphql/v1beta", new NewtonsoftJsonSerializer());
 
-		public async Task<Pokemon[]> RequestAsync(IEnumerable<Criteria.Criterion> criteria, bool includeForms)
+		private static Pokemon[] PokemonsCache { get; set; }
+
+		public static async Task<Pokemon[]> LoadAsync()
 		{
+			if (PokemonsCache is not null) return PokemonsCache;
+
 			GraphQLRequest request = new(@"query PokeAPIquery {
   pokemons: pokemon_v2_pokemonspecies(order_by: {id: asc}) {
     number: id
@@ -65,7 +69,13 @@ namespace MissingNopedia.AdvancedSearch
 }", null, "PokeAPIquery");
 			var response = await client.SendQueryAsync(request, () => new { pokemons = new List<Pokemon>() });
 
-			Pokemon[] results = response.Data.pokemons.ToArray();
+			PokemonsCache = response.Data.pokemons.ToArray();
+			return PokemonsCache;
+		}
+
+		public static async Task<Pokemon[]> RequestAsync(IEnumerable<Criteria.Criterion> criteria, bool includeForms)
+		{
+			Pokemon[] results = await LoadAsync();
 			if (includeForms) results = results.SelectMany(p => p.GetForms()).ToArray();
 
 			var filter = (Pokemon pokemon) => true;

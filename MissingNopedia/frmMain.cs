@@ -17,7 +17,6 @@ namespace MissingNopedia
 		private readonly Stack<Uri> history = new();
 
 		private Options options = new();
-		private readonly AdvancedSearch.AdvancedSearch advancedSearch = new();
 
 		public frmMain()
 		{
@@ -333,7 +332,7 @@ namespace MissingNopedia
 		private void btnAdvancedSearch_Click(object sender, EventArgs e)
 		{
 			dgvResult.Rows.Clear();
-			advancedSearch.RequestAsync(flpCriteria.Controls.OfType<Criterion>(), chkIncludeForms.Checked)
+			AdvancedSearch.AdvancedSearch.RequestAsync(flpCriteria.Controls.OfType<Criterion>(), chkIncludeForms.Checked)
 				.ContinueWith(t =>
 					{
 						if (t.IsFaulted)
