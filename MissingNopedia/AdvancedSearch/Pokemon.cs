@@ -10,6 +10,8 @@ namespace MissingNopedia.AdvancedSearch
 {
 	public class Pokemon
 	{
+		[JsonProperty("species"), JsonConverter(typeof(PokemonSpeciesConverter))]
+		private readonly PokemonSpecies pokemonSpecies = new();
 		[JsonProperty("forms")]
 		private readonly PokemonForm[] pokemonForms = new PokemonForm[1];
 		/// <summary>
@@ -31,12 +33,22 @@ namespace MissingNopedia.AdvancedSearch
 			return pokemonForm;
 		}
 
-		public int Number { get; set; }
-		[JsonConverter(typeof(PokemonNameConverter))]
-		public string Name { get; set; }
+		[JsonProperty("number")]
+		public int Number { get; private set; }
+		public string Name => pokemonSpecies.Name;
 		public string Form => GetPokemonForm().Form?.Name;
 		public Type Type1 => GetPokemonForm().Types.Types[0];
 		public Type? Type2 => GetPokemonForm().Types.Types.Length > 1 ? GetPokemonForm().Types.Types[1] : null;
+		public Type[] Types
+		{
+			get
+			{
+				List<Type> listTypes = new() { Type1 };
+				if (Type2.HasValue)
+					listTypes.Add(Type2.Value);
+				return listTypes.ToArray();
+			}
+		}
 
 		public int BaseHP => GetPokemonForm().BaseStats[0].BaseStat;
 		public int BaseAttack => GetPokemonForm().BaseStats[1].BaseStat;
@@ -83,10 +95,24 @@ namespace MissingNopedia.AdvancedSearch
 		public Type[] Weaknesses => GetPokemonForm().Types.Efficacies.Where(t => t.DamageMultiplier > 1).Select(t => t.DamageType).ToArray();
 		public Type[] Resistances => GetPokemonForm().Types.Efficacies.Where(t => t.DamageMultiplier < 1).Select(t => t.DamageType).ToArray();
 
-		public Pokemon(int number, string name)
+		[JsonIgnore]
+		public string Species => pokemonSpecies.Species;
+
+		[JsonProperty("pokedexEntries"), JsonConverter(typeof(PokedexEntriesConverter))]
+		public Dictionary<string, string> PokedexEntries { get; private set; }
+
+		[JsonConstructor]
+		[SuppressMessage("CodeQuality", "IDE0051:Supprimer les membres privés non utilisés", Justification = "JsonSerialization")]
+		private Pokemon()
 		{
-			Number = number;
-			Name = name;
+		}
+
+		private Pokemon(Pokemon pokemonOriginal, PokemonForm pokemonForm)
+		{
+			Number = pokemonForm.Id;
+			pokemonSpecies = pokemonOriginal.pokemonSpecies;
+			this.pokemonForm = pokemonForm;
+			PokedexEntries = pokemonOriginal.PokedexEntries;
 		}
 
 		public override string ToString()
@@ -97,7 +123,7 @@ namespace MissingNopedia.AdvancedSearch
 			return s;
 		}
 
-		public IEnumerable<Pokemon> GetForms() => pokemonForms.Select(f => new Pokemon(f.Id, Name) { pokemonForm = f });
+		public IEnumerable<Pokemon> GetForms() => pokemonForms.Select(f => new Pokemon(this, f));
 
 		public DataGridViewRow ConvertRow()
 		{
@@ -142,6 +168,13 @@ namespace MissingNopedia.AdvancedSearch
 				ToolTipText = HiddenAbility?.ToString()
 			});
 			return row;
+		}
+
+		private class PokemonSpecies
+		{
+			public string Name { get; set; }
+			[JsonProperty("genus")]
+			public string Species { get; set; }
 		}
 
 		private class PokemonForm
@@ -222,8 +255,15 @@ namespace MissingNopedia.AdvancedSearch
 
 			public override string ReadJson(JsonReader reader, System.Type objectType, [AllowNull] string existingValue, bool hasExistingValue, JsonSerializer serializer)
 			{
-				PokemonName[] pokemonNames = serializer.Deserialize<PokemonName[]>(reader);
-				return pokemonNames.Length == 0 ? null : pokemonNames[0].Name;
+				var o = serializer.Deserialize(reader);
+				if (o is Newtonsoft.Json.Linq.JObject jo)
+					return jo["name"].ToString();
+				else if (o is Newtonsoft.Json.Linq.JArray ja)
+				{
+					PokemonName[] pokemonNames = ja.ToObject<PokemonName[]>();
+					return pokemonNames.Length == 0 ? null : pokemonNames[0].Name;
+				}
+				return null;
 			}
 
 			public override void WriteJson(JsonWriter writer, [AllowNull] string value, JsonSerializer serializer) => throw new NotImplementedException();
@@ -245,6 +285,16 @@ namespace MissingNopedia.AdvancedSearch
 			}
 
 			public override void WriteJson(JsonWriter writer, [AllowNull] Type value, JsonSerializer serializer) => throw new NotImplementedException();
+		}
+
+		private class PokemonSpeciesConverter : JsonConverter<PokemonSpecies>
+		{
+			public override PokemonSpecies ReadJson(JsonReader reader, System.Type objectType, [AllowNull] PokemonSpecies existingValue, bool hasExistingValue, JsonSerializer serializer)
+			{
+				return serializer.Deserialize<PokemonSpecies[]>(reader)[0];
+			}
+
+			public override void WriteJson(JsonWriter writer, [AllowNull] PokemonSpecies value, JsonSerializer serializer) => throw new NotImplementedException();
 		}
 
 		private class PokemonFormConverter : JsonConverter<PokemonForm.PokemonFormForm>
@@ -291,6 +341,24 @@ namespace MissingNopedia.AdvancedSearch
 			}
 
 			public override void WriteJson(JsonWriter writer, [AllowNull] PokemonForm.PokemonTypes value, JsonSerializer serializer) => throw new NotImplementedException();
+		}
+
+		private class PokedexEntriesConverter : JsonConverter<Dictionary<string, string>>
+		{
+			private class PokedexEntry
+			{
+				[JsonProperty("version"), JsonConverter(typeof(PokemonNameConverter))]
+				public string VersionName { get; set; }
+				[JsonProperty("flavor_text")]
+				public string FlavorText { get; set; }
+			}
+
+			public override Dictionary<string, string> ReadJson(JsonReader reader, System.Type objectType, [AllowNull] Dictionary<string, string> existingValue, bool hasExistingValue, JsonSerializer serializer)
+			{
+				return serializer.Deserialize<PokedexEntry[]>(reader).ToDictionary(pe => pe.VersionName, pe => pe.FlavorText);
+			}
+
+			public override void WriteJson(JsonWriter writer, [AllowNull] Dictionary<string, string> value, JsonSerializer serializer) => throw new NotImplementedException();
 		}
 	}
 }

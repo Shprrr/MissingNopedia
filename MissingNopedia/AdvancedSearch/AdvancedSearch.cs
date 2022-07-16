@@ -22,8 +22,16 @@ namespace MissingNopedia.AdvancedSearch
   pokemons: pokemon_v2_pokemonspecies(order_by: {id: asc}) {
     number: id
     order
-    name: pokemon_v2_pokemonspeciesnames(where: {language_id: {_eq: 9}}) {
+    species: pokemon_v2_pokemonspeciesnames(where: {language_id: {_eq: 9}}) {
       name
+      genus
+    }
+    pokedexEntries: pokemon_v2_pokemonspeciesflavortexts(where: {language_id: {_eq: 9}}) {
+      version_id
+      version: pokemon_v2_version {
+        name
+      }
+      flavor_text
     }
     forms: pokemon_v2_pokemons {
       id
