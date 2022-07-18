@@ -18,9 +18,10 @@ namespace MissingNopedia.AdvancedSearch
 		/// Do not use this directly.
 		/// </summary>
 		private PokemonForm pokemonForm;
-		private string ability1 = "";
-		private string ability2 = "";
-		private string hiddenAbility = "";
+		private static readonly Ability AbilityNotSet = new("Not set", new());
+		private Ability ability1 = AbilityNotSet;
+		private Ability ability2 = AbilityNotSet;
+		private Ability hiddenAbility = AbilityNotSet;
 
 		/// <summary>
 		/// Get additional data for the current form.
@@ -64,31 +65,60 @@ namespace MissingNopedia.AdvancedSearch
 		public int PhysicalTank { get { return BaseAttack + BaseDefense; } }
 		public int SpecialTank { get { return BaseSpAttack + BaseSpDefense; } }
 
-		public string Ability1
+		public Ability Ability1
 		{
 			get
 			{
-				if (ability1 == "")
-					ability1 = GetPokemonForm().Abilities.SingleOrDefault(a => a.Slot == 1)?.Ability.Name;
+				if (ability1 == AbilityNotSet)
+				{
+					var formAbility = GetPokemonForm().Abilities.SingleOrDefault(a => a.Slot == 1);
+					ability1 = formAbility == null
+						? null
+						: (new(formAbility.Ability.Name, formAbility.Ability.Descriptions.ToDictionary(d => d.VersionGroupName, d => d.FlavorText)));
+				}
 				return ability1;
 			}
 		}
-		public string Ability2
+		public Ability Ability2
 		{
 			get
 			{
-				if (ability2 == "")
-					ability2 = GetPokemonForm().Abilities.SingleOrDefault(a => a.Slot == 2)?.Ability.Name;
+				if (ability2 == AbilityNotSet)
+				{
+					var formAbility = GetPokemonForm().Abilities.SingleOrDefault(a => a.Slot == 2);
+					ability2 = formAbility == null
+						? null
+						: (new(formAbility.Ability.Name, formAbility.Ability.Descriptions.ToDictionary(d => d.VersionGroupName, d => d.FlavorText)));
+				}
 				return ability2;
 			}
 		}
-		public string HiddenAbility
+		public Ability HiddenAbility
 		{
 			get
 			{
-				if (hiddenAbility == "")
-					hiddenAbility = GetPokemonForm().Abilities.SingleOrDefault(a => a.IsHidden)?.Ability.Name;
+				if (hiddenAbility == AbilityNotSet)
+				{
+					var formAbility = GetPokemonForm().Abilities.SingleOrDefault(a => a.IsHidden);
+					hiddenAbility = formAbility == null
+						? null
+						: (new(formAbility.Ability.Name, formAbility.Ability.Descriptions.ToDictionary(d => d.VersionGroupName, d => d.FlavorText)));
+				}
 				return hiddenAbility;
+			}
+		}
+		public Ability[] Abilities
+		{
+			get
+			{
+				List<Ability> listAbilties = new();
+				if (Ability1 != null)
+					listAbilties.Add(Ability1);
+				if (Ability2 != null)
+					listAbilties.Add(Ability2);
+				if (HiddenAbility != null)
+					listAbilties.Add(HiddenAbility);
+				return listAbilties.ToArray();
 			}
 		}
 
@@ -97,6 +127,11 @@ namespace MissingNopedia.AdvancedSearch
 
 		[JsonIgnore]
 		public string Species => pokemonSpecies.Species;
+		public float HeightInMeters => GetPokemonForm().Height / 10f;
+		public int HeightInFeet => (int)(GetPokemonForm().Height / 0.254 / 12);
+		public int HeightInInches => (int)Math.Round(GetPokemonForm().Height / 0.254 % 12);
+		public float WeightInKilograms => GetPokemonForm().Weight / 10f;
+		public float WeightInPounds => GetPokemonForm().Weight / 4.5359237f;
 
 		[JsonProperty("pokedexEntries"), JsonConverter(typeof(PokedexEntriesConverter))]
 		public Dictionary<string, string> PokedexEntries { get; private set; }
@@ -156,16 +191,20 @@ namespace MissingNopedia.AdvancedSearch
 			row.Cells.Add(new DataGridViewTextBoxCell { Value = PhysicalTank });
 			row.Cells.Add(new DataGridViewTextBoxCell { Value = SpecialTank });
 
-			row.Cells.Add(new DataGridViewTextBoxCell { Value = Ability1 });
 			row.Cells.Add(new DataGridViewTextBoxCell
 			{
-				Value = Ability2,
-				ToolTipText = Ability2?.ToString()
+				Value = Ability1?.Name,
+				ToolTipText = Ability1?.Description.Last().Value
 			});
 			row.Cells.Add(new DataGridViewTextBoxCell
 			{
-				Value = HiddenAbility,
-				ToolTipText = HiddenAbility?.ToString()
+				Value = Ability2?.Name,
+				ToolTipText = Ability2?.Description.Last().Value
+			});
+			row.Cells.Add(new DataGridViewTextBoxCell
+			{
+				Value = HiddenAbility?.Name,
+				ToolTipText = HiddenAbility?.Description.Last().Value
 			});
 			return row;
 		}
@@ -180,6 +219,8 @@ namespace MissingNopedia.AdvancedSearch
 		private class PokemonForm
 		{
 			public int Id { get; set; }
+			public int Height { get; set; }
+			public int Weight { get; set; }
 			[JsonConverter(typeof(PokemonFormConverter))]
 			public PokemonFormForm Form { get; set; }
 			[JsonConverter(typeof(PokemonTypesConverter))]
@@ -240,6 +281,15 @@ namespace MissingNopedia.AdvancedSearch
 				{
 					[JsonConverter(typeof(PokemonNameConverter))]
 					public string Name { get; set; }
+					public PokemonAbilityDescription[] Descriptions { get; set; }
+
+					public class PokemonAbilityDescription
+					{
+						[JsonProperty("versionGroup"), JsonConverter(typeof(PokemonNameConverter))]
+						public string VersionGroupName { get; set; }
+						[JsonProperty("flavor_text")]
+						public string FlavorText { get; set; }
+					}
 				}
 
 				public override string ToString() => Ability.Name;

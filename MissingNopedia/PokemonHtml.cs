@@ -275,6 +275,10 @@ namespace MissingNopedia
             color: #ff6bce
         }
 
+        .text-muted {
+            color: #737373;
+        }
+
         table {
             border-collapse: collapse;
             border-spacing: 0;
@@ -306,16 +310,39 @@ namespace MissingNopedia
         </tr>
         <tr>
             <th>Type</th>
-            <td></td>
+            <td><small class=""text-muted"">None</small></td>
         </tr>
         <tr>
             <th>Species</th>
             <td>{pokemonData.Species}</td>
         </tr>
+        <tr>
+            <th>Height</th>
+            <td>{pokemonData.HeightInMeters:F1}&nbsp;m ({pokemonData.HeightInFeet}′{pokemonData.HeightInInches:D2}″)</td>
+        </tr>
+        <tr>
+            <th>Weight</th>
+            <td>{pokemonData.WeightInKilograms:F1}&nbsp;kg ({pokemonData.WeightInPounds:F1}&nbsp;lbs)</td>
+        </tr>
+        <tr>
+            <th>Abilities</th>
+            <td><small class=""text-muted"">None</small></td>
+        </tr>
     </tbody>
 </table>"));
 			main.LastChild.SelectSingleNode("//tr[2]/td[1]")
 				.InnerHtml = string.Join(" ", pokemonData.Types.Select(t => $"<span class=\"type-icon type-{t.ToString().ToLower()}\">{t}</span>"));
+			if (pokemonData.Ability1 != null)
+			{
+				var abilitiesCell = main.LastChild.SelectSingleNode("//tr[6]/td[1]");
+				abilitiesCell.InnerHtml = $"<span class=\"text-muted\">1. <a href=\"/{pokemonData.Ability1.Name}{AbilityHtml.WikiAbilitySuffix}\" title=\"{pokemonData.Ability1.Description.Last().Value}\">{pokemonData.Ability1.Name}</a></span>";
+
+				if (pokemonData.Ability2 != null)
+					abilitiesCell.InnerHtml += $"<br><span class=\"text-muted\">2. <a href=\"/{pokemonData.Ability2.Name}{AbilityHtml.WikiAbilitySuffix}\" title=\"{pokemonData.Ability2.Description.Last().Value}\">{pokemonData.Ability2.Name}</a></span>";
+
+				if (pokemonData.HiddenAbility != null)
+					abilitiesCell.InnerHtml += $"<br><small class=\"text-muted\"><a href=\"/{pokemonData.HiddenAbility.Name}{AbilityHtml.WikiAbilitySuffix}\" title=\"{pokemonData.HiddenAbility.Description.Last().Value}\">{pokemonData.HiddenAbility.Name}</a> (hidden ability)</small>";
+			}
 
 			main.AppendChild(HtmlNode.CreateNode("<h2>Pokédex entries</h2>"));
 			main.AppendChild(HtmlNode.CreateNode(@"<table>

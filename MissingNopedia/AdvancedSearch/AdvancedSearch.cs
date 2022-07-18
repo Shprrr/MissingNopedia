@@ -35,6 +35,8 @@ namespace MissingNopedia.AdvancedSearch
     }
     forms: pokemon_v2_pokemons {
       id
+      height
+      weight
       form: pokemon_v2_pokemonforms {
         form_order
         form_name
@@ -69,6 +71,13 @@ namespace MissingNopedia.AdvancedSearch
         ability: pokemon_v2_ability {
           name: pokemon_v2_abilitynames(where: {language_id: {_eq: 9}}) {
             name
+          }
+          descriptions: pokemon_v2_abilityflavortexts(where: {language_id: {_eq: 9}}) {
+            version_group_id
+            versionGroup: pokemon_v2_versiongroup {
+              name
+            }
+            flavor_text
           }
         }
       }

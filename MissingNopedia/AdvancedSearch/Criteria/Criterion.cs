@@ -105,7 +105,7 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 					criterion = (Pokemon p) => CompareOperator(p.Name);
 					break;
 				case Type.Type:
-					criterion = (Pokemon p) => CompareOperator(p.Type1.ToString()) || p.Type2 != null && CompareOperator(p.Type2.ToString());
+					criterion = (Pokemon p) => CompareOperator(p.Types.Select(t => t.ToString()).ToArray());
 					break;
 				case Type.HP:
 					criterion = (Pokemon p) => CompareOperator(p.BaseHP);
@@ -144,7 +144,7 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 					criterion = (Pokemon p) => CompareOperator(p.SpecialTank);
 					break;
 				case Type.AbilityName:
-					criterion = (Pokemon p) => CompareOperator(p.Ability1) || p.Ability2 != null && CompareOperator(p.Ability2) || p.HiddenAbility != null && CompareOperator(p.HiddenAbility);
+					criterion = (Pokemon p) => CompareOperator(p.Abilities.Select(a => a.Name).ToArray());
 					break;
 				case Type.Weakness:
 					criterion = (Pokemon p) => CompareOperator(p.Weaknesses.Select(t => t.ToString()).ToArray());
@@ -249,6 +249,7 @@ namespace MissingNopedia.AdvancedSearch.Criteria
 
 		public bool CompareOperator(params string[] valuesToCompare)
 		{
+			if (valuesToCompare.Length == 0) valuesToCompare = new[] { "" };
 			return OperatorValue switch
 			{
 				Operator.Equals or Operator.Like or Operator.Lesser or Operator.LesserEqual or Operator.Greater or Operator.GreaterEqual => valuesToCompare.Any(CompareOperator),
