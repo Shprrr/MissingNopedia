@@ -22,6 +22,8 @@ namespace MissingNopedia
 		{
 			DocumentHtml.client = client;
 			InitializeComponent();
+			webBrowser.Visible = true;
+			splitSearch.Visible = false;
 
 			// Remove auto horizontal scroll.
 			tlpCriteria.AutoScroll = false;
