@@ -26,6 +26,12 @@ namespace MissingNopedia.AdvancedSearch
       name
       genus
     }
+    pokedexNumbers: pokemon_v2_pokemondexnumbers(where: {pokemon_v2_pokedex: {is_main_series: {_eq: true}}}) {
+      pokedex_number
+      pokedexName: pokemon_v2_pokedex {
+        name
+      }
+    }
     pokedexEntries: pokemon_v2_pokemonspeciesflavortexts(where: {language_id: {_eq: 9}}) {
       version_id
       version: pokemon_v2_version {

@@ -133,6 +133,9 @@ namespace MissingNopedia.AdvancedSearch
 		public float WeightInKilograms => GetPokemonForm().Weight / 10f;
 		public float WeightInPounds => GetPokemonForm().Weight / 4.5359237f;
 
+		[JsonProperty("pokedexNumbers"), JsonConverter(typeof(PokedexNumbersConverter))]
+		public Dictionary<string, int> PokedexNumbers { get; private set; }
+
 		[JsonProperty("pokedexEntries"), JsonConverter(typeof(PokedexEntriesConverter))]
 		public Dictionary<string, string> PokedexEntries { get; private set; }
 
@@ -147,6 +150,7 @@ namespace MissingNopedia.AdvancedSearch
 			Number = pokemonForm.Id;
 			pokemonSpecies = pokemonOriginal.pokemonSpecies;
 			this.pokemonForm = pokemonForm;
+			PokedexNumbers = pokemonOriginal.PokedexNumbers;
 			PokedexEntries = pokemonOriginal.PokedexEntries;
 		}
 
@@ -391,6 +395,24 @@ namespace MissingNopedia.AdvancedSearch
 			}
 
 			public override void WriteJson(JsonWriter writer, [AllowNull] PokemonForm.PokemonTypes value, JsonSerializer serializer) => throw new NotImplementedException();
+		}
+
+		private class PokedexNumbersConverter : JsonConverter<Dictionary<string, int>>
+		{
+			private class PokedexNumber
+			{
+				[JsonProperty("pokedexName"), JsonConverter(typeof(PokemonNameConverter))]
+				public string PokedexName { get; set; }
+				[JsonProperty("pokedex_number")]
+				public int Number { get; set; }
+			}
+
+			public override Dictionary<string, int> ReadJson(JsonReader reader, System.Type objectType, [AllowNull] Dictionary<string, int> existingValue, bool hasExistingValue, JsonSerializer serializer)
+			{
+				return serializer.Deserialize<PokedexNumber[]>(reader).ToDictionary(pe => pe.PokedexName, pe => pe.Number);
+			}
+
+			public override void WriteJson(JsonWriter writer, [AllowNull] Dictionary<string, int> value, JsonSerializer serializer) => throw new NotImplementedException();
 		}
 
 		private class PokedexEntriesConverter : JsonConverter<Dictionary<string, string>>
