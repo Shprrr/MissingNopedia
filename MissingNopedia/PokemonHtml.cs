@@ -10,7 +10,22 @@ namespace MissingNopedia
 	{
 		public const string WikiPokemonSuffix = "_(Pok%C3%A9mon)";
 
+		private const int MaxIv = 31;
+		private const int MaxEv = 254;
+
 		private Pokemon pokemonData;
+		private int minimumHP;
+		private int maximumHP;
+		private int minimumAttack;
+		private int maximumAttack;
+		private int minimumDefense;
+		private int maximumDefense;
+		private int minimumSpAttack;
+		private int maximumSpAttack;
+		private int minimumSpDefense;
+		private int maximumSpDefense;
+		private int minimumSpeed;
+		private int maximumSpeed;
 
 		public string PokemonName { get; }
 		public string GenerationLearnset { get; }
@@ -25,7 +40,22 @@ namespace MissingNopedia
 
 		public override async Task LoadAsync()
 		{
-			pokemonData = Array.Find(await AdvancedSearch.AdvancedSearch.LoadAsync(), p => p.Name.Replace('’', '\'') == PokemonName);
+			Pokemon[] pokemons = await AdvancedSearch.AdvancedSearch.LoadAsync();
+			pokemonData = Array.Find(pokemons, p => p.Name.Replace('’', '\'') == PokemonName);
+			if (pokemonData is null) return;
+			Pokemon[] pokemonsWithForms = pokemons.SelectMany(p => p.GetForms()).ToArray();
+			minimumHP = pokemonsWithForms.Min(p => p.BaseHP);
+			maximumHP = pokemonsWithForms.Max(p => p.BaseHP);
+			minimumAttack = pokemonsWithForms.Min(p => p.BaseAttack);
+			maximumAttack = pokemonsWithForms.Max(p => p.BaseAttack);
+			minimumDefense = pokemonsWithForms.Min(p => p.BaseDefense);
+			maximumDefense = pokemonsWithForms.Max(p => p.BaseDefense);
+			minimumSpAttack = pokemonsWithForms.Min(p => p.BaseSpAttack);
+			maximumSpAttack = pokemonsWithForms.Max(p => p.BaseSpAttack);
+			minimumSpDefense = pokemonsWithForms.Min(p => p.BaseSpDefense);
+			maximumSpDefense = pokemonsWithForms.Max(p => p.BaseSpDefense);
+			minimumSpeed = pokemonsWithForms.Min(p => p.BaseSpeed);
+			maximumSpeed = pokemonsWithForms.Max(p => p.BaseSpeed);
 		}
 
 		public override string BuildNewPage()
@@ -410,6 +440,43 @@ namespace MissingNopedia
                 border: 1px solid #9B6470;
             }
 
+        .cell-barchart {
+            width: 100%;
+            min-width: 150px
+        }
+
+        .barchart-bar {
+            height: .75rem;
+            border-radius: 4px;
+            background-color: #a3a3a3;
+            border: 1px solid #737373;
+            border-color: rgba(0,0,0,.15)
+        }
+
+        .barchart-rank-1 {
+            background-color: #f34444
+        }
+
+        .barchart-rank-2 {
+            background-color: #ff7f0f
+        }
+
+        .barchart-rank-3 {
+            background-color: #ffdd57
+        }
+
+        .barchart-rank-4 {
+            background-color: #a0e515
+        }
+
+        .barchart-rank-5 {
+            background-color: #23cd5e
+        }
+
+        .barchart-rank-6 {
+            background-color: #00c2b8
+        }
+
         .infocard-list-evo {
             display: flex;
             justify-content: center;
@@ -562,8 +629,22 @@ namespace MissingNopedia
 			main.AppendChild(HtmlNode.CreateNode($"<h1>{PokemonName}</h1>"));
 			main.AppendChild(HtmlNode.CreateNode($"<img src=\"https://img.pokemondb.net/artwork/large/{ImageName()}.jpg\" class=\"profile\" />"));
 
-			main.AppendChild(HtmlNode.CreateNode("<h2>Pokédex data</h2>"));
-			main.AppendChild(HtmlNode.CreateNode(@$"<table>
+			AddPokedexData(main);
+
+			AddBaseStats(main);
+
+			AddPokedexEntries(main);
+
+			return doc.DocumentNode.OuterHtml;
+		}
+
+		private string ImageName() => PokemonName.ToLower()
+			.Replace("♀", "-f").Replace("♂", "-m").Replace("'", "").Replace(". ", "-").Replace(" ", "-").Replace(".", "").Replace(":", "");
+
+		private void AddPokedexData(HtmlNode parentNode)
+		{
+			parentNode.AppendChild(HtmlNode.CreateNode("<h2 id=\"pokedexData\">Pokédex data</h2>"));
+			parentNode.AppendChild(HtmlNode.CreateNode(@$"<table>
     <tbody>
         <tr>
             <th>National №</th>
@@ -595,13 +676,14 @@ namespace MissingNopedia
         </tr>
     </tbody>
 </table>"));
+
 			var types = string.Join(" ", pokemonData.Types.Select(t => $"<span class=\"type-icon type-{t.ToString().ToLower()}\">{t}</span>"));
 			if (!string.IsNullOrEmpty(types))
-				main.LastChild.SelectSingleNode("//tr[2]/td[1]").InnerHtml = types;
+				parentNode.LastChild.SelectSingleNode("//tr[2]/td[1]").InnerHtml = types;
 
 			if (pokemonData.Ability1 != null)
 			{
-				var abilitiesCell = main.LastChild.SelectSingleNode("//tr[6]/td[1]");
+				var abilitiesCell = parentNode.LastChild.SelectSingleNode("//tr[6]/td[1]");
 				abilitiesCell.InnerHtml = $"<span class=\"text-muted\">1. <a href=\"/{pokemonData.Ability1.Name}{AbilityHtml.WikiAbilitySuffix}\" title=\"{pokemonData.Ability1.Description.Last().Value}\">{pokemonData.Ability1.Name}</a></span>";
 
 				if (pokemonData.Ability2 != null)
@@ -613,14 +695,170 @@ namespace MissingNopedia
 
 			var localDexNumbers = string.Join("<br>", pokemonData.PokedexNumbers.Where(pn => pn.Key != "national").Select(pn => $"{pn.Value:D3} <small class=\"text-muted\">({ToPokedexName(pn.Key)})</small>"));
 			if (!string.IsNullOrEmpty(localDexNumbers))
-				main.LastChild.SelectSingleNode("//tr[7]/td[1]").InnerHtml = localDexNumbers;
+				parentNode.LastChild.SelectSingleNode("//tr[7]/td[1]").InnerHtml = localDexNumbers;
+		}
 
-			main.AppendChild(HtmlNode.CreateNode("<h2>Pokédex entries</h2>"));
-			main.AppendChild(HtmlNode.CreateNode(@"<table>
+		private static string ToPokedexName(string pokedexName)
+		{
+			return pokedexName switch
+			{
+				"national" => "National",
+				"kanto" => "Red/Blue/Yellow/FireRed/LeafGreen",
+				"original-johto" => "Gold/Silver/Crystal",
+				"hoenn" => "Ruby/Sapphire/Emerald",
+				"original-sinnoh" => "Diamond/Pearl/Brilliant Diamond/Shining Pearl",
+				"extended-sinnoh" => "Platinum",
+				"updated-johto" => "HeartGold/SoulSilver",
+				"original-unova" => "Black/White",
+				"updated-unova" => "Black 2/White 2",
+				"kalos-central" => "X/Y — Central Kalos",
+				"kalos-coastal" => "X/Y — Coastal Kalos",
+				"kalos-mountain" => "X/Y — Mountain Kalos",
+				"updated-hoenn" => "Omega Ruby/Alpha Sapphire",
+				"original-alola" => "Sun/Moon — Alola",
+				"original-melemele" => "Sun/Moon — Melemele",
+				"original-akala" => "Sun/Moon — Akala",
+				"original-ulaula" => "Sun/Moon — Ula'ula",
+				"original-poni" => "Sun/Moon — Poni",
+				"updated-alola" => "Ultra Sun/Ultra Moon — Alola",
+				"updated-melemele" => "Ultra Sun/Ultra Moon — Melemele",
+				"updated-akala" => "Ultra Sun/Ultra Moon — Akala",
+				"updated-ulaula" => "Ultra Sun/Ultra Moon — Ula'ula",
+				"updated-poni" => "Ultra Sun/Ultra Moon — Poni",
+				"letsgo-kanto" => "Let’s Go: Pikachu/Let’s Go: Eevee",
+				"galar" => "Sword/Shield",
+				"isle-of-armor" => "Isle of Armor",
+				"crown-tundra" => "Crown Tundra",
+				"hisui" => "Legends: Arceus",
+				_ => ""
+			};
+		}
+
+		private void AddBaseStats(HtmlNode parentNode)
+		{
+			parentNode.AppendChild(HtmlNode.CreateNode("<h2 id=\"baseStats\">Base stats</h2>"));
+			parentNode.AppendChild(HtmlNode.CreateNode(FormattableString.Invariant(@$"<table>
+    <thead>
+        <tr><td colspan=""3"" rowspan=""2""></td><th colspan=""2"">At Lv. 50</th><th colspan=""2"">At Lv. 100</th></tr>
+        <tr>
+            <th>Min</th>
+            <th>Max</th>
+            <th>Min</th>
+            <th>Max</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>HP</th>
+            <td>{pokemonData.BaseHP}</td>
+            <td class=""cell-barchart"">
+                <div style=""width:{CalculateWidth(pokemonData.BaseHP, minimumHP, maximumHP)}%;"" class=""barchart-bar barchart-rank-{CalculateRank(pokemonData.BaseHP, minimumHP, maximumHP)}""></div>
+            </td>
+            <td>{CalculateHPStat(pokemonData.BaseHP, 50, 0, 0)}</td>
+            <td>{CalculateHPStat(pokemonData.BaseHP, 50, MaxIv, MaxEv)}</td>
+            <td>{CalculateHPStat(pokemonData.BaseHP, 100, 0, 0)}</td>
+            <td>{CalculateHPStat(pokemonData.BaseHP, 100, MaxIv, MaxEv)}</td>
+        </tr>
+        <tr>
+            <th>Attack</th>
+            <td>{pokemonData.BaseAttack}</td>
+            <td class=""cell-barchart"">
+                <div style=""width:{CalculateWidth(pokemonData.BaseAttack, minimumAttack, maximumAttack)}%;"" class=""barchart-bar barchart-rank-{CalculateRank(pokemonData.BaseAttack, minimumAttack, maximumAttack)}""></div>
+            </td>
+            <td>{CalculateOtherStat(pokemonData.BaseAttack, 50, 0, 0, NatureBoosting.Hindering)}</td>
+            <td>{CalculateOtherStat(pokemonData.BaseAttack, 50, MaxIv, MaxEv, NatureBoosting.Beneficial)}</td>
+            <td>{CalculateOtherStat(pokemonData.BaseAttack, 100, 0, 0, NatureBoosting.Hindering)}</td>
+            <td>{CalculateOtherStat(pokemonData.BaseAttack, 100, MaxIv, MaxEv, NatureBoosting.Beneficial)}</td>
+        </tr>
+        <tr>
+            <th>Defense</th>
+            <td>{pokemonData.BaseDefense}</td>
+            <td class=""cell-barchart"">
+                <div style=""width:{CalculateWidth(pokemonData.BaseDefense, minimumDefense, maximumDefense)}%;"" class=""barchart-bar barchart-rank-{CalculateRank(pokemonData.BaseDefense, minimumDefense, maximumDefense)}""></div>
+            </td>
+            <td>{CalculateOtherStat(pokemonData.BaseDefense, 50, 0, 0, NatureBoosting.Hindering)}</td>
+            <td>{CalculateOtherStat(pokemonData.BaseDefense, 50, MaxIv, MaxEv, NatureBoosting.Beneficial)}</td>
+            <td>{CalculateOtherStat(pokemonData.BaseDefense, 100, 0, 0, NatureBoosting.Hindering)}</td>
+            <td>{CalculateOtherStat(pokemonData.BaseDefense, 100, MaxIv, MaxEv, NatureBoosting.Beneficial)}</td>
+        </tr>
+        <tr>
+            <th>Sp. Atk</th>
+            <td>{pokemonData.BaseSpAttack}</td>
+            <td class=""cell-barchart"">
+                <div style=""width:{CalculateWidth(pokemonData.BaseSpAttack, minimumSpAttack, maximumSpAttack)}%;"" class=""barchart-bar barchart-rank-{CalculateRank(pokemonData.BaseSpAttack, minimumSpAttack, maximumSpAttack)}""></div>
+            </td>
+            <td>{CalculateOtherStat(pokemonData.BaseSpAttack, 50, 0, 0, NatureBoosting.Hindering)}</td>
+            <td>{CalculateOtherStat(pokemonData.BaseSpAttack, 50, MaxIv, MaxEv, NatureBoosting.Beneficial)}</td>
+            <td>{CalculateOtherStat(pokemonData.BaseSpAttack, 100, 0, 0, NatureBoosting.Hindering)}</td>
+            <td>{CalculateOtherStat(pokemonData.BaseSpAttack, 100, MaxIv, MaxEv, NatureBoosting.Beneficial)}</td>
+        </tr>
+        <tr>
+            <th>Sp. Def</th>
+            <td>{pokemonData.BaseSpDefense}</td>
+            <td class=""cell-barchart"">
+                <div style=""width:{CalculateWidth(pokemonData.BaseSpDefense, minimumSpDefense, maximumSpDefense)}%;"" class=""barchart-bar barchart-rank-{CalculateRank(pokemonData.BaseSpDefense, minimumSpDefense, maximumSpDefense)}""></div>
+            </td>
+            <td>{CalculateOtherStat(pokemonData.BaseSpDefense, 50, 0, 0, NatureBoosting.Hindering)}</td>
+            <td>{CalculateOtherStat(pokemonData.BaseSpDefense, 50, MaxIv, MaxEv, NatureBoosting.Beneficial)}</td>
+            <td>{CalculateOtherStat(pokemonData.BaseSpDefense, 100, 0, 0, NatureBoosting.Hindering)}</td>
+            <td>{CalculateOtherStat(pokemonData.BaseSpDefense, 100, MaxIv, MaxEv, NatureBoosting.Beneficial)}</td>
+        </tr>
+        <tr>
+            <th>Speed</th>
+            <td>{pokemonData.BaseSpeed}</td>
+            <td class=""cell-barchart"">
+                <div style=""width:{CalculateWidth(pokemonData.BaseSpeed, minimumSpeed, maximumSpeed)}%;"" class=""barchart-bar barchart-rank-{CalculateRank(pokemonData.BaseSpeed, minimumSpeed, maximumSpeed)}""></div>
+            </td>
+            <td>{CalculateOtherStat(pokemonData.BaseSpeed, 50, 0, 0, NatureBoosting.Hindering)}</td>
+            <td>{CalculateOtherStat(pokemonData.BaseSpeed, 50, MaxIv, MaxEv, NatureBoosting.Beneficial)}</td>
+            <td>{CalculateOtherStat(pokemonData.BaseSpeed, 100, 0, 0, NatureBoosting.Hindering)}</td>
+            <td>{CalculateOtherStat(pokemonData.BaseSpeed, 100, MaxIv, MaxEv, NatureBoosting.Beneficial)}</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th rowspan=""2"">Total</th>
+            <td rowspan=""2""><b>{pokemonData.BaseHP + pokemonData.BaseAttack + pokemonData.BaseDefense + pokemonData.BaseSpAttack + pokemonData.BaseSpDefense + pokemonData.BaseSpeed}</b></td>
+            <th colspan=""5""></th>
+        </tr>
+    </tfoot>
+</table>")));
+			parentNode.AppendChild(HtmlNode.CreateNode("<p class=\"text-muted\">Maximum values are based on a beneficial nature, 252 EVs, 31 IVs; minimum values are based on a hindering nature, 0 EVs, 0 IVs.</p>"));
+		}
+
+		private static float CalculateWidth(int stat, int minimum, int maximum) => 100f * (stat - minimum) / (maximum - minimum);
+		private static int CalculateRank(int stat, int minimum, int maximum) => (int)(6f * (stat - minimum) / (maximum - minimum + 1) + 1);
+		private static int CalculateHPStat(int baseStat, int level, int iv, int ev)
+		{
+			if (baseStat == 1) return 1;
+			return (int)((2 * baseStat + iv + (int)(ev / 4d)) * level / 100d) + level + 10;
+		}
+		private static int CalculateOtherStat(int baseStat, int level, int iv, int ev, NatureBoosting natureBoosting)
+		{
+			return (int)(((int)((2 * baseStat + iv + (int)(ev / 4d)) * level / 100d) + 5) * NatureMultiplier(natureBoosting));
+		}
+		private enum NatureBoosting
+		{
+			Neutral,
+			Hindering,
+			Beneficial
+		}
+		private static float NatureMultiplier(NatureBoosting natureBoosting) => natureBoosting switch
+		{
+			NatureBoosting.Beneficial => 1.1f,
+			NatureBoosting.Hindering => 0.9f,
+			_ => 1
+		};
+
+		private void AddPokedexEntries(HtmlNode parentNode)
+		{
+			parentNode.AppendChild(HtmlNode.CreateNode("<h2 id=\"pokedexEntries\">Pokédex entries</h2>"));
+			parentNode.AppendChild(HtmlNode.CreateNode(@"<table>
     <tbody>
     </tbody>
 </table>"));
-			var tbody = main.LastChild.SelectSingleNode("//tbody");
+
+			var tbody = parentNode.LastChild.SelectSingleNode("//tbody");
 			foreach (var pokedexEntry in pokemonData.PokedexEntries.GroupBy(pe => pe.Value, pe => pe.Key))
 			{
 				var verions = string.Join("<br>", pokedexEntry.Select(v => $"<span class=\"igame {v}\">{ToVersionName(v)}</span>"));
@@ -629,12 +867,7 @@ namespace MissingNopedia
             <td>{pokedexEntry.Key}</td>
         </tr>"));
 			}
-
-			return doc.DocumentNode.OuterHtml;
 		}
-
-		private string ImageName() => PokemonName.ToLower()
-			.Replace("♀", "-f").Replace("♂", "-m").Replace("'", "").Replace(". ", "-").Replace(" ", "-").Replace(".", "").Replace(":", "");
 
 		private static string ToVersionName(string version)
 		{
@@ -676,41 +909,6 @@ namespace MissingNopedia
 				"shining-pearl" => "Shining Pearl",
 				"legends-arceus" => "Legends: Arceus",
 				_ => version
-			};
-		}
-
-		private static string ToPokedexName(string pokedexName)
-		{
-			return pokedexName switch
-			{
-				"national" => "National",
-				"kanto" => "Red/Blue/Yellow/FireRed/LeafGreen",
-				"original-johto" => "Gold/Silver/Crystal",
-				"hoenn" => "Ruby/Sapphire/Emerald",
-				"original-sinnoh" => "Diamond/Pearl/Brilliant Diamond/Shining Pearl",
-				"extended-sinnoh" => "Platinum",
-				"updated-johto" => "HeartGold/SoulSilver",
-				"original-unova" => "Black/White",
-				"updated-unova" => "Black 2/White 2",
-				"kalos-central" => "X/Y — Central Kalos",
-				"kalos-coastal" => "X/Y — Coastal Kalos",
-				"kalos-mountain" => "X/Y — Mountain Kalos",
-				"updated-hoenn" => "Omega Ruby/Alpha Sapphire",
-				"original-alola" => "Sun/Moon — Alola",
-				"original-melemele" => "Sun/Moon — Melemele",
-				"original-akala" => "Sun/Moon — Akala",
-				"original-ulaula" => "Sun/Moon — Ula'ula",
-				"original-poni" => "Sun/Moon — Poni",
-				"updated-alola" => "Ultra Sun/Ultra Moon — Alola",
-				"updated-melemele" => "Ultra Sun/Ultra Moon — Melemele",
-				"updated-akala" => "Ultra Sun/Ultra Moon — Akala",
-				"updated-ulaula" => "Ultra Sun/Ultra Moon — Ula'ula",
-				"updated-poni" => "Ultra Sun/Ultra Moon — Poni",
-				"letsgo-kanto" => "Let’s Go: Pikachu/Let’s Go: Eevee",
-				"galar" => "Sword/Shield",
-				"isle-of-armor" => "Isle of Armor",
-				"crown-tundra" => "Crown Tundra",
-				_ => ""
 			};
 		}
 	}
