@@ -76,7 +76,6 @@ namespace MissingNopedia
 
         .profile {
             max-width: 300px;
-            float: right;
         }
 
         .img-sprite {
@@ -627,7 +626,10 @@ namespace MissingNopedia
 			var main = doc.GetElementbyId("main");
 
 			main.AppendChild(HtmlNode.CreateNode($"<h1>{PokemonName}</h1>"));
-			main.AppendChild(HtmlNode.CreateNode($"<img src=\"https://img.pokemondb.net/artwork/large/{ImageName()}.jpg\" class=\"profile\" />"));
+
+			main.AppendChild(HtmlNode.CreateNode("<div style=\"float: right;\"></div>"));
+			main.LastChild.AppendChild(HtmlNode.CreateNode($"<img src=\"https://img.pokemondb.net/artwork/large/{ImageName()}.jpg\" class=\"profile\" />"));
+			AddTraining(main.LastChild);
 
 			AddPokedexData(main);
 
@@ -730,6 +732,73 @@ namespace MissingNopedia
 				"isle-of-armor" => "Isle of Armor",
 				"crown-tundra" => "Crown Tundra",
 				"hisui" => "Legends: Arceus",
+				_ => ""
+			};
+		}
+
+		private void AddTraining(HtmlNode parentNode)
+		{
+			parentNode.AppendChild(HtmlNode.CreateNode("<h2>Training</h2>"));
+			parentNode.AppendChild(HtmlNode.CreateNode(@$"<table>
+    <tbody>
+        <tr>
+            <th>EV yield</th>
+            <td>{string.Join(", ", pokemonData.EffortValues)}</td>
+        </tr>
+        <tr>
+            <th>Catch rate</th>
+            <td>{pokemonData.CaptureRate} <small class=""text-muted"">({CaptureRateWithPokeballFullHP(pokemonData.Number, pokemonData.CaptureRate):F3}% with PokéBall, full HP)</small></td>
+        </tr>
+        <tr>
+            <th>Base Friendship</th>
+            <td>—</td>
+        </tr>
+        <tr>
+            <th>Base Exp.</th>
+            <td>{pokemonData.BaseExperience?.ToString() ?? "—"}</td>
+        </tr>
+        <tr>
+            <th>Growth Rate</th>
+            <td>{ToGrowthRateName(pokemonData.GrowthRate)}</td>
+        </tr>
+    </tbody>
+</table>"));
+
+			var baseFriendshipCell = parentNode.LastChild.SelectSingleNode("//tr[3]/td[1]");
+			if (pokemonData.BaseHappiness.HasValue)
+				baseFriendshipCell.InnerHtml = $"{pokemonData.BaseHappiness} <small class=\"text-muted\">({(pokemonData.BaseHappiness > 70 ? "higher than " : pokemonData.BaseHappiness < 50 ? "lower than " : "")}normal)</small>";
+		}
+
+		/// <summary>
+		/// Source : https://www.dragonflycave.com/calculators/gen-viii-catch-rate
+		/// </summary>
+		/// <param name="pokemonNumber"></param>
+		/// <param name="captureRate"></param>
+		/// <returns></returns>
+		private static double CaptureRateWithPokeballFullHP(int pokemonNumber, int captureRate)
+		{
+			var rate = captureRate / 3d;
+			if (IsUltraBeast(pokemonNumber))
+				rate *= 410d / 4096;
+
+			var wobble = Math.Floor(RoundToNearest4096th(65536 / RoundToNearest4096th(Math.Pow(RoundToNearest4096th(255 / rate), 3d / 16))));
+			var wobbleChance = wobble / 65536;
+			if (wobbleChance > 1) wobbleChance = 1;
+
+			return Math.Pow(wobbleChance, 4) * 100;
+		}
+		private static double RoundToNearest4096th(double a) => Math.Round(a * 4096) / 4096;
+		private static bool IsUltraBeast(int pokemonNumber) => pokemonNumber >= 793 && pokemonNumber <= 799 || pokemonNumber >= 803 && pokemonNumber <= 806;
+		private static string ToGrowthRateName(string growthRate)
+		{
+			return growthRate switch
+			{
+				"slow" => "Slow",
+				"medium" => "Medium Fast",
+				"fast" => "Fast",
+				"medium-slow" => "Medium Slow",
+				"slow-then-very-fast" => "Erratic",
+				"fast-then-very-slow" => "Fluctuating",
 				_ => ""
 			};
 		}

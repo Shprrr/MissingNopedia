@@ -133,6 +133,19 @@ namespace MissingNopedia.AdvancedSearch
 		public float WeightInKilograms => GetPokemonForm().Weight / 10f;
 		public float WeightInPounds => GetPokemonForm().Weight / 4.5359237f;
 
+		public string[] EffortValues => GetPokemonForm().BaseStats.Where(s => s.Effort > 0).Select(s => $"{s.Effort} {s.StatIdToString()}").ToArray();
+
+		[JsonProperty("capture_rate")]
+		public int CaptureRate { get; private set; }
+
+		[JsonProperty("base_happiness")]
+		public int? BaseHappiness { get; private set; }
+
+		public int? BaseExperience => GetPokemonForm().BaseExperience;
+
+		[JsonProperty("growthRate"), JsonConverter(typeof(PokemonNameConverter))]
+		public string GrowthRate { get; private set; }
+
 		[JsonProperty("pokedexNumbers"), JsonConverter(typeof(PokedexNumbersConverter))]
 		public Dictionary<string, int> PokedexNumbers { get; private set; }
 
@@ -150,6 +163,9 @@ namespace MissingNopedia.AdvancedSearch
 			Number = pokemonForm.Id;
 			pokemonSpecies = pokemonOriginal.pokemonSpecies;
 			this.pokemonForm = pokemonForm;
+			CaptureRate = pokemonOriginal.CaptureRate;
+			BaseHappiness = pokemonOriginal.BaseHappiness;
+			GrowthRate = pokemonOriginal.GrowthRate;
 			PokedexNumbers = pokemonOriginal.PokedexNumbers;
 			PokedexEntries = pokemonOriginal.PokedexEntries;
 		}
@@ -225,6 +241,8 @@ namespace MissingNopedia.AdvancedSearch
 			public int Id { get; set; }
 			public int Height { get; set; }
 			public int Weight { get; set; }
+			[JsonProperty("base_experience")]
+			public int? BaseExperience { get; set; }
 			[JsonConverter(typeof(PokemonFormConverter))]
 			public PokemonFormForm Form { get; set; }
 			[JsonConverter(typeof(PokemonTypesConverter))]
@@ -270,8 +288,20 @@ namespace MissingNopedia.AdvancedSearch
 				public int StatId { get; set; }
 				[JsonProperty("base_stat")]
 				public int BaseStat { get; set; }
+				public int Effort { get; set; }
 
 				public override string ToString() => BaseStat.ToString();
+
+				public string StatIdToString() => StatId switch
+				{
+					1 => "HP",
+					2 => "Attack",
+					3 => "Defense",
+					4 => "Special Attack",
+					5 => "Special Defense",
+					6 => "Speed",
+					_ => ""
+				};
 			}
 
 			public class PokemonAbility

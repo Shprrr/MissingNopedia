@@ -43,6 +43,7 @@ namespace MissingNopedia.AdvancedSearch
       id
       height
       weight
+      base_experience
       form: pokemon_v2_pokemonforms {
         form_order
         form_name
@@ -70,6 +71,7 @@ namespace MissingNopedia.AdvancedSearch
       baseStats: pokemon_v2_pokemonstats {
         stat_id
         base_stat
+        effort
       }
       abilities: pokemon_v2_pokemonabilities {
         slot
@@ -87,6 +89,11 @@ namespace MissingNopedia.AdvancedSearch
           }
         }
       }
+    }
+    capture_rate
+    base_happiness
+    growthRate: pokemon_v2_growthrate {
+      name
     }
   }
 }", null, "PokeAPIquery");
