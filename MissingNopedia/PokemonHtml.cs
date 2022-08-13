@@ -12,7 +12,7 @@ namespace MissingNopedia
 
 		private const int MaxIv = 31;
 		private const int MaxEv = 254;
-
+		private const int EggCycleSteps = 256;
 		private Pokemon pokemonData;
 		private int minimumHP;
 		private int maximumHP;
@@ -630,6 +630,7 @@ namespace MissingNopedia
 			main.AppendChild(HtmlNode.CreateNode("<div style=\"float: right;\"></div>"));
 			main.LastChild.AppendChild(HtmlNode.CreateNode($"<img src=\"https://img.pokemondb.net/artwork/large/{ImageName()}.jpg\" class=\"profile\" />"));
 			AddTraining(main.LastChild);
+			AddBreeding(main.LastChild);
 
 			AddPokedexData(main);
 
@@ -800,6 +801,66 @@ namespace MissingNopedia
 				"slow-then-very-fast" => "Erratic",
 				"fast-then-very-slow" => "Fluctuating",
 				_ => ""
+			};
+		}
+
+		private void AddBreeding(HtmlNode parentNode)
+		{
+			parentNode.AppendChild(HtmlNode.CreateNode("<h2>Breeding</h2>"));
+			parentNode.AppendChild(HtmlNode.CreateNode(@$"<table>
+    <tbody>
+        <tr>
+            <th>Egg Groups</th>
+            <td><small class=""text-muted"">None</small></td>
+        </tr>
+        <tr>
+            <th>Gender</th>
+            <td>{AddGenderRate()}</td>
+        </tr>
+        <tr>
+            <th>Egg cycles</th>
+            <td><small class=""text-muted"">None</small></td>
+        </tr>
+    </tbody>
+</table>"));
+
+			var eggGroups = string.Join(", ", pokemonData.EggGroups.Select(e => $"<a href=\"/{e}{EggGroupHtml.WikiEggGroupSuffix}\">{ToEggGroupeName(e)}</a>"));
+			if (!string.IsNullOrEmpty(eggGroups))
+				parentNode.LastChild.SelectSingleNode("//tr[1]/td[1]").InnerHtml = eggGroups;
+
+			if(pokemonData.EggCycle.HasValue)
+				parentNode.LastChild.SelectSingleNode("//tr[3]/td[1]").InnerHtml = $"{pokemonData.EggCycle} <small class=\"text-muted\">({(pokemonData.EggCycle - 1) * EggCycleSteps:N0}–{pokemonData.EggCycle * EggCycleSteps:N0} steps)</small>";
+		}
+
+		private static string ToEggGroupeName(string eggGroup)
+		{
+			return eggGroup switch
+			{
+				"monster" => "Monster",
+				"water1" => "Water 1",
+				"bug" => "Bug",
+				"flying" => "Flying",
+				"ground" => "Field",
+				"fairy" => "Fairy",
+				"plant" => "Grass",
+				"humanshape" => "Human-Like",
+				"water3" => "Water 3",
+				"mineral" => "Mineral",
+				"indeterminate" => "Amorphous",
+				"water2" => "Water 2",
+				"ditto" => "Ditto",
+				"dragon" => "Dragon",
+				"no-eggs" => "Undiscovered",
+				_ => ""
+			};
+		}
+		private string AddGenderRate()
+		{
+			return pokemonData.GenderRate switch
+			{
+				GenderRate.Unknown => "Genderless",
+				GenderRate.Male or GenderRate.Male7To1 or GenderRate.Male3To1 or GenderRate.Half or GenderRate.Female3To1 or GenderRate.Female7To1 or GenderRate.Female => $"<span class=\"text-blue\">{pokemonData.MaleGenderRate:0.##%} male</span>, <span class=\"text-pink\">{pokemonData.FemaleGenderRate:0.##%} female</span>",
+				_ => throw new NotImplementedException()
 			};
 		}
 

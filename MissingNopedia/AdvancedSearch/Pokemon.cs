@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace MissingNopedia.AdvancedSearch
 {
@@ -29,8 +30,7 @@ namespace MissingNopedia.AdvancedSearch
 		/// <returns></returns>
 		private PokemonForm GetPokemonForm()
 		{
-			if (pokemonForm == null)
-				pokemonForm = pokemonForms.Single(f => f.Id == Number);
+			pokemonForm ??= pokemonForms.Single(f => f.Id == Number);
 			return pokemonForm;
 		}
 
@@ -146,6 +146,35 @@ namespace MissingNopedia.AdvancedSearch
 		[JsonProperty("growthRate"), JsonConverter(typeof(PokemonNameConverter))]
 		public string GrowthRate { get; private set; }
 
+		[JsonProperty("eggGroups", ItemConverterType = typeof(PokemonEggGroupConverter))]
+		public string[] EggGroups { get; private set; }
+
+		[JsonProperty("hatch_counter")]
+		public int? EggCycle { get; private set; }
+
+		[JsonProperty("gender_rate"), JsonConverter(typeof(PokemonGenderRateConverter))]
+		public GenderRate GenderRate { get; private set; }
+		public float MaleGenderRate => GenderRate == GenderRate.Unknown ? 0 : 1 - FemaleGenderRate;
+		public float FemaleGenderRate
+		{
+			get
+			{
+				var femaleRate = GenderRate switch
+				{
+					GenderRate.Unknown or GenderRate.Male => 0,
+					GenderRate.Male7To1 => 30,
+					GenderRate.Male3To1 => 62,
+					GenderRate.Half => 126,
+					GenderRate.Female3To1 => 190,
+					GenderRate.Female7To1 => 224,
+					GenderRate.Female => 253,
+					_ => throw new NotImplementedException(),
+				};
+
+				return femaleRate / 253f;
+			}
+		}
+
 		[JsonProperty("pokedexNumbers"), JsonConverter(typeof(PokedexNumbersConverter))]
 		public Dictionary<string, int> PokedexNumbers { get; private set; }
 
@@ -166,6 +195,9 @@ namespace MissingNopedia.AdvancedSearch
 			CaptureRate = pokemonOriginal.CaptureRate;
 			BaseHappiness = pokemonOriginal.BaseHappiness;
 			GrowthRate = pokemonOriginal.GrowthRate;
+			EggGroups = pokemonOriginal.EggGroups;
+			EggCycle = pokemonOriginal.EggCycle;
+			GenderRate = pokemonOriginal.GenderRate;
 			PokedexNumbers = pokemonOriginal.PokedexNumbers;
 			PokedexEntries = pokemonOriginal.PokedexEntries;
 		}
@@ -340,9 +372,14 @@ namespace MissingNopedia.AdvancedSearch
 			public override string ReadJson(JsonReader reader, System.Type objectType, [AllowNull] string existingValue, bool hasExistingValue, JsonSerializer serializer)
 			{
 				var o = serializer.Deserialize(reader);
-				if (o is Newtonsoft.Json.Linq.JObject jo)
+				return GetName(o);
+			}
+
+			protected static string GetName(object o)
+			{
+				if (o is JObject jo)
 					return jo["name"].ToString();
-				else if (o is Newtonsoft.Json.Linq.JArray ja)
+				else if (o is JArray ja)
 				{
 					PokemonName[] pokemonNames = ja.ToObject<PokemonName[]>();
 					return pokemonNames.Length == 0 ? null : pokemonNames[0].Name;
@@ -351,6 +388,15 @@ namespace MissingNopedia.AdvancedSearch
 			}
 
 			public override void WriteJson(JsonWriter writer, [AllowNull] string value, JsonSerializer serializer) => throw new NotImplementedException();
+		}
+
+		private class PokemonEggGroupConverter : PokemonNameConverter
+		{
+			public override string ReadJson(JsonReader reader, System.Type objectType, [AllowNull] string existingValue, bool hasExistingValue, JsonSerializer serializer)
+			{
+				var o = serializer.Deserialize(reader) as JObject;
+				return GetName(o.First.Children().Single());
+			}
 		}
 
 		private class PokemonTypeConverter : JsonConverter<Type>
@@ -425,6 +471,28 @@ namespace MissingNopedia.AdvancedSearch
 			}
 
 			public override void WriteJson(JsonWriter writer, [AllowNull] PokemonForm.PokemonTypes value, JsonSerializer serializer) => throw new NotImplementedException();
+		}
+
+		private class PokemonGenderRateConverter : JsonConverter<GenderRate>
+		{
+			public override GenderRate ReadJson(JsonReader reader, System.Type objectType, [AllowNull] GenderRate existingValue, bool hasExistingValue, JsonSerializer serializer)
+			{
+				var genderRate = serializer.Deserialize<int>(reader);
+				return genderRate switch
+				{
+					-1 => GenderRate.Unknown,
+					0 => GenderRate.Male,
+					1 => GenderRate.Male7To1,
+					2 => GenderRate.Male3To1,
+					4 => GenderRate.Half,
+					6 => GenderRate.Female3To1,
+					7 => GenderRate.Female7To1,
+					8 => GenderRate.Female,
+					_ => throw new NotImplementedException()
+				};
+			}
+
+			public override void WriteJson(JsonWriter writer, [AllowNull] GenderRate value, JsonSerializer serializer) => throw new NotImplementedException();
 		}
 
 		private class PokedexNumbersConverter : JsonConverter<Dictionary<string, int>>

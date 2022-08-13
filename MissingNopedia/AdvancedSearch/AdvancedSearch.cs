@@ -95,6 +95,13 @@ namespace MissingNopedia.AdvancedSearch
     growthRate: pokemon_v2_growthrate {
       name
     }
+    gender_rate
+    hatch_counter
+    eggGroups: pokemon_v2_pokemonegggroups {
+      eggGroup: pokemon_v2_egggroup {
+        name
+      }
+    }
   }
 }", null, "PokeAPIquery");
 			var response = await client.SendQueryAsync(request, () => new { pokemons = new List<Pokemon>() });
