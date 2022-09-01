@@ -598,22 +598,250 @@ namespace MissingNopedia
             text-align: right;
         }
 
-        table.colored tbody tr {
-            margin: 3px;
-            border-radius: 10px;
-            display: block;
-            background: #F5AC78;
+        table.colored {
+            width: 100%;
+            border: 3px solid;
         }
 
-        table.colored th, table.colored td {
-            border: 0;
-        }
+            table.colored tbody tr {
+                margin: 3px;
+                border-radius: 10px;
+                display: block;
+            }
 
-        table.sprites-table th {
-            text-align: center;
-        }
+            table.colored th, table.colored td {
+                border: 0;
+            }
 
-        table.sprites-table td {
+            table.colored.normal1 {
+                background: #A8A878;
+            }
+
+            table.colored.normal2 {
+                border-color: #6D6D4E;
+            }
+
+            table.colored.normal1 tbody tr {
+                background: #C6C6A7;
+            }
+
+            table.colored.fire1 {
+                background: #F08030;
+            }
+
+            table.colored.fire2 {
+                border-color: #9C531F;
+            }
+
+            table.colored.fire1 tbody tr {
+                background: #F5AC78;
+            }
+
+            table.colored.water1 {
+                background: #6890F0;
+            }
+
+            table.colored.water2 {
+                border-color: #445E9C;
+            }
+
+            table.colored.water1 tbody tr {
+                background: #9DB7F5;
+            }
+
+            table.colored.electric1 {
+                background: #F8D030;
+            }
+
+            table.colored.electric2 {
+                border-color: #A1871F;
+            }
+
+            table.colored.electric1 tbody tr {
+                background: #FAE078;
+            }
+
+            table.colored.grass1 {
+                background: #78C850;
+            }
+
+            table.colored.grass2 {
+                border-color: #4E8234;
+            }
+
+            table.colored.grass1 tbody tr {
+                background: #A7DB8D;
+            }
+
+            table.colored.ice1 {
+                background: #98D8D8;
+            }
+
+            table.colored.ice2 {
+                border-color: #638D8D;
+            }
+
+            table.colored.ice1 tbody tr {
+                background: #BCE6E6;
+            }
+
+            table.colored.fighting1 {
+                background: #C03028;
+            }
+
+            table.colored.fighting2 {
+                border-color: #7D1F1A;
+            }
+
+            table.colored.fighting1 tbody tr {
+                background: #D67873;
+            }
+
+            table.colored.poison1 {
+                background: #A040A0;
+            }
+
+            table.colored.poison2 {
+                border-color: #682A68;
+            }
+
+            table.colored.poison1 tbody tr {
+                background: #C183C1;
+            }
+
+            table.colored.ground1 {
+                background: #E0C068;
+            }
+
+            table.colored.ground2 {
+                border-color: #927D44;
+            }
+
+            table.colored.ground1 tbody tr {
+                background: #EBD69D;
+            }
+
+            table.colored.flying1 {
+                background: #A890F0;
+            }
+
+            table.colored.flying2 {
+                border-color: #6D5E9C;
+            }
+
+            table.colored.flying1 tbody tr {
+                background: #C6B7F5;
+            }
+
+            table.colored.psychic1 {
+                background: #F85888;
+            }
+
+            table.colored.psychic2 {
+                border-color: #A13959;
+            }
+
+            table.colored.psychic1 tbody tr {
+                background: #FA92B2;
+            }
+
+            table.colored.bug1 {
+                background: #A8B820;
+            }
+
+            table.colored.bug2 {
+                border-color: #6D7815;
+            }
+
+            table.colored.bug1 tbody tr {
+                background: #C6D16E;
+            }
+
+            table.colored.rock1 {
+                background: #B8A038;
+            }
+
+            table.colored.rock2 {
+                border-color: #786824;
+            }
+
+            table.colored.rock1 tbody tr {
+                background: #D1C17D;
+            }
+
+            table.colored.ghost1 {
+                background: #705898;
+            }
+
+            table.colored.ghost2 {
+                border-color: #493963;
+            }
+
+            table.colored.ghost1 tbody tr {
+                background: #A292BC;
+            }
+
+            table.colored.dragon1 {
+                background: #7038F8;
+            }
+
+            table.colored.dragon2 {
+                border-color: #4924A1;
+            }
+
+            table.colored.dragon1 tbody tr {
+                background: #A27DFA;
+            }
+
+            table.colored.dark1 {
+                background: #705848;
+            }
+
+            table.colored.dark2 {
+                border-color: #49392F;
+            }
+
+            table.colored.dark1 tbody tr {
+                background: #A29288;
+            }
+
+            table.colored.steel1 {
+                background: #B8B8D0;
+            }
+
+            table.colored.steel2 {
+                border-color: #787887;
+            }
+
+            table.colored.steel1 tbody tr {
+                background: #D1D1E0;
+            }
+
+            table.colored.fairy1 {
+                background: #EE99AC;
+            }
+
+            table.colored.fairy2 {
+                border-color: #9B6470;
+            }
+
+            table.colored.fairy1 tbody tr {
+                background: #F4BDC9;
+            }
+
+            table.colored.curse1 {
+                background: #68A090;
+            }
+
+            table.colored.curse2 {
+                border-color: #44685E;
+            }
+
+            table.colored.curse1 tbody tr {
+                background: #9DC1B7;
+            }
+
+        table.sprites-table th, table.sprites-table td {
             text-align: center;
         }
 
@@ -635,6 +863,8 @@ namespace MissingNopedia
 			AddPokedexData(main);
 
 			AddBaseStats(main);
+
+			AddTypeDefenses(main);
 
 			AddPokedexEntries(main);
 
@@ -828,7 +1058,7 @@ namespace MissingNopedia
 			if (!string.IsNullOrEmpty(eggGroups))
 				parentNode.LastChild.SelectSingleNode("//tr[1]/td[1]").InnerHtml = eggGroups;
 
-			if(pokemonData.EggCycle.HasValue)
+			if (pokemonData.EggCycle.HasValue)
 				parentNode.LastChild.SelectSingleNode("//tr[3]/td[1]").InnerHtml = $"{pokemonData.EggCycle} <small class=\"text-muted\">({(pokemonData.EggCycle - 1) * EggCycleSteps:N0}–{pokemonData.EggCycle * EggCycleSteps:N0} steps)</small>";
 		}
 
@@ -979,6 +1209,103 @@ namespace MissingNopedia
 			NatureBoosting.Hindering => 0.9f,
 			_ => 1
 		};
+
+		private void AddTypeDefenses(HtmlNode parentNode)
+		{
+			parentNode.AppendChild(HtmlNode.CreateNode("<h2 id=\"typeDefenses\">Type defenses</h2>"));
+			parentNode.AppendChild(HtmlNode.CreateNode(@$"<table class=""colored {pokemonData.Type1.ToString().ToLower()}1 {pokemonData.Types.Last().ToString().ToLower()}2"">
+    <thead>
+        <tr valign=""top"">
+            <td>
+                Under normal battle conditions in Generation VIII, this Pokémon is:
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th style=""width: 100px;"">
+                Damaged<br>normally by:
+            </th>
+            <td>
+                <span class=""tag none"">
+                    <span>None</span>
+                    <span></span>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th style=""width:100px;"">
+                Weak to:
+            </th>
+            <td>
+                <span class=""tag none"">
+                    <span>None</span>
+                    <span></span>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th style=""width:100px;"">
+                Immune to:
+            </th>
+            <td>
+                <span class=""tag none"">
+                    <span>None</span>
+                    <span></span>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th style=""width:100px;"">
+                Resistant to:
+            </th>
+            <td>
+                <span class=""tag none"">
+                    <span>None</span>
+                    <span></span>
+                </span>
+            </td>
+        </tr>
+    </tbody>
+</table>"));
+
+			HtmlNode typeListNode;
+			if (pokemonData.TypeEfficacies.Any(t => t.DamageMultiplier == 1))
+			{
+				typeListNode = parentNode.LastChild.SelectSingleNode("//tbody/tr[1]/td[1]");
+				typeListNode.InnerHtml = string.Join(' ', pokemonData.TypeEfficacies.Where(t => t.DamageMultiplier == 1).Select(t => @$"<span class=""tag {t.DamageType.ToString().ToLower()}"">
+                    <span>{t.DamageType}</span>
+                    <span>1×</span>
+                </span>"));
+			}
+
+			if (pokemonData.TypeEfficacies.Any(t => t.DamageMultiplier > 1))
+			{
+				typeListNode = parentNode.LastChild.SelectSingleNode("//tbody/tr[2]/td[1]");
+				typeListNode.InnerHtml = string.Join(' ', pokemonData.TypeEfficacies.Where(t => t.DamageMultiplier > 1).OrderByDescending(t => t.DamageMultiplier).Select(t => @$"<span class=""tag {t.DamageType.ToString().ToLower()}"">
+                    <span>{t.DamageType}</span>
+                    <span>{t.DamageMultiplier}×</span>
+                </span>"));
+			}
+
+			if (pokemonData.TypeEfficacies.Any(t => t.DamageMultiplier == 0))
+			{
+				typeListNode = parentNode.LastChild.SelectSingleNode("//tbody/tr[3]/td[1]");
+				typeListNode.InnerHtml = string.Join(' ', pokemonData.TypeEfficacies.Where(t => t.DamageMultiplier == 0).Select(t => @$"<span class=""tag {t.DamageType.ToString().ToLower()}"">
+                    <span>{t.DamageType}</span>
+                    <span>0×</span>
+                </span>"));
+			}
+
+			if (pokemonData.TypeEfficacies.Any(t => t.DamageMultiplier < 1 && t.DamageMultiplier > 0))
+			{
+				typeListNode = parentNode.LastChild.SelectSingleNode("//tbody/tr[4]/td[1]");
+				typeListNode.InnerHtml = string.Join(' ', pokemonData.TypeEfficacies.Where(t => t.DamageMultiplier < 1 && t.DamageMultiplier > 0).OrderBy(t => t.DamageMultiplier).Select(t => @$"<span class=""tag {t.DamageType.ToString().ToLower()}"">
+                    <span>{t.DamageType}</span>
+                    <span>{t.DamageMultiplier switch { 0.5f => "½", 0.25f => "¼", _ => t.DamageMultiplier.ToString() }}×</span>
+                </span>"));
+			}
+		}
 
 		private void AddPokedexEntries(HtmlNode parentNode)
 		{

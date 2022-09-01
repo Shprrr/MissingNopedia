@@ -95,4 +95,19 @@ namespace MissingNopedia.AdvancedSearch
 			return !(left == right);
 		}
 	}
+
+	public class PokemonTypesEfficacy
+	{
+		public Type DamageType { get; set; }
+		public float DamageMultiplier { get; set; }
+
+		public PokemonTypesEfficacy(Type damageType, float damageMultiplier)
+		{
+			DamageType = damageType;
+			DamageMultiplier = damageMultiplier;
+		}
+
+		public override string ToString() => $"{DamageType} > {DamageMultiplier}";
+	}
+
 }

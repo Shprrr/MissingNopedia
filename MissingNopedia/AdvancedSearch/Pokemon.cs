@@ -124,6 +124,7 @@ namespace MissingNopedia.AdvancedSearch
 
 		public Type[] Weaknesses => GetPokemonForm().Types.Efficacies.Where(t => t.DamageMultiplier > 1).Select(t => t.DamageType).ToArray();
 		public Type[] Resistances => GetPokemonForm().Types.Efficacies.Where(t => t.DamageMultiplier < 1).Select(t => t.DamageType).ToArray();
+		public PokemonTypesEfficacy[] TypeEfficacies => GetPokemonForm().Types.Efficacies;
 
 		[JsonIgnore]
 		public string Species => pokemonSpecies.Species;
@@ -305,12 +306,6 @@ namespace MissingNopedia.AdvancedSearch
 				public Type[] Types { get; set; }
 				public PokemonTypesEfficacy[] Efficacies { get; set; }
 
-				public class PokemonTypesEfficacy
-				{
-					public Type DamageType { get; set; }
-					public float DamageMultiplier { get; set; }
-					public override string ToString() => $"{DamageType} > {DamageMultiplier}";
-				}
 				public override string ToString() => string.Join(' ', Types);
 			}
 
@@ -466,7 +461,8 @@ namespace MissingNopedia.AdvancedSearch
 				return new PokemonForm.PokemonTypes
 				{
 					Types = pokemonTypes.Select(t => t.Type.Type).ToArray(),
-					Efficacies = pokemonTypes.SelectMany(t => t.Type.Efficacies).GroupBy(t => t.DamageType, (d, ts) => new PokemonForm.PokemonTypes.PokemonTypesEfficacy { DamageType = d, DamageMultiplier = ts.Aggregate(1f, (dm, t) => dm * t.DamageMultiplier) }).ToArray()
+					Efficacies = pokemonTypes.SelectMany(t => t.Type.Efficacies)
+						.GroupBy(t => t.DamageType, (d, ts) => new PokemonTypesEfficacy(d, ts.Aggregate(1f, (dm, t) => dm * t.DamageMultiplier))).ToArray()
 				};
 			}
 
