@@ -19,6 +19,10 @@ namespace MissingNopedia.AdvancedSearch
 		/// Do not use this directly.
 		/// </summary>
 		private PokemonForm pokemonForm;
+
+		[JsonProperty("evolvesFrom")]
+		private readonly PokemonEvolvesFrom[] pokemonEvolvesFrom = Array.Empty<PokemonEvolvesFrom>();
+
 		private static readonly Ability AbilityNotSet = new("Not set", new());
 		private Ability ability1 = AbilityNotSet;
 		private Ability ability2 = AbilityNotSet;
@@ -182,6 +186,11 @@ namespace MissingNopedia.AdvancedSearch
 		[JsonProperty("pokedexEntries"), JsonConverter(typeof(PokedexEntriesConverter))]
 		public Dictionary<string, string> PokedexEntries { get; private set; }
 
+		[JsonIgnore]
+		public PokemonEvolution[] EvolvesFrom { get; private set; } = Array.Empty<PokemonEvolution>();
+		[JsonIgnore]
+		public PokemonEvolution[] EvolvesTo { get; private set; } = Array.Empty<PokemonEvolution>();
+
 		[JsonConstructor]
 		[SuppressMessage("CodeQuality", "IDE0051:Supprimer les membres privés non utilisés", Justification = "JsonSerialization")]
 		private Pokemon()
@@ -201,6 +210,9 @@ namespace MissingNopedia.AdvancedSearch
 			GenderRate = pokemonOriginal.GenderRate;
 			PokedexNumbers = pokemonOriginal.PokedexNumbers;
 			PokedexEntries = pokemonOriginal.PokedexEntries;
+			pokemonEvolvesFrom = pokemonOriginal.pokemonEvolvesFrom;
+			EvolvesFrom = pokemonOriginal.EvolvesFrom;
+			EvolvesTo = pokemonOriginal.EvolvesTo;
 		}
 
 		public override string ToString()
@@ -212,6 +224,34 @@ namespace MissingNopedia.AdvancedSearch
 		}
 
 		public IEnumerable<Pokemon> GetForms() => pokemonForms.Select(f => new Pokemon(this, f));
+
+		public void SetEvolutions(Pokemon[] pokemons)
+		{
+			List<PokemonEvolution> listEvolvesFrom = new();
+			foreach (var evolvesFrom in pokemonEvolvesFrom)
+			{
+				var pokemon = pokemons.Single(p => p.Number == evolvesFrom.Specy.Number);
+				listEvolvesFrom.Add(new()
+				{
+					Pokemon = pokemon,
+					EvolutionTrigger = evolvesFrom.EvolutionTrigger,
+					MinLevel = evolvesFrom.MinLevel
+				});
+			}
+			EvolvesFrom = listEvolvesFrom.ToArray();
+
+			List<PokemonEvolution> listEvolvesTo = new();
+			foreach (var pokemon in pokemons.Where(p => p.pokemonEvolvesFrom.Any(e => e.Specy.Number == Number)).SelectMany(p => p.pokemonEvolvesFrom.Where(e => e.Specy.Number == Number), (p, pe) => (pokemon: p, evolvesFrom: pe)))
+			{
+				listEvolvesTo.Add(new()
+				{
+					Pokemon = pokemon.pokemon,
+					EvolutionTrigger = pokemon.evolvesFrom.EvolutionTrigger,
+					MinLevel = pokemon.evolvesFrom.MinLevel
+				});
+			}
+			EvolvesTo = listEvolvesTo.ToArray();
+		}
 
 		public DataGridViewRow ConvertRow()
 		{
@@ -355,6 +395,27 @@ namespace MissingNopedia.AdvancedSearch
 
 				public override string ToString() => Ability.Name;
 			}
+		}
+
+		private class PokemonEvolvesFrom
+		{
+			public PokemonSpecy Specy { get; set; }
+			[JsonConverter(typeof(PokemonNameConverter))]
+			public string EvolutionTrigger { get; set; }
+			[JsonProperty("min_level")]
+			public int? MinLevel { get; set; }
+
+			public class PokemonSpecy
+			{
+				public int Number { get; set; }
+			}
+		}
+
+		public class PokemonEvolution
+		{
+			public Pokemon Pokemon { get; set; }
+			public string EvolutionTrigger { get; set; }
+			public int? MinLevel { get; set; }
 		}
 
 		private class PokemonNameConverter : JsonConverter<string>

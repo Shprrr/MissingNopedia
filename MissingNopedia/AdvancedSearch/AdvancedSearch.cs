@@ -102,11 +102,77 @@ namespace MissingNopedia.AdvancedSearch
         name
       }
     }
+    evolvesFrom: pokemon_v2_pokemonevolutions {
+      specy: pokemon_v2_pokemonspecy {
+        number: evolves_from_species_id
+      }
+      evolutionTrigger: pokemon_v2_evolutiontrigger {
+        name
+      }
+      min_level
+      min_happiness
+      min_beauty
+      time_of_day
+      held_item_id
+      heldItem: pokemonV2ItemByHeldItemId {
+        name: pokemon_v2_itemnames(where: {language_id: {_eq: 9}}) {
+          name
+        }
+      }
+      relative_physical_stats
+      party_species_id
+      gender_id
+      known_move_id
+      knownMove: pokemon_v2_move {
+        name: pokemon_v2_movenames(where: {language_id: {_eq: 9}}) {
+          name
+        }
+      }
+      location_id
+      location: pokemon_v2_location {
+        region: pokemon_v2_region {
+          name: pokemon_v2_regionnames(where: {language_id: {_eq: 9}}) {
+            name
+          }
+        }
+        name: pokemon_v2_locationnames(where: {language_id: {_eq: 9}}) {
+          name
+        }
+      }
+      min_affection
+      known_move_type_id
+      knownMoveType: pokemon_v2_type {
+        name
+      }
+      party_type_id
+      partyType: pokemonV2TypeByPartyTypeId {
+        name
+      }
+      turn_upside_down
+      needs_overworld_rain
+      trade_species_id
+      evolution_item_id
+      evolutionItem: pokemon_v2_item {
+        name: pokemon_v2_itemnames(where: {language_id: {_eq: 9}}) {
+          name
+        }
+      }
+    }
+    babyBreeding: pokemon_v2_evolutionchain {
+      baby_trigger_item_id
+      babyTriggerItem: pokemon_v2_item {
+        name: pokemon_v2_itemnames(where: {language_id: {_eq: 9}}) {
+          name
+        }
+      }
+    }
   }
 }", null, "PokeAPIquery");
 			var response = await client.SendQueryAsync(request, () => new { pokemons = new List<Pokemon>() });
 
-			PokemonsCache = response.Data.pokemons.ToArray();
+			List<Pokemon> pokemons = response.Data.pokemons;
+			PokemonsCache = pokemons.ToArray();
+			pokemons.ForEach(p => p.SetEvolutions(PokemonsCache));
 			return PokemonsCache;
 		}
 

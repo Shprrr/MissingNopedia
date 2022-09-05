@@ -866,12 +866,15 @@ namespace MissingNopedia
 
 			AddTypeDefenses(main);
 
+			AddEvolutionChart(main);
+
 			AddPokedexEntries(main);
 
 			return doc.DocumentNode.OuterHtml;
 		}
 
-		private string ImageName() => PokemonName.ToLower()
+		private string ImageName() => ImageName(PokemonName);
+		private static string ImageName(string pokemonName) => pokemonName.ToLower()
 			.Replace("♀", "-f").Replace("♂", "-m").Replace("'", "").Replace(". ", "-").Replace(" ", "-").Replace(".", "").Replace(":", "");
 
 		private void AddPokedexData(HtmlNode parentNode)
@@ -1305,6 +1308,63 @@ namespace MissingNopedia
                     <span>{t.DamageMultiplier switch { 0.5f => "½", 0.25f => "¼", _ => t.DamageMultiplier.ToString() }}×</span>
                 </span>"));
 			}
+		}
+
+		private void AddEvolutionChart(HtmlNode parentNode)
+		{
+			parentNode.AppendChild(HtmlNode.CreateNode("<h2 id=\"evolutionChart\">Evolution chart</h2>"));
+			parentNode.AppendChild(HtmlNode.CreateNode(@"<div class=""infocard-list-evo"">
+</div>"));
+
+			var evolutions = parentNode.LastChild;
+			AddEvolvesFrom(evolutions, pokemonData);
+			AddEvolutionCard(evolutions, pokemonData);
+			AddEvolvesTo(evolutions, pokemonData);
+
+			void AddEvolvesFrom(HtmlNode evolutions, Pokemon pokemonEvolution)
+			{
+				foreach (var evolution in pokemonEvolution.EvolvesFrom)
+				{
+					AddEvolvesFrom(evolutions, evolution.Pokemon);
+					AddEvolutionCard(evolutions, evolution.Pokemon);
+					AddEvolutionMethod(evolutions, evolution);
+				}
+			}
+
+			void AddEvolvesTo(HtmlNode evolutions, Pokemon pokemonEvolution)
+			{
+				foreach (var evolution in pokemonEvolution.EvolvesTo)
+				{
+					AddEvolutionMethod(evolutions, evolution);
+					AddEvolutionCard(evolutions, evolution.Pokemon);
+					AddEvolvesTo(evolutions, evolution.Pokemon);
+				}
+			}
+		}
+
+		private static void AddEvolutionCard(HtmlNode evolutions, Pokemon pokemonEvolution)
+		{
+			evolutions.AppendChild(HtmlNode.CreateNode(@$"<div class=""infocard"">
+        <a href=""/{pokemonEvolution.Name}{WikiPokemonSuffix}""><img class=""img-fixed img-sprite"" src=""https://img.pokemondb.net/sprites/home/normal/{ImageName(pokemonEvolution.Name)}.png"" alt=""{pokemonEvolution.Name} sprite""></a>
+        <span class=""text-muted"">
+            <small>#{pokemonEvolution.Number:D3}</small><br>
+            <a class=""ent-name"" href=""/{pokemonEvolution.Name}{WikiPokemonSuffix}"">{pokemonEvolution.Name}</a><br>
+            <small>None</small>
+        </span>
+    </div>"));
+
+			var types = string.Join(" · ", pokemonEvolution.Types.Select(t => $"<span class=\"itype {t.ToString().ToLower()}\">{t}</span>"));
+			if (!string.IsNullOrEmpty(types))
+				evolutions.LastChild.SelectSingleNode("//small[2]").InnerHtml = types;
+		}
+
+		private static void AddEvolutionMethod(HtmlNode evolutions, Pokemon.PokemonEvolution evolution)
+		{
+			string text = "";
+			if (evolution.MinLevel.HasValue)
+				text = $"<small>(Level {evolution.MinLevel})</small>";
+
+			evolutions.AppendChild(HtmlNode.CreateNode($"<span class=\"infocard infocard-arrow\"><i class=\"icon-arrow icon-arrow-e\"></i>{text}</span>"));
 		}
 
 		private void AddPokedexEntries(HtmlNode parentNode)
