@@ -192,7 +192,6 @@ namespace MissingNopedia.AdvancedSearch
 		public PokemonEvolution[] EvolvesTo { get; private set; } = Array.Empty<PokemonEvolution>();
 
 		[JsonConstructor]
-		[SuppressMessage("CodeQuality", "IDE0051:Supprimer les membres privés non utilisés", Justification = "JsonSerialization")]
 		private Pokemon()
 		{
 		}
