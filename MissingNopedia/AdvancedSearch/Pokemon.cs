@@ -226,30 +226,85 @@ namespace MissingNopedia.AdvancedSearch
 
 		public void SetEvolutions(Pokemon[] pokemons)
 		{
-			List<PokemonEvolution> listEvolvesFrom = new();
-			foreach (var evolvesFrom in pokemonEvolvesFrom)
-			{
-				var pokemon = pokemons.Single(p => p.Number == evolvesFrom.Specy.Number);
-				listEvolvesFrom.Add(new()
-				{
-					Pokemon = pokemon,
-					EvolutionTrigger = evolvesFrom.EvolutionTrigger,
-					MinLevel = evolvesFrom.MinLevel
-				});
-			}
-			EvolvesFrom = listEvolvesFrom.ToArray();
+			EvolvesFrom = GetEvolvesFrom(pokemonEvolvesFrom.Join(pokemons, e => e.Specy.Number, p => p.Number, (e, p) => (p, e)));
 
-			List<PokemonEvolution> listEvolvesTo = new();
-			foreach (var pokemon in pokemons.Where(p => p.pokemonEvolvesFrom.Any(e => e.Specy.Number == Number)).SelectMany(p => p.pokemonEvolvesFrom.Where(e => e.Specy.Number == Number), (p, pe) => (pokemon: p, evolvesFrom: pe)))
+			EvolvesTo = GetEvolvesFrom(pokemons.Where(p => p.pokemonEvolvesFrom.Any(e => e.Specy.Number == Number)).SelectMany(p => p.pokemonEvolvesFrom.Where(e => e.Specy.Number == Number), (p, pe) => (pokemon: p, evolvesFrom: pe)));
+
+			static PokemonEvolution[] GetEvolvesFrom(IEnumerable<(Pokemon pokemon, PokemonEvolvesFrom evolvesFrom)> pokemonsEvolvesFrom)
 			{
-				listEvolvesTo.Add(new()
+				List<PokemonEvolution> listEvolvesFrom = new();
+
+				var evolvesFromToProcess = pokemonsEvolvesFrom.Where(pe => !pe.evolvesFrom.IsEmpty()).ToList();
+				for (var i = 0; i < evolvesFromToProcess.Count; i++)
 				{
-					Pokemon = pokemon.pokemon,
-					EvolutionTrigger = pokemon.evolvesFrom.EvolutionTrigger,
-					MinLevel = pokemon.evolvesFrom.MinLevel
-				});
+					var pokemon = evolvesFromToProcess[i].pokemon;
+					var evolvesFrom = evolvesFromToProcess[i].evolvesFrom;
+					if (evolvesFrom.LocationId == 10) // if Magnetic Field
+					{
+						evolvesFromToProcess.RemoveAll(pe => pe.pokemon == pokemon && pe.evolvesFrom.LocationId.HasValue && pe.evolvesFrom.LocationId != 10);
+						listEvolvesFrom.Add(new(pokemon, new PokemonEvolvesFrom()
+						{
+							Specy = evolvesFrom.Specy,
+							EvolutionTrigger = evolvesFrom.EvolutionTrigger,
+							MinLevel = evolvesFrom.MinLevel,
+							MinHappiness = evolvesFrom.MinHappiness,
+							TimeOfDay = evolvesFrom.TimeOfDay,
+							HeldItem = evolvesFrom.HeldItem,
+							Location = new() { Name = "Magnetic Field" },
+							EvolutionItem = evolvesFrom.EvolutionItem
+						}));
+						continue;
+					}
+
+					if (evolvesFrom.Specy.Number == 737) // if Magnetic Field, but location unkown
+					{
+						listEvolvesFrom.Add(new(pokemon, new PokemonEvolvesFrom()
+						{
+							Specy = evolvesFrom.Specy,
+							EvolutionTrigger = "level-up",
+							Location = new() { Name = "Magnetic Field" }
+						}));
+					}
+
+					if (evolvesFrom.LocationId == 8) // if Mossy Rock
+					{
+						evolvesFromToProcess.RemoveAll(pe => pe.pokemon == pokemon && pe.evolvesFrom.LocationId.HasValue && pe.evolvesFrom.LocationId != 8);
+						listEvolvesFrom.Add(new(pokemon, new PokemonEvolvesFrom()
+						{
+							Specy = evolvesFrom.Specy,
+							EvolutionTrigger = evolvesFrom.EvolutionTrigger,
+							MinLevel = evolvesFrom.MinLevel,
+							MinHappiness = evolvesFrom.MinHappiness,
+							TimeOfDay = evolvesFrom.TimeOfDay,
+							HeldItem = evolvesFrom.HeldItem,
+							Location = new() { Name = "Mossy Rock" },
+							EvolutionItem = evolvesFrom.EvolutionItem
+						}));
+						continue;
+					}
+
+					if (evolvesFrom.LocationId == 48) // if Icy Rock
+					{
+						evolvesFromToProcess.RemoveAll(pe => pe.pokemon == pokemon && pe.evolvesFrom.LocationId.HasValue && pe.evolvesFrom.LocationId != 48);
+						listEvolvesFrom.Add(new(pokemon, new PokemonEvolvesFrom()
+						{
+							Specy = evolvesFrom.Specy,
+							EvolutionTrigger = evolvesFrom.EvolutionTrigger,
+							MinLevel = evolvesFrom.MinLevel,
+							MinHappiness = evolvesFrom.MinHappiness,
+							TimeOfDay = evolvesFrom.TimeOfDay,
+							HeldItem = evolvesFrom.HeldItem,
+							Location = new() { Name = "Icy Rock" },
+							EvolutionItem = evolvesFrom.EvolutionItem
+						}));
+						continue;
+					}
+
+					listEvolvesFrom.Add(new(pokemon, evolvesFrom));
+				}
+
+				return listEvolvesFrom.ToArray();
 			}
-			EvolvesTo = listEvolvesTo.ToArray();
 		}
 
 		public DataGridViewRow ConvertRow()
@@ -396,17 +451,47 @@ namespace MissingNopedia.AdvancedSearch
 			}
 		}
 
-		private class PokemonEvolvesFrom
+		internal class PokemonEvolvesFrom
 		{
 			public PokemonSpecy Specy { get; set; }
 			[JsonConverter(typeof(PokemonNameConverter))]
 			public string EvolutionTrigger { get; set; }
 			[JsonProperty("min_level")]
 			public int? MinLevel { get; set; }
+			[JsonProperty("min_happiness")]
+			public int? MinHappiness { get; set; }
+			[JsonProperty("time_of_day")]
+			public string TimeOfDay { get; set; }
+			public PokemonEvolvesFromItem HeldItem { get; set; }
+			[JsonProperty("location_id")]
+			public int? LocationId { get; set; }
+			public PokemonEvolvesFromLocation Location { get; set; }
+			public PokemonEvolvesFromItem EvolutionItem { get; set; }
+
+			public bool IsEmpty() => !MinLevel.HasValue && !MinHappiness.HasValue && string.IsNullOrEmpty(TimeOfDay) && HeldItem == null && Location == null && EvolutionItem == null;
 
 			public class PokemonSpecy
 			{
 				public int Number { get; set; }
+			}
+
+			public class PokemonEvolvesFromItem
+			{
+				[JsonConverter(typeof(PokemonNameConverter))]
+				public string Name { get; set; }
+			}
+
+			public class PokemonEvolvesFromLocation
+			{
+				[JsonConverter(typeof(PokemonNameConverter))]
+				public string Name { get; set; }
+				public PokemonEvolvesFromLocationRegion Region { get; set; }
+
+				public class PokemonEvolvesFromLocationRegion
+				{
+					[JsonConverter(typeof(PokemonNameConverter))]
+					public string Name { get; set; }
+				}
 			}
 		}
 
@@ -415,6 +500,32 @@ namespace MissingNopedia.AdvancedSearch
 			public Pokemon Pokemon { get; set; }
 			public string EvolutionTrigger { get; set; }
 			public int? MinLevel { get; set; }
+			public int? MinHappiness { get; set; }
+			public TimeDay? TimeOfDay { get; set; }
+			public string HeldItemName { get; set; }
+			public string LocationName { get; set; }
+			public string RegionName { get; set; }
+			public string EvolutionItemName { get; set; }
+
+			internal PokemonEvolution(Pokemon pokemonFrom, PokemonEvolvesFrom evolvesFrom)
+			{
+				Pokemon = pokemonFrom;
+				EvolutionTrigger = evolvesFrom.EvolutionTrigger;
+				MinLevel = evolvesFrom.MinLevel;
+				MinHappiness = evolvesFrom.MinHappiness;
+				TimeOfDay = evolvesFrom.TimeOfDay switch { "day" => TimeDay.Day, "night" => TimeDay.Night, "dusk" => TimeDay.Dusk, _ => null };
+				HeldItemName = evolvesFrom.HeldItem?.Name;
+				LocationName = evolvesFrom.Location?.Name;
+				RegionName = evolvesFrom.Location?.Region?.Name;
+				EvolutionItemName = evolvesFrom.EvolutionItem?.Name;
+			}
+
+			public enum TimeDay
+			{
+				Day,
+				Night,
+				Dusk
+			}
 		}
 
 		private class PokemonNameConverter : JsonConverter<string>

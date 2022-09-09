@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
@@ -1360,9 +1361,38 @@ namespace MissingNopedia
 
 		private static void AddEvolutionMethod(HtmlNode evolutions, Pokemon.PokemonEvolution evolution)
 		{
-			string text = "";
+			List<string> texts = new();
 			if (evolution.MinLevel.HasValue)
-				text = $"<small>(Level {evolution.MinLevel})</small>";
+				texts.Add($"Level {evolution.MinLevel}");
+			if (evolution.MinHappiness.HasValue)
+				texts.Add("high Friendship");
+			if (evolution.TimeOfDay.HasValue)
+				texts.Add(evolution.TimeOfDay switch
+				{
+					Pokemon.PokemonEvolution.TimeDay.Day => "Daytime",
+					Pokemon.PokemonEvolution.TimeDay.Night => "Nighttime",
+					Pokemon.PokemonEvolution.TimeDay.Dusk => "Dusk 5-6PM",
+					_ => throw new NotImplementedException()
+				});
+			if (!string.IsNullOrEmpty(evolution.LocationName))
+				if (evolution.LocationName.Contains("Rock"))
+					texts.Add($"level up near a {evolution.LocationName}");
+				else if (string.IsNullOrEmpty(evolution.RegionName))
+					texts.Add($"level up in a {evolution.LocationName} area");
+				else
+					texts.Add($"level up at {evolution.LocationName}, {evolution.RegionName}");
+			if (evolution.EvolutionTrigger == "use-item")
+				texts.Add($"use {evolution.EvolutionItemName}");
+			if (evolution.EvolutionTrigger == "trade")
+				if (string.IsNullOrEmpty(evolution.HeldItemName))
+					texts.Add("Trade");
+				else
+					texts.Add($"trade holding {evolution.HeldItemName}");
+
+
+			string text = "";
+			if (texts.Count > 0)
+				text = $"<small>({string.Join(", ", texts)})</small>";
 
 			evolutions.AppendChild(HtmlNode.CreateNode($"<span class=\"infocard infocard-arrow\"><i class=\"icon-arrow icon-arrow-e\"></i>{text}</span>"));
 		}

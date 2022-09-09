@@ -32,7 +32,7 @@ namespace MissingNopedia.AdvancedSearch
         name
       }
     }
-    pokedexEntries: pokemon_v2_pokemonspeciesflavortexts(where: {language_id: {_eq: 9}}) {
+    pokedexEntries: pokemon_v2_pokemonspeciesflavortexts(where: {language_id: {_eq: 9}}, order_by: {version_id: asc}) {
       version_id
       version: pokemon_v2_version {
         name
@@ -111,7 +111,6 @@ namespace MissingNopedia.AdvancedSearch
       }
       min_level
       min_happiness
-      min_beauty
       time_of_day
       held_item_id
       heldItem: pokemonV2ItemByHeldItemId {
@@ -120,14 +119,7 @@ namespace MissingNopedia.AdvancedSearch
         }
       }
       relative_physical_stats
-      party_species_id
-      gender_id
-      known_move_id
-      knownMove: pokemon_v2_move {
-        name: pokemon_v2_movenames(where: {language_id: {_eq: 9}}) {
-          name
-        }
-      }
+      min_beauty
       location_id
       location: pokemon_v2_location {
         region: pokemon_v2_region {
@@ -136,6 +128,14 @@ namespace MissingNopedia.AdvancedSearch
           }
         }
         name: pokemon_v2_locationnames(where: {language_id: {_eq: 9}}) {
+          name
+        }
+      }
+      party_species_id
+      gender_id
+      known_move_id
+      knownMove: pokemon_v2_move {
+        name: pokemon_v2_movenames(where: {language_id: {_eq: 9}}) {
           name
         }
       }
