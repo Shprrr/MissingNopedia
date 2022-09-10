@@ -468,7 +468,8 @@ namespace MissingNopedia.AdvancedSearch
 			public PokemonEvolvesFromLocation Location { get; set; }
 			public PokemonEvolvesFromItem EvolutionItem { get; set; }
 
-			public bool IsEmpty() => !MinLevel.HasValue && !MinHappiness.HasValue && string.IsNullOrEmpty(TimeOfDay) && HeldItem == null && Location == null && EvolutionItem == null;
+			public bool IsEmpty() => EvolutionTrigger == "level-up" && !MinLevel.HasValue && !MinHappiness.HasValue
+				&& string.IsNullOrEmpty(TimeOfDay) && HeldItem == null && Location == null && EvolutionItem == null;
 
 			public class PokemonSpecy
 			{
