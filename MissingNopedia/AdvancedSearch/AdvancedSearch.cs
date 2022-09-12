@@ -112,12 +112,6 @@ namespace MissingNopedia.AdvancedSearch
       min_level
       min_happiness
       time_of_day
-      held_item_id
-      heldItem: pokemonV2ItemByHeldItemId {
-        name: pokemon_v2_itemnames(where: {language_id: {_eq: 9}}) {
-          name
-        }
-      }
       relative_physical_stats
       min_beauty
       location_id
@@ -131,14 +125,14 @@ namespace MissingNopedia.AdvancedSearch
           name
         }
       }
-      party_species_id
-      gender_id
       known_move_id
       knownMove: pokemon_v2_move {
         name: pokemon_v2_movenames(where: {language_id: {_eq: 9}}) {
           name
         }
       }
+      party_species_id
+      gender_id
       min_affection
       known_move_type_id
       knownMoveType: pokemon_v2_type {
@@ -151,6 +145,12 @@ namespace MissingNopedia.AdvancedSearch
       turn_upside_down
       needs_overworld_rain
       trade_species_id
+      held_item_id
+      heldItem: pokemonV2ItemByHeldItemId {
+        name: pokemon_v2_itemnames(where: {language_id: {_eq: 9}}) {
+          name
+        }
+      }
       evolution_item_id
       evolutionItem: pokemon_v2_item {
         name: pokemon_v2_itemnames(where: {language_id: {_eq: 9}}) {

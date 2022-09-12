@@ -249,8 +249,10 @@ namespace MissingNopedia.AdvancedSearch
 							MinLevel = evolvesFrom.MinLevel,
 							MinHappiness = evolvesFrom.MinHappiness,
 							TimeOfDay = evolvesFrom.TimeOfDay,
-							HeldItem = evolvesFrom.HeldItem,
+							RelativePhysicalStats = evolvesFrom.RelativePhysicalStats,
+							MinBeauty = evolvesFrom.MinBeauty,
 							Location = new() { Name = "Magnetic Field" },
+							HeldItem = evolvesFrom.HeldItem,
 							EvolutionItem = evolvesFrom.EvolutionItem
 						}));
 						continue;
@@ -276,8 +278,10 @@ namespace MissingNopedia.AdvancedSearch
 							MinLevel = evolvesFrom.MinLevel,
 							MinHappiness = evolvesFrom.MinHappiness,
 							TimeOfDay = evolvesFrom.TimeOfDay,
-							HeldItem = evolvesFrom.HeldItem,
+							RelativePhysicalStats = evolvesFrom.RelativePhysicalStats,
+							MinBeauty = evolvesFrom.MinBeauty,
 							Location = new() { Name = "Mossy Rock" },
+							HeldItem = evolvesFrom.HeldItem,
 							EvolutionItem = evolvesFrom.EvolutionItem
 						}));
 						continue;
@@ -293,8 +297,10 @@ namespace MissingNopedia.AdvancedSearch
 							MinLevel = evolvesFrom.MinLevel,
 							MinHappiness = evolvesFrom.MinHappiness,
 							TimeOfDay = evolvesFrom.TimeOfDay,
-							HeldItem = evolvesFrom.HeldItem,
+							RelativePhysicalStats = evolvesFrom.RelativePhysicalStats,
+							MinBeauty = evolvesFrom.MinBeauty,
 							Location = new() { Name = "Icy Rock" },
+							HeldItem = evolvesFrom.HeldItem,
 							EvolutionItem = evolvesFrom.EvolutionItem
 						}));
 						continue;
@@ -462,14 +468,19 @@ namespace MissingNopedia.AdvancedSearch
 			public int? MinHappiness { get; set; }
 			[JsonProperty("time_of_day")]
 			public string TimeOfDay { get; set; }
-			public PokemonEvolvesFromItem HeldItem { get; set; }
+			[JsonProperty("relative_physical_stats")]
+			public int? RelativePhysicalStats { get; set; }
+			[JsonProperty("min_beauty")]
+			public int? MinBeauty { get; set; }
 			[JsonProperty("location_id")]
 			public int? LocationId { get; set; }
 			public PokemonEvolvesFromLocation Location { get; set; }
+			public PokemonEvolvesFromItem HeldItem { get; set; }
 			public PokemonEvolvesFromItem EvolutionItem { get; set; }
 
 			public bool IsEmpty() => EvolutionTrigger == "level-up" && !MinLevel.HasValue && !MinHappiness.HasValue
-				&& string.IsNullOrEmpty(TimeOfDay) && HeldItem == null && Location == null && EvolutionItem == null;
+				&& string.IsNullOrEmpty(TimeOfDay) && !RelativePhysicalStats.HasValue && !MinBeauty.HasValue
+				&& Location == null && HeldItem == null && EvolutionItem == null;
 
 			public class PokemonSpecy
 			{
@@ -499,26 +510,63 @@ namespace MissingNopedia.AdvancedSearch
 		public class PokemonEvolution
 		{
 			public Pokemon Pokemon { get; set; }
-			public string EvolutionTrigger { get; set; }
+			public Trigger EvolutionTrigger { get; set; }
 			public int? MinLevel { get; set; }
 			public int? MinHappiness { get; set; }
 			public TimeDay? TimeOfDay { get; set; }
-			public string HeldItemName { get; set; }
+			public RelativeStats? RelativePhysicalStats { get; set; }
+			public int? MinBeauty { get; set; }
 			public string LocationName { get; set; }
 			public string RegionName { get; set; }
+			public string HeldItemName { get; set; }
 			public string EvolutionItemName { get; set; }
 
 			internal PokemonEvolution(Pokemon pokemonFrom, PokemonEvolvesFrom evolvesFrom)
 			{
 				Pokemon = pokemonFrom;
-				EvolutionTrigger = evolvesFrom.EvolutionTrigger;
+				EvolutionTrigger = evolvesFrom.EvolutionTrigger switch
+				{
+					"level-up" => Trigger.LevelUp,
+					"trade" => Trigger.Trade,
+					"use-item" => Trigger.UseItem,
+					"shed" => Trigger.Shed,
+					"spin" => Trigger.Spin,
+					"tower-of-darkness" => Trigger.TowerOfDarkness,
+					"tower-of-waters" => Trigger.TowerOfWaters,
+					"three-critical-hits" => Trigger.ThreeCriticalHits,
+					"take-damage" => Trigger.TakeDamage,
+					"other" => Trigger.Other,
+					_ => Trigger.Other
+				};
 				MinLevel = evolvesFrom.MinLevel;
 				MinHappiness = evolvesFrom.MinHappiness;
 				TimeOfDay = evolvesFrom.TimeOfDay switch { "day" => TimeDay.Day, "night" => TimeDay.Night, "dusk" => TimeDay.Dusk, _ => null };
-				HeldItemName = evolvesFrom.HeldItem?.Name;
+				RelativePhysicalStats = evolvesFrom.RelativePhysicalStats switch
+				{
+					0 => RelativeStats.AttackEqualsDefense,
+					1 => RelativeStats.AttackGreaterDefense,
+					-1 => RelativeStats.DefenseGreaterAttack,
+					_ => null
+				};
+				MinBeauty = evolvesFrom.MinBeauty;
 				LocationName = evolvesFrom.Location?.Name;
 				RegionName = evolvesFrom.Location?.Region?.Name;
+				HeldItemName = evolvesFrom.HeldItem?.Name;
 				EvolutionItemName = evolvesFrom.EvolutionItem?.Name;
+			}
+
+			public enum Trigger
+			{
+				LevelUp,
+				Trade,
+				UseItem,
+				Shed,
+				Spin,
+				TowerOfDarkness,
+				TowerOfWaters,
+				ThreeCriticalHits,
+				TakeDamage,
+				Other
 			}
 
 			public enum TimeDay
@@ -526,6 +574,13 @@ namespace MissingNopedia.AdvancedSearch
 				Day,
 				Night,
 				Dusk
+			}
+
+			public enum RelativeStats
+			{
+				AttackEqualsDefense,
+				AttackGreaterDefense,
+				DefenseGreaterAttack
 			}
 		}
 

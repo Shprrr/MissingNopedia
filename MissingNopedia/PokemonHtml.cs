@@ -1324,7 +1324,8 @@ namespace MissingNopedia
 
 			void AddEvolvesFrom(HtmlNode evolutions, Pokemon pokemonEvolution)
 			{
-				foreach (var evolution in pokemonEvolution.EvolvesFrom)
+				// We don't show the exact value so the first one is enough.
+				foreach (var evolution in pokemonEvolution.EvolvesFrom.Where((e, i) => !e.MinBeauty.HasValue || i == 0))
 				{
 					AddEvolvesFrom(evolutions, evolution.Pokemon);
 					AddEvolutionCard(evolutions, evolution.Pokemon);
@@ -1334,7 +1335,8 @@ namespace MissingNopedia
 
 			void AddEvolvesTo(HtmlNode evolutions, Pokemon pokemonEvolution)
 			{
-				foreach (var evolution in pokemonEvolution.EvolvesTo)
+				// We don't show the exact value so the first one is enough.
+				foreach (var evolution in pokemonEvolution.EvolvesTo.Where((e, i) => !e.MinBeauty.HasValue || i == 0))
 				{
 					AddEvolutionMethod(evolutions, evolution);
 					AddEvolutionCard(evolutions, evolution.Pokemon);
@@ -1374,6 +1376,16 @@ namespace MissingNopedia
 					Pokemon.PokemonEvolution.TimeDay.Dusk => "Dusk 5-6PM",
 					_ => throw new NotImplementedException()
 				});
+			if (evolution.RelativePhysicalStats.HasValue)
+				texts.Add(evolution.RelativePhysicalStats switch
+				{
+					Pokemon.PokemonEvolution.RelativeStats.AttackEqualsDefense => "Attack = Defense",
+					Pokemon.PokemonEvolution.RelativeStats.AttackGreaterDefense => "Attack > Defense",
+					Pokemon.PokemonEvolution.RelativeStats.DefenseGreaterAttack => "Attack < Defense",
+					_ => throw new NotImplementedException()
+				});
+			if (evolution.MinBeauty.HasValue)
+				texts.Add("level up with max Beauty");
 			if (!string.IsNullOrEmpty(evolution.LocationName))
 				if (evolution.LocationName.Contains("Rock"))
 					texts.Add($"level up near a {evolution.LocationName}");
@@ -1381,13 +1393,17 @@ namespace MissingNopedia
 					texts.Add($"level up in a {evolution.LocationName} area");
 				else
 					texts.Add($"level up at {evolution.LocationName}, {evolution.RegionName}");
-			if (evolution.EvolutionTrigger == "use-item")
-				texts.Add($"use {evolution.EvolutionItemName}");
-			if (evolution.EvolutionTrigger == "trade")
+			if (evolution.EvolutionTrigger == Pokemon.PokemonEvolution.Trigger.LevelUp && !string.IsNullOrEmpty(evolution.HeldItemName))
+				texts.Add($"hold {evolution.HeldItemName}");
+			if (evolution.EvolutionTrigger == Pokemon.PokemonEvolution.Trigger.Trade)
 				if (string.IsNullOrEmpty(evolution.HeldItemName))
 					texts.Add("Trade");
 				else
 					texts.Add($"trade holding {evolution.HeldItemName}");
+			if (evolution.EvolutionTrigger == Pokemon.PokemonEvolution.Trigger.UseItem)
+				texts.Add($"use {evolution.EvolutionItemName}");
+			if (evolution.EvolutionTrigger == Pokemon.PokemonEvolution.Trigger.Shed)
+				texts.Add("while evolving, empty spot in party, Pokéball in bag");
 
 
 			string text = "";
