@@ -144,13 +144,13 @@ namespace MissingNopedia.AdvancedSearch
       }
       turn_upside_down
       needs_overworld_rain
-      trade_species_id
       held_item_id
       heldItem: pokemonV2ItemByHeldItemId {
         name: pokemon_v2_itemnames(where: {language_id: {_eq: 9}}) {
           name
         }
       }
+      trade_species_id
       evolution_item_id
       evolutionItem: pokemon_v2_item {
         name: pokemon_v2_itemnames(where: {language_id: {_eq: 9}}) {

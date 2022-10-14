@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GraphQL.Client.Abstractions.Utilities;
 using HtmlAgilityPack;
 using MissingNopedia.AdvancedSearch;
 
@@ -27,6 +28,7 @@ namespace MissingNopedia
 		private int maximumSpDefense;
 		private int minimumSpeed;
 		private int maximumSpeed;
+		private Dictionary<int, Pokemon> extraPokemonData = new();
 
 		public string PokemonName { get; }
 		public string GenerationLearnset { get; }
@@ -57,6 +59,10 @@ namespace MissingNopedia
 			maximumSpDefense = pokemonsWithForms.Max(p => p.BaseSpDefense);
 			minimumSpeed = pokemonsWithForms.Min(p => p.BaseSpeed);
 			maximumSpeed = pokemonsWithForms.Max(p => p.BaseSpeed);
+
+			var extraData = pokemonsWithForms.Join(pokemonData.EvolvesFrom, p => p.Number, e => e.PartySpeciesId ?? e.TradeSpeciesId ?? -1, (p, e) => p).ToList();
+			extraData.AddRange(pokemonsWithForms.Join(pokemonData.EvolvesTo, p => p.Number, e => e.PartySpeciesId ?? e.TradeSpeciesId ?? -1, (p, e) => p));
+			extraPokemonData = extraData.ToDictionary(p => p.Number);
 		}
 
 		public override string BuildNewPage()
@@ -1361,7 +1367,7 @@ namespace MissingNopedia
 				evolutions.LastChild.SelectSingleNode("//small[2]").InnerHtml = types;
 		}
 
-		private static void AddEvolutionMethod(HtmlNode evolutions, Pokemon.PokemonEvolution evolution)
+		private void AddEvolutionMethod(HtmlNode evolutions, Pokemon.PokemonEvolution evolution)
 		{
 			List<string> texts = new();
 			if (evolution.MinLevel.HasValue)
@@ -1393,17 +1399,39 @@ namespace MissingNopedia
 					texts.Add($"level up in a {evolution.LocationName} area");
 				else
 					texts.Add($"level up at {evolution.LocationName}, {evolution.RegionName}");
+			if (!string.IsNullOrEmpty(evolution.KnownMoveName))
+				texts.Add($"after {evolution.KnownMoveName} learned");
+			if (evolution.PartySpeciesId.HasValue)
+				texts.Add($"with <a href=\"/{extraPokemonData[evolution.PartySpeciesId.Value].Name}{WikiPokemonSuffix}\">{extraPokemonData[evolution.PartySpeciesId.Value].Name}</a> in party");
+			if (evolution.EvolutionGender.HasValue)
+				texts.Add(evolution.EvolutionGender switch
+				{
+					Pokemon.PokemonEvolution.Gender.Female => "Female",
+					Pokemon.PokemonEvolution.Gender.Male => "Male",
+					Pokemon.PokemonEvolution.Gender.Genderless => "Genderless",
+					_ => throw new NotImplementedException()
+				});
+			if (evolution.MinAffection.HasValue)
+				texts.Add("♥♥ Affection in Gen 6-7");
+			if (!string.IsNullOrEmpty(evolution.KnownMoveType))
+				texts.Add($"after {evolution.KnownMoveType.ToUpperFirst()}-type move learned");
 			if (evolution.EvolutionTrigger == Pokemon.PokemonEvolution.Trigger.LevelUp && !string.IsNullOrEmpty(evolution.HeldItemName))
 				texts.Add($"hold {evolution.HeldItemName}");
 			if (evolution.EvolutionTrigger == Pokemon.PokemonEvolution.Trigger.Trade)
-				if (string.IsNullOrEmpty(evolution.HeldItemName))
+				if (string.IsNullOrEmpty(evolution.HeldItemName) && !evolution.TradeSpeciesId.HasValue)
 					texts.Add("Trade");
+				else if (evolution.TradeSpeciesId.HasValue)
+					texts.Add($"Trade with <a href=\"/{extraPokemonData[evolution.TradeSpeciesId.Value].Name}{WikiPokemonSuffix}\">{extraPokemonData[evolution.TradeSpeciesId.Value].Name}</a>");
 				else
 					texts.Add($"trade holding {evolution.HeldItemName}");
 			if (evolution.EvolutionTrigger == Pokemon.PokemonEvolution.Trigger.UseItem)
 				texts.Add($"use {evolution.EvolutionItemName}");
 			if (evolution.EvolutionTrigger == Pokemon.PokemonEvolution.Trigger.Shed)
 				texts.Add("while evolving, empty spot in party, Pokéball in bag");
+			if (evolution.EvolutionTrigger == Pokemon.PokemonEvolution.Trigger.TakeDamage)
+				texts.Add("Travel under the stone bridge in Dusty Bowl after taking at least 49 HP in damage from attacks without fainting");
+			if (!string.IsNullOrEmpty(evolution.SpecialEvolution))
+				texts.Add(evolution.SpecialEvolution);
 
 
 			string text = "";

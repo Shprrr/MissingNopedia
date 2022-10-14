@@ -306,6 +306,12 @@ namespace MissingNopedia.AdvancedSearch
 						continue;
 					}
 
+					if (evolvesFrom.Specy.Number == 265)
+					{
+						listEvolvesFrom.Add(new(pokemon, evolvesFrom, "random based on personality"));
+						continue;
+					}
+
 					listEvolvesFrom.Add(new(pokemon, evolvesFrom));
 				}
 
@@ -475,19 +481,32 @@ namespace MissingNopedia.AdvancedSearch
 			[JsonProperty("location_id")]
 			public int? LocationId { get; set; }
 			public PokemonEvolvesFromLocation Location { get; set; }
-			public PokemonEvolvesFromItem HeldItem { get; set; }
-			public PokemonEvolvesFromItem EvolutionItem { get; set; }
+			public PokemonEvolvesFromName KnownMove { get; set; }
+			[JsonProperty("party_species_id")]
+			public int? PartySpeciesId { get; set; }
+			[JsonProperty("gender_id")]
+			public int? GenderId { get; set; }
+			[JsonProperty("min_affection")]
+			public int? MinAffection { get; set; }
+			[JsonConverter(typeof(PokemonNameConverter))]
+			public string KnownMoveType { get; set; }
+			public PokemonEvolvesFromName HeldItem { get; set; }
+			[JsonProperty("trade_species_id")]
+			public int? TradeSpeciesId { get; set; }
+			public PokemonEvolvesFromName EvolutionItem { get; set; }
 
 			public bool IsEmpty() => EvolutionTrigger == "level-up" && !MinLevel.HasValue && !MinHappiness.HasValue
 				&& string.IsNullOrEmpty(TimeOfDay) && !RelativePhysicalStats.HasValue && !MinBeauty.HasValue
-				&& Location == null && HeldItem == null && EvolutionItem == null;
+				&& Location == null && KnownMove == null && !PartySpeciesId.HasValue && !GenderId.HasValue
+				&& !MinAffection.HasValue && string.IsNullOrEmpty(KnownMoveType)
+				&& HeldItem == null && !TradeSpeciesId.HasValue && EvolutionItem == null;
 
 			public class PokemonSpecy
 			{
 				public int Number { get; set; }
 			}
 
-			public class PokemonEvolvesFromItem
+			public class PokemonEvolvesFromName
 			{
 				[JsonConverter(typeof(PokemonNameConverter))]
 				public string Name { get; set; }
@@ -518,10 +537,17 @@ namespace MissingNopedia.AdvancedSearch
 			public int? MinBeauty { get; set; }
 			public string LocationName { get; set; }
 			public string RegionName { get; set; }
+			public string KnownMoveName { get; set; }
+			public int? PartySpeciesId { get; set; }
+			public Gender? EvolutionGender { get; set; }
+			public int? MinAffection { get; set; }
+			public string KnownMoveType { get; set; }
 			public string HeldItemName { get; set; }
+			public int? TradeSpeciesId { get; set; }
 			public string EvolutionItemName { get; set; }
+			public string SpecialEvolution { get; set; }
 
-			internal PokemonEvolution(Pokemon pokemonFrom, PokemonEvolvesFrom evolvesFrom)
+			internal PokemonEvolution(Pokemon pokemonFrom, PokemonEvolvesFrom evolvesFrom, string specialEvolution = null)
 			{
 				Pokemon = pokemonFrom;
 				EvolutionTrigger = evolvesFrom.EvolutionTrigger switch
@@ -551,8 +577,21 @@ namespace MissingNopedia.AdvancedSearch
 				MinBeauty = evolvesFrom.MinBeauty;
 				LocationName = evolvesFrom.Location?.Name;
 				RegionName = evolvesFrom.Location?.Region?.Name;
+				KnownMoveName = evolvesFrom.KnownMove?.Name;
+				PartySpeciesId = evolvesFrom.PartySpeciesId;
+				EvolutionGender = evolvesFrom.GenderId switch
+				{
+					1 => Gender.Female,
+					2 => Gender.Male,
+					3 => Gender.Genderless,
+					_ => null
+				};
+				MinAffection = evolvesFrom.MinAffection;
+				KnownMoveType = evolvesFrom.KnownMoveType;
 				HeldItemName = evolvesFrom.HeldItem?.Name;
+				TradeSpeciesId = evolvesFrom.TradeSpeciesId;
 				EvolutionItemName = evolvesFrom.EvolutionItem?.Name;
+				SpecialEvolution = specialEvolution;
 			}
 
 			public enum Trigger
@@ -581,6 +620,13 @@ namespace MissingNopedia.AdvancedSearch
 				AttackEqualsDefense,
 				AttackGreaterDefense,
 				DefenseGreaterAttack
+			}
+
+			public enum Gender
+			{
+				Female,
+				Male,
+				Genderless
 			}
 		}
 
