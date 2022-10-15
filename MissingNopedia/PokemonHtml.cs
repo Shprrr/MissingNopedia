@@ -882,7 +882,7 @@ namespace MissingNopedia
 
 		private string ImageName() => ImageName(PokemonName);
 		private static string ImageName(string pokemonName) => pokemonName.ToLower()
-			.Replace("♀", "-f").Replace("♂", "-m").Replace("'", "").Replace(". ", "-").Replace(" ", "-").Replace(".", "").Replace(":", "");
+			.Replace("♀", "-f").Replace("♂", "-m").Replace("'", "").Replace("’", "").Replace(". ", "-").Replace(" ", "-").Replace(".", "").Replace(":", "");
 
 		private void AddPokedexData(HtmlNode parentNode)
 		{
@@ -1415,6 +1415,12 @@ namespace MissingNopedia
 				texts.Add("♥♥ Affection in Gen 6-7");
 			if (!string.IsNullOrEmpty(evolution.KnownMoveType))
 				texts.Add($"after {evolution.KnownMoveType.ToUpperFirst()}-type move learned");
+			if (evolution.TurnUpsideDown)
+				texts.Add("holding console upside down");
+			if (evolution.NeedsOverworldRain)
+				texts.Add("during rain");
+			if (!string.IsNullOrEmpty(evolution.PartyType))
+				texts.Add($"{evolution.PartyType.ToUpperFirst()} type Pokémon in party");
 			if (evolution.EvolutionTrigger == Pokemon.PokemonEvolution.Trigger.LevelUp && !string.IsNullOrEmpty(evolution.HeldItemName))
 				texts.Add($"hold {evolution.HeldItemName}");
 			if (evolution.EvolutionTrigger == Pokemon.PokemonEvolution.Trigger.Trade)
@@ -1428,6 +1434,14 @@ namespace MissingNopedia
 				texts.Add($"use {evolution.EvolutionItemName}");
 			if (evolution.EvolutionTrigger == Pokemon.PokemonEvolution.Trigger.Shed)
 				texts.Add("while evolving, empty spot in party, Pokéball in bag");
+			if (evolution.EvolutionTrigger == Pokemon.PokemonEvolution.Trigger.Spin)
+				texts.Add("spin around holding Sweet");
+			if (evolution.EvolutionTrigger == Pokemon.PokemonEvolution.Trigger.TowerOfDarkness)
+				texts.Add("in Tower of Darkness");
+			if (evolution.EvolutionTrigger == Pokemon.PokemonEvolution.Trigger.TowerOfWaters)
+				texts.Add("in Tower of Waters");
+			if (evolution.EvolutionTrigger == Pokemon.PokemonEvolution.Trigger.ThreeCriticalHits)
+				texts.Add("achieve 3 critical hits in one battle");
 			if (evolution.EvolutionTrigger == Pokemon.PokemonEvolution.Trigger.TakeDamage)
 				texts.Add("Travel under the stone bridge in Dusty Bowl after taking at least 49 HP in damage from attacks without fainting");
 			if (!string.IsNullOrEmpty(evolution.SpecialEvolution))

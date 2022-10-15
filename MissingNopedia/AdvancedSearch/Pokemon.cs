@@ -226,6 +226,19 @@ namespace MissingNopedia.AdvancedSearch
 
 		public void SetEvolutions(Pokemon[] pokemons)
 		{
+			switch (Number)
+			{
+				case 808:
+					EvolvesFrom = Array.Empty<PokemonEvolution>();
+					EvolvesTo = new[] { new PokemonEvolution(pokemons.Single(p => p.Number == 809), new(), "Pokémon GO only, 400 Meltan Candies") };
+					return;
+
+				case 809:
+					EvolvesFrom = new[] { new PokemonEvolution(pokemons.Single(p => p.Number == 808), new(), "Pokémon GO only, 400 Meltan Candies") };
+					EvolvesTo = Array.Empty<PokemonEvolution>();
+					return;
+			}
+
 			EvolvesFrom = GetEvolvesFrom(pokemonEvolvesFrom.Join(pokemons, e => e.Specy.Number, p => p.Number, (e, p) => (p, e)));
 
 			EvolvesTo = GetEvolvesFrom(pokemons.Where(p => p.pokemonEvolvesFrom.Any(e => e.Specy.Number == Number)).SelectMany(p => p.pokemonEvolvesFrom.Where(e => e.Specy.Number == Number), (p, pe) => (pokemon: p, evolvesFrom: pe)));
@@ -490,6 +503,12 @@ namespace MissingNopedia.AdvancedSearch
 			public int? MinAffection { get; set; }
 			[JsonConverter(typeof(PokemonNameConverter))]
 			public string KnownMoveType { get; set; }
+			[JsonConverter(typeof(PokemonNameConverter))]
+			public string PartyType { get; set; }
+			[JsonProperty("turn_upside_down")]
+			public bool TurnUpsideDown { get; set; }
+			[JsonProperty("needs_overworld_rain")]
+			public bool NeedsOverworldRain { get; set; }
 			public PokemonEvolvesFromName HeldItem { get; set; }
 			[JsonProperty("trade_species_id")]
 			public int? TradeSpeciesId { get; set; }
@@ -498,7 +517,8 @@ namespace MissingNopedia.AdvancedSearch
 			public bool IsEmpty() => EvolutionTrigger == "level-up" && !MinLevel.HasValue && !MinHappiness.HasValue
 				&& string.IsNullOrEmpty(TimeOfDay) && !RelativePhysicalStats.HasValue && !MinBeauty.HasValue
 				&& Location == null && KnownMove == null && !PartySpeciesId.HasValue && !GenderId.HasValue
-				&& !MinAffection.HasValue && string.IsNullOrEmpty(KnownMoveType)
+				&& !MinAffection.HasValue && string.IsNullOrEmpty(KnownMoveType) && string.IsNullOrEmpty(PartyType)
+				&& !TurnUpsideDown && !NeedsOverworldRain
 				&& HeldItem == null && !TradeSpeciesId.HasValue && EvolutionItem == null;
 
 			public class PokemonSpecy
@@ -542,6 +562,9 @@ namespace MissingNopedia.AdvancedSearch
 			public Gender? EvolutionGender { get; set; }
 			public int? MinAffection { get; set; }
 			public string KnownMoveType { get; set; }
+			public string PartyType { get; set; }
+			public bool TurnUpsideDown { get; set; }
+			public bool NeedsOverworldRain { get; set; }
 			public string HeldItemName { get; set; }
 			public int? TradeSpeciesId { get; set; }
 			public string EvolutionItemName { get; set; }
@@ -588,6 +611,9 @@ namespace MissingNopedia.AdvancedSearch
 				};
 				MinAffection = evolvesFrom.MinAffection;
 				KnownMoveType = evolvesFrom.KnownMoveType;
+				PartyType = evolvesFrom.PartyType;
+				TurnUpsideDown = evolvesFrom.TurnUpsideDown;
+				NeedsOverworldRain = evolvesFrom.NeedsOverworldRain;
 				HeldItemName = evolvesFrom.HeldItem?.Name;
 				TradeSpeciesId = evolvesFrom.TradeSpeciesId;
 				EvolutionItemName = evolvesFrom.EvolutionItem?.Name;
