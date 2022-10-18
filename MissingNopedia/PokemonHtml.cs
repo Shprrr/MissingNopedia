@@ -1330,25 +1330,51 @@ namespace MissingNopedia
 
 			void AddEvolvesFrom(HtmlNode evolutions, Pokemon pokemonEvolution)
 			{
-				// We don't show the exact value so the first one is enough.
-				foreach (var evolution in pokemonEvolution.EvolvesFrom.Where((e, i) => !e.MinBeauty.HasValue || i == 0))
+				foreach (var evolution in GetEvolutions(pokemonEvolution.EvolvesFrom))
 				{
 					AddEvolvesFrom(evolutions, evolution.Pokemon);
 					AddEvolutionCard(evolutions, evolution.Pokemon);
-					AddEvolutionMethod(evolutions, evolution);
+					AddEvolutionMethod(evolutions, evolution, EvolutionDirection.East);
 				}
 			}
 
 			void AddEvolvesTo(HtmlNode evolutions, Pokemon pokemonEvolution)
 			{
-				// We don't show the exact value so the first one is enough.
-				foreach (var evolution in pokemonEvolution.EvolvesTo.Where((e, i) => !e.MinBeauty.HasValue || i == 0))
+				var evolutionsArray = GetEvolutions(pokemonEvolution.EvolvesTo).ToArray();
+				HtmlNode evolutionsNodeParent = evolutions;
+				if (evolutionsArray.Length > 1)
+					evolutionsNodeParent = evolutions.AppendChild(HtmlNode.CreateNode("<div class=\"infocard-evo-split\"></div>"));
+
+				for (var i = 0; i < evolutionsArray.Length; i++)
 				{
-					AddEvolutionMethod(evolutions, evolution);
-					AddEvolutionCard(evolutions, evolution.Pokemon);
-					AddEvolvesTo(evolutions, evolution.Pokemon);
+					HtmlNode evolutionsNode = evolutions;
+					var direction = EvolutionDirection.East;
+					if (evolutionsArray.Length > 1)
+					{
+						evolutionsNode = evolutionsNodeParent.AppendChild(HtmlNode.CreateNode("<div class=\"infocard-list-evo\"></div>"));
+
+						if (i == 0)
+							direction = EvolutionDirection.NorthEast;
+						else if (i == evolutionsArray.Length - 1)
+							direction = EvolutionDirection.SouthEast;
+					}
+
+					AddEvolutionMethod(evolutionsNode, evolutionsArray[i], direction);
+					AddEvolutionCard(evolutionsNode, evolutionsArray[i].Pokemon);
+					AddEvolvesTo(evolutionsNode, evolutionsArray[i].Pokemon);
 				}
 			}
+
+			static IEnumerable<Pokemon.PokemonEvolution> GetEvolutions(IEnumerable<Pokemon.PokemonEvolution> pokemonEvolutions)
+				// We don't show the exact value so the first one is enough.
+				=> pokemonEvolutions.Where((e, i) => !e.MinBeauty.HasValue || i == 0);
+		}
+
+		private enum EvolutionDirection
+		{
+			East,
+			NorthEast,
+			SouthEast
 		}
 
 		private static void AddEvolutionCard(HtmlNode evolutions, Pokemon pokemonEvolution)
@@ -1367,7 +1393,7 @@ namespace MissingNopedia
 				evolutions.LastChild.SelectSingleNode("//small[2]").InnerHtml = types;
 		}
 
-		private void AddEvolutionMethod(HtmlNode evolutions, Pokemon.PokemonEvolution evolution)
+		private void AddEvolutionMethod(HtmlNode evolutions, Pokemon.PokemonEvolution evolution, EvolutionDirection evolutionDirection)
 		{
 			List<string> texts = new();
 			if (evolution.MinLevel.HasValue)
@@ -1452,7 +1478,18 @@ namespace MissingNopedia
 			if (texts.Count > 0)
 				text = $"<small>({string.Join(", ", texts)})</small>";
 
-			evolutions.AppendChild(HtmlNode.CreateNode($"<span class=\"infocard infocard-arrow\"><i class=\"icon-arrow icon-arrow-e\"></i>{text}</span>"));
+			switch (evolutionDirection)
+			{
+				case EvolutionDirection.East:
+					evolutions.AppendChild(HtmlNode.CreateNode($"<span class=\"infocard infocard-arrow\"><i class=\"icon-arrow icon-arrow-e\"></i>{text}</span>"));
+					break;
+				case EvolutionDirection.NorthEast:
+					evolutions.AppendChild(HtmlNode.CreateNode($"<span class=\"infocard infocard-arrow\">{text}<i class=\"icon-arrow icon-arrow-ne\"></i></span>"));
+					break;
+				case EvolutionDirection.SouthEast:
+					evolutions.AppendChild(HtmlNode.CreateNode($"<span class=\"infocard infocard-arrow\"><i class=\"icon-arrow icon-arrow-se\"></i>{text}</span>"));
+					break;
+			}
 		}
 
 		private void AddPokedexEntries(HtmlNode parentNode)
